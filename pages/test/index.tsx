@@ -19,6 +19,7 @@ const Test: NextPage = () => {
                 <button onClick={onClick}>{count}</button>
                 <style jsx>{`
                     .Test {
+                        width: 100%;
                         .title {
                             color: blue;
                         }

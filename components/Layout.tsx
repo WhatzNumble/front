@@ -15,8 +15,8 @@ function Layout({children, title = '', hasTabBar = true}: Props){
             </Head>
             <main className="Layout">
                 {children}
-                {hasTabBar && <TabBar/>}
             </main>
+            {hasTabBar && <TabBar/>}
             <style jsx>{`
                 .Layout {
                     height: 100vh;
