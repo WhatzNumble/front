@@ -16,7 +16,7 @@ const Test: NextPage = () => {
 
   return (
     <Layout>
-      <div className='Test'>
+      {/* <div className='Test'>
         <h1 className='title'>테스트에요~</h1>
         <button onClick={onClick}>{count}</button>
         <style jsx>{`
@@ -26,8 +26,8 @@ const Test: NextPage = () => {
             }
           }
         `}</style>
-        <Video isEmbed videoSrc='uwlXQRWu54E' />
-      </div>
+      </div> */}
+      <Video isEmbed videoSrc='uwlXQRWu54E' />
     </Layout>
   );
 };
