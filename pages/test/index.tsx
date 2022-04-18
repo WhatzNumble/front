@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import { useSelector, useDispatch } from 'react-redux'
-import {AppState} from '../../store/index';
-import {testActions} from '../../store/test';
+import {AppState} from 'store/index';
+import {testActions} from 'store/test';
 
 const Test: NextPage = () => {
     const dispatch = useDispatch();
