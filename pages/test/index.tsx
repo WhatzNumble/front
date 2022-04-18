@@ -25,7 +25,6 @@ const Test: NextPage = () => {
         }
       `}</style>
       <Video isEmbed videoSrc='uwlXQRWu54E' />
-      <Video isEmbed videoSrc='HG0M_eZduxY' />
     </div>
   );
 };
