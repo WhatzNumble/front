@@ -1,32 +1,35 @@
-import type { NextPage } from 'next'
-import { useSelector, useDispatch } from 'react-redux'
-import {AppState} from 'store/index';
-import {testActions} from 'store/test';
-import Layout from 'components/Layout';
+import type { NextPage } from "next";
+import { useSelector, useDispatch } from "react-redux";
+import { AppState } from "store/index";
+import { testActions } from "store/test";
+import Layout from "components/Layout";
+
+import Video from "components/Video";
 
 const Test: NextPage = () => {
-    const dispatch = useDispatch();
-    const {count} = useSelector((state: AppState) => state.test);
+  const dispatch = useDispatch();
+  const { count } = useSelector((state: AppState) => state.test);
 
-    const onClick = ()=>{
-        dispatch(testActions.setCount(count + 1));
-    }
+  const onClick = () => {
+    dispatch(testActions.setCount(count + 1));
+  };
 
-    return (
-        <Layout>
-            <div className='Test'>
-                <h1 className='title'>테스트에요~</h1>
-                <button onClick={onClick}>{count}</button>
-                <style jsx>{`
-                    .Test {
-                        .title {
-                            color: blue;
-                        }
-                    }
-                `}</style>
-            </div>
-        </Layout>
-    )
-}
+  return (
+    <Layout>
+      {/* <div className='Test'>
+        <h1 className='title'>테스트에요~</h1>
+        <button onClick={onClick}>{count}</button>
+        <style jsx>{`
+          .Test {
+            .title {
+              color: blue;
+            }
+          }
+        `}</style>
+      </div> */}
+      <Video isEmbed videoSrc='tGSvvcqhmwM' />
+    </Layout>
+  );
+};
 
-export default Test
+export default Test;
