@@ -1,43 +1,49 @@
-import { useRef, useEffect } from "react";
-
-export enum Commands {
-  play,
-  pause,
-  stop,
-  mute,
-  unMute,
-}
+import { useRef, useEffect, MutableRefObject } from "react";
+import { Commands } from "./index";
 
 interface Props {
   embedID: string;
-  command?: Commands;
+  command?: Commands | null;
+  onRendered: () => void;
 }
 
-const YoutubeEmbedPlayer: React.FC<Props> = ({ embedID, command }) => {
+const YoutubeEmbedPlayer: React.FC<Props> = ({ embedID, command, onRendered }) => {
   const iframeVideoRef = useRef<HTMLIFrameElement | null>(null);
-  const sendCommand = (func: string, args?: any) => {
+
+  const isRenderedIframePlayer = (ref: MutableRefObject<HTMLIFrameElement | null>) => {
     const iframe = iframeVideoRef.current;
     if (iframe) {
       const src = iframe.getAttribute("src");
       if (src) {
-        if (iframe.contentWindow) {
-          iframe.contentWindow.postMessage(
-            JSON.stringify({
-              event: "command",
-              func: func,
-              args: args || [],
-            }),
-            "*"
-          );
-        }
+        return !!iframe.contentWindow;
       }
     }
   };
+
+  const sendCommand = (func: string, args?: any) => {
+    if (isRenderedIframePlayer(iframeVideoRef)) {
+      iframeVideoRef.current?.contentWindow?.postMessage(
+        JSON.stringify({
+          event: "command",
+          func: func,
+          args: args || [],
+        }),
+        "*"
+      );
+    }
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      onRendered();
+    }, 1000);
+  }, [onRendered]);
 
   useEffect(() => {
     switch (command) {
       case Commands.play:
         sendCommand("playVideo");
+        console.log("play");
         break;
       case Commands.stop:
         sendCommand("stopVideo");
@@ -51,18 +57,21 @@ const YoutubeEmbedPlayer: React.FC<Props> = ({ embedID, command }) => {
       case Commands.unMute:
         sendCommand("unMute");
         break;
+      default:
+        sendCommand("playVideo");
     }
   }, [command]);
   return (
     <>
       <iframe
+        ref={iframeVideoRef}
         width='100%'
-        height='95%'
-        src={`https://www.youtube.com/embed/${embedID}?modestbranding=1&enablejsapi=1&controls=0`}
+        height='100%'
+        src={`https://www.youtube.com/embed/${embedID}?modestbranding=1&enablejsapi=1&controls=0&autoplay=1&mute=1`}
         frameBorder='0'
-        allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
+        allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture;'
         allowFullScreen
-        title='Embedded youtube'
+        title={embedID}
       />
     </>
   );
