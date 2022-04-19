@@ -42,11 +42,6 @@ const Video: React.FC<Props> = ({ isEmbed = false, videoSrc }) => {
     setPlaying(true);
   }
 
-  useEffect(()=>{
-
-
-  },[command])
-
   return (
     <>
       <div className='Video'>

@@ -27,7 +27,7 @@ const Test: NextPage = () => {
           }
         `}</style>
       </div> */}
-      <Video isEmbed videoSrc='uwlXQRWu54E' />
+      <Video isEmbed videoSrc='tGSvvcqhmwM' />
     </Layout>
   );
 };
