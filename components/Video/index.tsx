@@ -1,8 +1,13 @@
-import Controller from "./Controller";
+import dynamic from "next/dynamic";
+import ControllerMask from "./ControllerMask";
+
+const YoutubeEmbedPlayer = dynamic(() => import("./YoutubeEmbedPlayer"), {
+  ssr: false,
+});
 
 interface Props {
   isEmbed?: boolean;
-  videoSrc?: string;
+  videoSrc: string;
 }
 
 const index: React.FC<Props> = ({ isEmbed = false, videoSrc }) => {
@@ -23,19 +28,11 @@ const index: React.FC<Props> = ({ isEmbed = false, videoSrc }) => {
     <>
       <div className='Video'>
         {isEmbed ? (
-          <iframe
-            width='100%'
-            height='100%'
-            src={`https://www.youtube.com/embed/${videoSrc}?autoplay=1&mute=0&controls=0&origin=https%3A%2F%2Fcookpete.com&playsinline=1&showinfo=0&rel=0&iv_load_policy=3&modestbranding=1&enablejsapi=1&widgetid=1`}
-            frameBorder='0'
-            allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-            allowFullScreen
-            title='Embedded youtube'
-          />
+          <YoutubeEmbedPlayer embedID={videoSrc} />
         ) : (
           <video className='Shorts' src={videoSrc} />
         )}
-        <Controller
+        <ControllerMask
           onDoubleTap={likeVideo}
           onTap={pauseVideo}
           onSwipeDown={movePrev}
