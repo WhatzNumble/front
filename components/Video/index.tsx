@@ -35,11 +35,9 @@ const Video: React.FC<Props> = ({ isEmbed = false, videoSrc }) => {
   const pauseVideo = () => {
     console.log("pause");
     setCommand(Commands.pause)
-    setPlaying(false);
   };
   const startVideo = () => {
     setCommand(Commands.play)
-    setPlaying(true);
   }
 
   return (
@@ -52,7 +50,7 @@ const Video: React.FC<Props> = ({ isEmbed = false, videoSrc }) => {
         )}
         <ControllerMask
           onDoubleTap={likeVideo}
-          onTap={playing ? pauseVideo: startVideo}
+          onTap={command===Commands.play? pauseVideo: startVideo}
           onSwipeDown={movePrev}
           onSwipeUp={moveNext}
         />

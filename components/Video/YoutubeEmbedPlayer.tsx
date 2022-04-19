@@ -11,7 +11,7 @@ const YoutubeEmbedPlayer: React.FC<Props> = ({ embedID, command, onRendered }) =
   const iframeVideoRef = useRef<HTMLIFrameElement | null>(null);
 
   const isRenderedIframePlayer = (ref: MutableRefObject<HTMLIFrameElement | null>) => {
-    const iframe = iframeVideoRef.current;
+    const iframe = ref.current;
     if (iframe) {
       const src = iframe.getAttribute("src");
       if (src) {
@@ -37,7 +37,7 @@ const YoutubeEmbedPlayer: React.FC<Props> = ({ embedID, command, onRendered }) =
     setTimeout(() => {
       onRendered();
     }, 1000);
-  }, [onRendered]);
+  }, []);
 
   useEffect(() => {
     switch (command) {
