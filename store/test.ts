@@ -17,12 +17,6 @@ const testSlice = createSlice({
         setCount: (state, action: PayloadAction<number>)=>{
             state.count = action.payload;
         },
-        pushToast: (state, action: PayloadAction<string | number>)=>{
-            state.toastMessages.push(action.payload);
-        },
-        removeToast: (state)=>{
-            state.toastMessages.shift();
-        },
     }
 });
 

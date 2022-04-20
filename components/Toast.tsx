@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import {useDispatch} from 'react-redux';
-import {testActions} from 'store/test';
+import {uiActions} from 'store/ui';
 
 interface Props {
     message?: string | number
@@ -15,10 +15,9 @@ function Toast({message = '', duration = 3}: Props){
     useEffect(()=>{
         setHasWin(true);
         setTimeout(()=> {
-            // dispatch(testActions.removeToast());
+            dispatch(uiActions.removeToast());
         }, duration * 1000);
     }, []);
-
 
     return hasWin ? (
         <>
@@ -55,24 +54,6 @@ function Toast({message = '', duration = 3}: Props){
                                 opacity: 0;
                                 transform: translate(-50%, 0);
                             }
-                        }
-
-                        .modal-enter  {
-                            opacity: 0;
-                            transform: scale(0.9);
-                        }
-                        .modal-enter-active  {
-                            opacity: 1;
-                            transform: translateX(0);
-                            transition: 1.5s;
-                        }
-                        .modal-exit  {
-                            opacity: 1;
-                        }
-                        .modal-exit-active  {
-                            opacity: 0;
-                            transform: scale(0.9);
-                            transition: .5s;
                         }
                     `}</style>
                 </div>,
