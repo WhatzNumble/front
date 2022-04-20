@@ -1,10 +1,10 @@
-import 'styles/globals.css'
+import Toast from 'components/Toast';
 import type { AppProps } from 'next/app'
 import { wrapper } from 'store'
+Toast
 
 function MyApp({ Component, pageProps }: AppProps) {
   return <>
-      
       <Component {...pageProps} />
 
       <style jsx global>{`
@@ -39,6 +39,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         * {
           box-sizing: border-box;
         }
+
       `}</style>
     </>
 }

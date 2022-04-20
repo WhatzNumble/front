@@ -2,10 +2,12 @@ import {createSlice, PayloadAction, Dispatch} from '@reduxjs/toolkit';
 
 type stateType = {
     count: number
+    toastMessages: (string | number)[]
 }
 
 const initialState: stateType = {
-    count: 0
+    count: 0,
+    toastMessages: []
 }
 
 const testSlice = createSlice({
@@ -14,6 +16,12 @@ const testSlice = createSlice({
     reducers: {
         setCount: (state, action: PayloadAction<number>)=>{
             state.count = action.payload;
+        },
+        pushToast: (state, action: PayloadAction<string | number>)=>{
+            state.toastMessages.push(action.payload);
+        },
+        removeToast: (state)=>{
+            state.toastMessages.shift();
         },
     }
 });

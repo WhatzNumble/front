@@ -2,7 +2,7 @@ import Head from "next/head";
 import TabBar from "./TabBar";
 
 interface Props {
-    children: JSX.Element | JSX.Element[]
+    children: React.ReactNode
     title?: string
     hasTabBar?: boolean
 }
