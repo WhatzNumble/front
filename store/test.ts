@@ -2,10 +2,12 @@ import {createSlice, PayloadAction, Dispatch} from '@reduxjs/toolkit';
 
 type stateType = {
     count: number
+    toastMessages: (string | number)[]
 }
 
 const initialState: stateType = {
-    count: 0
+    count: 0,
+    toastMessages: []
 }
 
 const testSlice = createSlice({

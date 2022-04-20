@@ -21,6 +21,7 @@ function TabBar(){
             </ul>
             <style jsx>{`
                 .TabBar {
+                    z-index: 99;
                     position: fixed;
                     bottom: 0;
                     background-color: white;
