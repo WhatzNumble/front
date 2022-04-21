@@ -25,12 +25,14 @@ function Toast({message = '', duration = 3}: Props){
                 {message}
                 <style jsx>{`
                     .Toast {
+                        z-index: 99;
                         position: fixed;
                         top: 60%;
                         left: 50%;
-                        padding: 5px 15px;
+                        padding: 10px 15px;
                         background-color: #00000083;
                         color: white;
+                        font-size: 12px;
                         border-radius: 30px;
                         animation: in ${duration}s;
                         animation-fill-mode: forwards;
