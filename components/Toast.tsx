@@ -19,48 +19,46 @@ function Toast({message = '', duration = 3}: Props){
         }, duration * 1000);
     }, []);
 
-    return hasWin ? (
-        <>
-            {ReactDOM.createPortal(
-                <div className="Toast">
-                    {message}
-                    <style jsx>{`
-                        .Toast {
-                            position: fixed;
-                            top: 60%;
-                            left: 50%;
-                            padding: 5px 15px;
-                            background-color: #0000005e;
-                            color: white;
-                            border-radius: 30px;
-                            animation: in ${duration}s;
-                            animation-fill-mode: forwards;
-                        }
+    return hasWin ? <>
+        {ReactDOM.createPortal(
+            <div className="Toast">
+                {message}
+                <style jsx>{`
+                    .Toast {
+                        position: fixed;
+                        top: 60%;
+                        left: 50%;
+                        padding: 5px 15px;
+                        background-color: #00000083;
+                        color: white;
+                        border-radius: 30px;
+                        animation: in ${duration}s;
+                        animation-fill-mode: forwards;
+                    }
 
-                        @keyframes in {
-                            0% {
-                                opacity: 0;
-                                transform: translate(-50%, 0);
-                            }
-                            10% {
-                                opacity: 1;
-                                transform: translate(-50%, -20px);
-                            }
-                            90% {
-                                opacity: 1;
-                                transform: translate(-50%, -20px);
-                            }
-                            100% {
-                                opacity: 0;
-                                transform: translate(-50%, 0);
-                            }
+                    @keyframes in {
+                        0% {
+                            opacity: 0;
+                            transform: translate(-50%, 0);
                         }
-                    `}</style>
-                </div>,
-                document.querySelector('#modal-root')!
-            )}
-        </>
-    ) : <></>;
+                        10% {
+                            opacity: 1;
+                            transform: translate(-50%, -20px);
+                        }
+                        90% {
+                            opacity: 1;
+                            transform: translate(-50%, -20px);
+                        }
+                        100% {
+                            opacity: 0;
+                            transform: translate(-50%, 0);
+                        }
+                    }
+                `}</style>
+            </div>,
+            document.querySelector('#modal-root')!
+        )}
+    </> : <></>;
 }
 
 export default Toast;
