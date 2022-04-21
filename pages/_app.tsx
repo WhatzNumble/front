@@ -1,11 +1,21 @@
-import 'styles/globals.css'
+import Toast from 'components/Toast';
 import type { AppProps } from 'next/app'
-import { wrapper } from 'store'
+import { wrapper, AppState } from 'store'
+import {useSelector} from 'react-redux';
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const {toasts} = useSelector((state: AppState) => state.ui);
+
   return <>
-      
       <Component {...pageProps} />
+
+      {toasts.map(toast => (
+        <Toast 
+          key={toast.id} 
+          message={toast.message} 
+          duration={toast.duration}
+        />
+      ))}
 
       <style jsx global>{`
         html,
@@ -39,6 +49,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         * {
           box-sizing: border-box;
         }
+
       `}</style>
     </>
 }

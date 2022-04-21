@@ -2,7 +2,7 @@ import Head from "next/head";
 import TabBar from "./TabBar";
 
 interface Props {
-    children: JSX.Element | JSX.Element[]
+    children: React.ReactNode
     title?: string
     hasTabBar?: boolean
 }
@@ -15,8 +15,8 @@ function Layout({children, title = '', hasTabBar = true}: Props){
             </Head>
             <main className="Layout">
                 {children}
-                {hasTabBar && <TabBar/>}
             </main>
+            {hasTabBar && <TabBar/>}
             <style jsx>{`
                 .Layout {
                     height: 100vh;
