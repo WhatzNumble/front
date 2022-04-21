@@ -12,16 +12,25 @@ interface Props {
   like: boolean;
   // userProfile: UserProfile;
   muted: boolean;
-  handleMute: () => void;
-  handleLike: () => void;
+  detail: boolean;
+  detailInfo: string;
+  handleToggle: (input: string) => void;
 }
 
-const PlayerUI: React.FC<Props> = ({ muted, title, likeCount, like, handleMute, handleLike}) => {
+const PlayerUI: React.FC<Props> = ({
+  muted,
+  title,
+  likeCount,
+  like,
+  handleToggle,
+  detail,
+  detailInfo,
+}) => {
   return (
     <>
       <div className='PlayerUI'>
         <div className='Top'>
-          <div className='MuteButton' onClick={handleMute}>
+          <div className='MuteButton' onClick={() => handleToggle("mute")}>
             {muted ? "unmute" : "mute"}
           </div>
         </div>
@@ -29,17 +38,26 @@ const PlayerUI: React.FC<Props> = ({ muted, title, likeCount, like, handleMute, 
           <div className='Title'>{title}</div>
         </div>
         <div className='Side'>
-          <div className='ICon' onClick={handleLike}>{like? 'dislike' : 'like' }
+          <div className='ICon' onClick={() => handleToggle("like")}>
+            {like ? "dislike" : "like"}
+            <label className='label'>{likeCount} </label>
           </div>
-          <label className='label'>{likeCount} </label>
+          <div className='Icon' onClick={() => handleToggle("detail")}>
+            {" "}
+            detail
+          </div>
         </div>
+        {detail && (
+          <div className='Detail' onClick={() => handleToggle("detail")}>
+            {detailInfo}
+          </div>
+        )}
       </div>
       <style jsx>
         {`
-          *{ 
+          * {
             color: white;
           }
-
           .Top {
             position: absolute;
             min-width: fit-content;
@@ -66,6 +84,17 @@ const PlayerUI: React.FC<Props> = ({ muted, title, likeCount, like, handleMute, 
             display: flex;
             flex-direction: column;
             align-items: center;
+            .Icon{
+              margin: 1rem;
+            }
+          }
+          .Detail {
+            width: 100%;
+            position: absolute;
+            flex-direction: column;
+            bottom: 10px;
+            background: grey;
+            padding: 1rem;
           }
         `}
       </style>
