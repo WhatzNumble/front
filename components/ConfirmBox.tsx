@@ -79,6 +79,9 @@ function ConfirmBox({message, callback, show}: Props){
                                         border-bottom-right-radius: $radius;
                                     }
                                     &:hover {
+                                        background-color: #ebebeb;
+                                    }
+                                    &:active {
                                         background-color: $gray;
                                     }
                                 }

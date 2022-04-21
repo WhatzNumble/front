@@ -26,6 +26,7 @@ function Modal({children, show, transitionTime = 200}: Props){
                 <div className='overlay'>
                     <style jsx>{`
                         .overlay {
+                            z-index: 10;
                             position: fixed;
                             width: 100%;
                             height: 100%;
