@@ -1,5 +1,4 @@
-import { useState, useRef, useEffect } from "react";
-import { start } from "repl";
+import { useState, useRef } from "react";
 
 interface Props {
   onSwipeUp: () => void;
@@ -16,7 +15,7 @@ const ControllerMask: React.FC<Props> = ({ onSwipeUp, onSwipeDown, onTap, onDoub
   const minSwipeDistance = 60;
 
   const onTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    setTouchEnd(null); // otherwise the swipe is fired even with usual touch events
+    setTouchEnd(null);
     setTouchStart(e.targetTouches[0].clientY);
   };
 
@@ -31,19 +30,6 @@ const ControllerMask: React.FC<Props> = ({ onSwipeUp, onSwipeDown, onTap, onDoub
     if (isUpSwipe) onSwipeUp();
     else if (isDownSwipe) onSwipeDown();
   };
-
-  useEffect(() => {
-    if (maskRef.current) {
-      const ref = maskRef.current;
-      ref.addEventListener("swiped-up", function (e) {
-        onSwipeUp();
-      });
-      ref.addEventListener("swiped-down", function (e) {
-        console.log(e.target); // the element that was swiped
-        onSwipeDown();
-      });
-    }
-  }, [maskRef, onSwipeDown, onSwipeUp]);
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     console.log(e.detail);
@@ -69,7 +55,12 @@ const ControllerMask: React.FC<Props> = ({ onSwipeUp, onSwipeDown, onTap, onDoub
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
-      ></div>
+      >
+        <div className='VideoBottom'>
+          <div className='title'>Title Short Video</div>
+        </div>
+        <div className='VideoRightButton'></div>
+      </div>
       <style jsx>
         {`
           .Mask {
@@ -79,6 +70,11 @@ const ControllerMask: React.FC<Props> = ({ onSwipeUp, onSwipeDown, onTap, onDoub
             z-index: 2;
             left: 0;
             top: 0;
+            .VideoBottom {
+              position: relative;
+              color: white;
+              bottom: 0px;
+            }
           }
         `}
       </style>

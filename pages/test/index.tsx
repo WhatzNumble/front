@@ -1,33 +1,71 @@
 import type { NextPage } from "next";
-import { useSelector, useDispatch } from "react-redux";
-import { AppState } from "store/index";
-import { testActions } from "store/test";
-import Layout from "components/Layout";
+import dynamic from "next/dynamic";
+import { useState } from "react";
 
-import Video from "components/Video";
+import Layout from "components/Layout";
+import type { Props as VideoProps } from "components/Video";
+
+const Video = dynamic(() => import("components/Video"), { ssr: false });
+
+const mockVideos: VideoProps[] = [
+  {
+    id: "mock",
+    videoSrc: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+  },
+  {
+    id: "mock",
+    isEmbed: true,
+    videoSrc: 'tGSvvcqhmwM',
+  },
+  {
+    id: "mock",
+    videoSrc: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+  },
+  {
+    id: "mock",
+    isEmbed: true,
+    videoSrc: 'tGSvvcqhmwM',
+  },
+  {
+    id: "mock",
+    videoSrc: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+  },
+  {
+    id: "mock",
+    isEmbed: true,
+    videoSrc: 'tGSvvcqhmwM',
+  },
+  {
+    id: "mock",
+    videoSrc: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+  },
+  {
+    id: "mock",
+    isEmbed: true,
+    videoSrc: 'tGSvvcqhmwM',
+  },
+];
 
 const Test: NextPage = () => {
-  const dispatch = useDispatch();
-  const { count } = useSelector((state: AppState) => state.test);
-
-  const onClick = () => {
-    dispatch(testActions.setCount(count + 1));
-  };
-
+  const [videos, setVideos] = useState<VideoProps[]>(mockVideos);
   return (
     <Layout>
-      {/* <div className='Test'>
-        <h1 className='title'>테스트에요~</h1>
-        <button onClick={onClick}>{count}</button>
-        <style jsx>{`
-          .Test {
-            .title {
-              color: blue;
-            }
+      <div className='VideosContainer'>
+        {videos?.map(({ id, isEmbed, videoSrc }, index) => {
+          return <Video key={index} id={id} isEmbed={isEmbed} videoSrc={videoSrc} />;
+        })}
+      </div>
+      <style jsx>
+        {`
+          .VideosContainer {
+            position: relative;
+            width: 100%;
+            height: 90vh;
+            overflow: scroll;
+            scroll-snap-type: y mandatory;
           }
-        `}</style>
-      </div> */}
-      <Video isEmbed videoSrc='tGSvvcqhmwM' />
+        `}
+      </style>
     </Layout>
   );
 };
