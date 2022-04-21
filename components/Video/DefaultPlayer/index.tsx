@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { Commands } from ".";
+import { useRef, useState } from "react";
+import { Commands } from "..";
 import PlayerUI from "./PlayerUI";
 
 interface Props {
@@ -12,6 +12,7 @@ const DefaultPlayer: React.FC<Props> = ({ videoSrc, command }) => {
   const [mute, setMute] = useState(false);
   const [like, setLike] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+
 
   const handleLikePress = () => {
     setLike((prev) => !prev);
@@ -39,7 +40,14 @@ const DefaultPlayer: React.FC<Props> = ({ videoSrc, command }) => {
         loop
         src={videoSrc}
       />
-      <PlayerUI title='mocksting' muted={mute} like={like} likeCount={777} handleMute={handleMutePress} handleLike={handleLikePress} />
+      <PlayerUI
+        title='mocksting'
+        muted={mute}
+        like={like}
+        likeCount={777}
+        handleMute={handleMutePress}
+        handleLike={handleLikePress}
+      />
       <style jsx>{`
         .DefaultPlayer {
           height: 100%;
