@@ -55,6 +55,8 @@ const DefaultPlayer: React.FC<Props> = ({ videoSrc, command }) => {
         ref={videoRef}
         muted={mute}
         loop
+        webkit-playsinline
+        playsInline
         src={videoSrc}
       />
       <PlayerUI
