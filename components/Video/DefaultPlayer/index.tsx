@@ -19,6 +19,8 @@ const DefaultPlayer: React.FC<Props> = ({ videoSrc, command }) => {
   const [mute, setMute] = useState(false);
   const [like, setLike] = useState(false);
   const [detail, setDetail] = useState(false);
+  const [duration, setDuration] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const handleToggle = (input: string) => {
@@ -47,6 +49,15 @@ const DefaultPlayer: React.FC<Props> = ({ videoSrc, command }) => {
       setPlaying((play) => !play);
     }
   };
+
+  const onLoadMetaData = (e: React.SyntheticEvent<HTMLVideoElement>) => {
+    setDuration(e.currentTarget.duration);
+  };
+
+  const onTimeUpdate = (e: React.SyntheticEvent<HTMLVideoElement>) => {
+    setCurrentTime(e.currentTarget.currentTime);
+  };
+
   return (
     <>
       <video
@@ -58,6 +69,8 @@ const DefaultPlayer: React.FC<Props> = ({ videoSrc, command }) => {
         webkit-playsinline
         playsInline
         src={videoSrc}
+        onLoadedMetadata={onLoadMetaData}
+        onTimeUpdate={onTimeUpdate}
       />
       <PlayerUI
         title='mocksting'
@@ -67,6 +80,7 @@ const DefaultPlayer: React.FC<Props> = ({ videoSrc, command }) => {
         detailInfo='detail INFO'
         likeCount={777}
         handleToggle={handleToggle}
+        progress={(currentTime / duration) * 100}
       />
       <style jsx>{`
         .DefaultPlayer {
