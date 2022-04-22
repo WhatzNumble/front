@@ -1,4 +1,4 @@
-import React from "react";
+import ProgressBar from "./ProgressBar";
 
 type UserProfile = {
   name: string;
@@ -14,6 +14,7 @@ interface Props {
   muted: boolean;
   detail: boolean;
   detailInfo: string;
+  progress: number;
   handleToggle: (input: string) => void;
 }
 
@@ -22,6 +23,7 @@ const PlayerUI: React.FC<Props> = ({
   title,
   likeCount,
   like,
+  progress,
   handleToggle,
   detail,
   detailInfo,
@@ -43,7 +45,6 @@ const PlayerUI: React.FC<Props> = ({
             <label className='label'>{likeCount} </label>
           </div>
           <div className='Icon' onClick={() => handleToggle("detail")}>
-            {" "}
             detail
           </div>
         </div>
@@ -52,6 +53,7 @@ const PlayerUI: React.FC<Props> = ({
             {detailInfo}
           </div>
         )}
+        <ProgressBar progress={progress} />
       </div>
       <style jsx>
         {`
@@ -84,7 +86,7 @@ const PlayerUI: React.FC<Props> = ({
             display: flex;
             flex-direction: column;
             align-items: center;
-            .Icon{
+            .Icon {
               margin: 1rem;
             }
           }
