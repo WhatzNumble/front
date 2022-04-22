@@ -17,7 +17,7 @@ function SideBar(){
                     <li key={info.path}>
                         <Link href={info.path}>
                             <a>
-                                <div className={`link ${router.pathname === info.path ? 'match' : ''}`}>{info.name}</div>
+                                <div className={`link ${router.pathname.includes(info.path) ? 'match' : ''}`}>{info.name}</div>
                             </a>
                         </Link>
                     </li>
