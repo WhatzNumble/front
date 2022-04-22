@@ -27,7 +27,7 @@ function Toast({message = '', duration = 3}: Props){
                     .Toast {
                         z-index: 99;
                         position: fixed;
-                        top: 60%;
+                        top: 80%;
                         left: 50%;
                         padding: 10px 15px;
                         background-color: #00000083;
