@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const LINK_INFOS = [
     {path: '/', name: '홈'},
-    {path: '/myVideo', name: '마이 비디오'},
+    {path: '/test2', name: '마이 비디오'},
     {path: '/interest', name: '관심 영상'},
     {path: '/profile', name: '프로필'},
 ];
