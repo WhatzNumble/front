@@ -2,6 +2,7 @@ import Toast from 'components/Toast';
 import type { AppProps } from 'next/app'
 import { wrapper, AppState } from 'store'
 import {useSelector} from 'react-redux';
+import { TransitionGroup } from 'react-transition-group';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const {toasts} = useSelector((state: AppState) => state.ui);
@@ -9,13 +10,15 @@ function MyApp({ Component, pageProps }: AppProps) {
   return <>
       <Component {...pageProps} />
 
-      {toasts.map(toast => (
-        <Toast 
-          key={toast.id} 
-          message={toast.message} 
-          duration={toast.duration}
-        />
-      ))}
+      <TransitionGroup>
+        {toasts.map(toast => (
+            <Toast 
+              key={toast.id} 
+              message={toast.message} 
+              duration={toast.duration}
+            />
+        ))}
+      </TransitionGroup>
 
       <style jsx global>{`
         html,
