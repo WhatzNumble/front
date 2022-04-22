@@ -1,13 +1,14 @@
 import Login from "components/Admin/Login";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 function Admin(){
-    const [isAdmin, setIsAdmin] = useState(false);
-    
+    const router = useRouter();
+
     const onLogin = ({id, pw}: {id: string, pw: string})=>{
         // 로그인 요청 추후 구현해야됨
 
-        setIsAdmin(true);
+        router.push('/admin/user');
     }
 
     useEffect(()=>{
@@ -16,13 +17,19 @@ function Admin(){
 
     return (
         <main className="Admin">
-            {isAdmin ? 
-                <div>어드민 화면</div> : 
-                <Login onLogin={onLogin}/>
-            }
+            <h1 className="title">Whatz</h1>
+            <Login onLogin={onLogin}/>
             <style jsx>{`
                 .Admin {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                }
 
+                .title {
+                    margin-bottom: 20px;
                 }
             `}</style>
         </main>

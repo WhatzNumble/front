@@ -84,10 +84,6 @@ function Login({onLogin}: Props){
                 $radius: 7px;
 
                 .Login {
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%,-50%,);
                     display: flex;
                     flex-direction: column;
                     width: 300px;
