@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import {CSSTransition} from "react-transition-group";
+import { screen } from "styles/screen";
 import Modal from "./Modal";
 
 interface Props {
@@ -19,6 +20,8 @@ function ConfirmBox({message, callback, show}: Props){
             callback(ok);
         }
     }
+
+    const test = '320px';
 
     useEffect(()=>{
         setHasWin(true);
@@ -49,7 +52,7 @@ function ConfirmBox({message, callback, show}: Props){
                                 position: fixed;
                                 top: 50%;
                                 left: 50%;
-                                width : 330px;
+                                width : 320px;
                                 transform: translate(-50%, -50%);
                                 background-color: white;
                                 border-radius: $radius;
@@ -102,6 +105,12 @@ function ConfirmBox({message, callback, show}: Props){
                                 opacity: 0;
                                 transform: translate(-50%, -50%) scale(0.9);
                                 transition: .2s;
+                            }
+
+                            @media screen and (max-width: ${screen.galaxyS9_plus}){
+                                .ConfirmBox {
+                                    width: 300px;
+                                }
                             }
                         `}</style>
                     </div>
