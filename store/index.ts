@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
 import testReducer from './test';
 import uiReducer from './ui';
+import userReducer from './user';
 
 
 const makeSotre = ()=>(
@@ -9,6 +10,7 @@ const makeSotre = ()=>(
         reducer: {
             test: testReducer,
             ui: uiReducer,
+            user: userReducer
         },
     })
 )
