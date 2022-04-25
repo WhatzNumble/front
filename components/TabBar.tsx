@@ -1,20 +1,23 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const LINK_INFOS = [
     {path: '/', name: '홈'},
-    {path: '/test2', name: '마이 비디오'},
-    {path: '/interest', name: '관심 영상'},
+    {path: '/myVideo', name: '마이 비디오'},
+    {path: '/like', name: '관심 영상'},
     {path: '/profile', name: '프로필'},
 ];
 
 function TabBar(){
+    const router = useRouter();
+
     return (
         <nav className="TabBar">
             <ul className="nav-box">
                 {LINK_INFOS.map(info => (
                     <li key={info.path}>
                         <Link href={info.path}>
-                            <a>{info.name}</a>
+                            <a className={router.pathname === info.path ? 'match' : ''}>{info.name}</a>
                         </Link>
                     </li>
                 ))}
@@ -38,6 +41,10 @@ function TabBar(){
                     padding: 15px 15px;
                     font-size: 10px;
                     color: gray;
+                }
+
+                .match {
+                    color: red;
                 }
             `}</style>
         </nav>
