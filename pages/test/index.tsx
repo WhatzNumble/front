@@ -1,46 +1,47 @@
-import type { NextPage } from "next";
-import dynamic from "next/dynamic";
-import { useState } from "react";
+import type { NextPage } from 'next';
+import dynamic from 'next/dynamic';
+import { useState, useRef, createRef } from 'react';
 
-import Layout from "components/Layout";
-import type { Props as VideoProps } from "components/Video";
+import Layout from 'components/Layout';
+import type { VideoProps } from 'components/Video';
+import useIntersection from 'hooks/useInterSection';
 
-const Video = dynamic(() => import("components/Video"), { ssr: false });
+const Video = dynamic(() => import('components/Video'), { ssr: false });
 
 const mockVideos: VideoProps[] = [
   {
-    id: "mock",
-    videoSrc: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+    id: 'mock',
+    videoSrc: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
   },
   {
-    id: "mock",
+    id: 'mock',
     isEmbed: true,
     videoSrc: 'tGSvvcqhmwM',
   },
   {
-    id: "mock",
-    videoSrc: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+    id: 'mock',
+    videoSrc: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
   },
   {
-    id: "mock",
+    id: 'mock',
     isEmbed: true,
     videoSrc: 'tGSvvcqhmwM',
   },
   {
-    id: "mock",
-    videoSrc: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+    id: 'mock',
+    videoSrc: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
   },
   {
-    id: "mock",
+    id: 'mock',
     isEmbed: true,
     videoSrc: 'tGSvvcqhmwM',
   },
   {
-    id: "mock",
-    videoSrc: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+    id: 'mock',
+    videoSrc: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
   },
   {
-    id: "mock",
+    id: 'mock',
     isEmbed: true,
     videoSrc: 'tGSvvcqhmwM',
   },
@@ -48,11 +49,20 @@ const mockVideos: VideoProps[] = [
 
 const Test: NextPage = () => {
   const [videos, setVideos] = useState<VideoProps[]>(mockVideos);
+
+
   return (
     <Layout>
       <div className='VideosContainer'>
         {videos?.map(({ id, isEmbed, videoSrc }, index) => {
-          return <Video key={index} id={id} isEmbed={isEmbed} videoSrc={videoSrc} />;
+          return (
+            <Video
+              key={index}
+              id={id}
+              isEmbed={isEmbed}
+              videoSrc={videoSrc}
+            />
+          );
         })}
       </div>
       <style jsx>
@@ -60,7 +70,7 @@ const Test: NextPage = () => {
           .VideosContainer {
             position: relative;
             width: 100%;
-            height: 90vh;
+            height: calc(100% - 20px);
             overflow: scroll;
             scroll-snap-type: y mandatory;
           }

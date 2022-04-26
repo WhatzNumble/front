@@ -1,51 +1,60 @@
 import Link from "next/link";
-import { AppState } from "store";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
-function TabBar() {
-  const { isLoggedIn } = useSelector((state: AppState) => state.user);
-  const LINK_INFOS = [
-    { path: "/", name: "홈" },
-    { path: "/test2", name: "마이 비디오" },
-    { path: "/interest", name: "관심 영상" },
-    isLoggedIn ? { path: "/profile", name: "프로필" } : { path: "/login", name: "로그인" },
-  ];
-  console.log(LINK_INFOS);
-  return (
-    <nav className='TabBar'>
-      <ul className='nav-box'>
-        {LINK_INFOS.map((info) => (
-          <li key={info.path}>
-            <Link href={info.path}>
-              <a>{info.name}</a>
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <style jsx>{`
-        .TabBar {
-          z-index: 9;
-          position: fixed;
-          bottom: 0;
-          background-color: white;
-          width: 100%;
-          box-shadow: 0 0 20px -15px black;
-        }
+const LINK_INFOS = [
+    {path: '/', name: '홈'},
+    {path: '/myVideo', name: '마이 비디오'},
+    {path: '/like', name: '관심 영상'},
+    {path: '/profile', name: '프로필'},
+];
 
-        .nav-box {
-          display: flex;
-          justify-content: center;
-        }
+interface Props {
+    height?: number;
+}
 
-        li {
-          padding: 15px 15px;
-          font-size: 10px;
-          color: gray;
-        }
-      `}</style>
-    </nav>
-  );
+function TabBar({height = 56}: Props){
+    const router = useRouter();
+
+    return (
+        <nav className="TabBar">
+            <ul className="nav-box">
+                {LINK_INFOS.map(info => (
+                    <li key={info.path}>
+                        <Link href={info.path}>
+                            <a className={router.pathname === info.path ? 'match' : ''}>{info.name}</a>
+                        </Link>
+                    </li>
+                ))}
+            </ul>
+            <style jsx>{`
+                .TabBar {
+                    z-index: 9;
+                    position: fixed;
+                    bottom: 0;
+                    background-color: white;
+                    width: 100%;
+                    box-shadow: 0 0 20px -15px black;
+                }
+
+                .nav-box {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: ${height}px;
+                }
+
+                li {
+                    padding: 0 15px;
+                    font-size: 10px;
+                    color: gray;
+                }
+
+                .match {
+                    color: red;
+                }
+            `}</style>
+        </nav>
+    )
 }
 
 export default TabBar;
