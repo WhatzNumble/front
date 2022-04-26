@@ -1,32 +1,30 @@
 import Toast from 'components/Toast';
-import type { AppProps } from 'next/app'
-import { wrapper, AppState } from 'store'
-import {useSelector} from 'react-redux';
+import type { AppProps } from 'next/app';
+import { wrapper, AppState } from 'store';
+import { useSelector } from 'react-redux';
 import { TransitionGroup } from 'react-transition-group';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const {toasts} = useSelector((state: AppState) => state.ui);
+  const { toasts } = useSelector((state: AppState) => state.ui);
 
-  return <>
+  return (
+    <>
       <Component {...pageProps} />
 
       <TransitionGroup>
-        {toasts.map(toast => (
-            <Toast 
-              key={toast.id} 
-              message={toast.message} 
-              duration={toast.duration}
-            />
+        {toasts.map((toast) => (
+          <Toast key={toast.id} message={toast.message} duration={toast.duration} />
         ))}
       </TransitionGroup>
 
       <style jsx global>{`
         html,
         body {
+          overscroll-behavior-y: none;
           padding: 0;
           margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-            Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
+            Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
         }
 
         a {
@@ -34,7 +32,12 @@ function MyApp({ Component, pageProps }: AppProps) {
           text-decoration: none;
         }
 
-        h1,h2,h3,h4,h5,h6 {
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
           margin: 0;
         }
 
@@ -43,7 +46,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           border: 0;
         }
 
-        ul,li {
+        ul,
+        li {
           list-style: none;
           padding: 0;
           margin: 0;
@@ -52,9 +56,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         * {
           box-sizing: border-box;
         }
-
       `}</style>
     </>
+  );
 }
 
 export default wrapper.withRedux(MyApp);
