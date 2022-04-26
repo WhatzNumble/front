@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 import TabBar from "./TabBar";
 
 export const TAB_HEIGHT = 56;
@@ -11,6 +12,11 @@ interface Props {
 }
 
 function Layout({children, title = '', headerTitle, hasTabBar = true}: Props){
+    const router = useRouter();
+
+    const onClickBack = ()=>{
+        router.back();
+    }
 
     return (
         <div className="Layout">
@@ -18,8 +24,15 @@ function Layout({children, title = '', headerTitle, hasTabBar = true}: Props){
                 <title>{title ? `${title} | Whatz` : 'Whatz'}</title>
             </Head>
             <main className="main">
-                {headerTitle && <header className="header">{headerTitle}</header>}
-                {children}
+                {headerTitle && 
+                    <header className="header">
+                        {headerTitle}
+                        <button className="back" onClick={onClickBack}>◀뒤로</button>
+                    </header>
+                }
+                <div className="content">
+                    {children}
+                </div>
             </main>
             {hasTabBar && <TabBar height={TAB_HEIGHT}/>}
             <style jsx>{`
@@ -38,9 +51,21 @@ function Layout({children, title = '', headerTitle, hasTabBar = true}: Props){
                     background-color: #ebe9e9;
                 }
 
+                .back {
+                    position: absolute;
+                    left: 15px;
+                    font-weight: bold;
+                }
+
                 .main {
+                    display: flex;
+                    flex-direction: column;
                     width: 100%;
                     height: calc(100vh - ${TAB_HEIGHT}px);
+                }
+
+                .content {
+                    flex-grow: 1;
                 }
             `}</style>
         </div>

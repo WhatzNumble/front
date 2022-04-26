@@ -8,6 +8,7 @@ import { CSSTransition } from "react-transition-group";
 interface Video {
     id: number
     thumbnail: string
+    name: string
 }
 
 interface Props {
@@ -40,10 +41,14 @@ function MyVideo({}: Props){
                 >
                     <div className="buttons">
                         <Link href={`${router.pathname}/embed`}>
-                            <button name="/embed">임베드 영상 업로드</button>
+                            <a>
+                                <button name="/embed">임베드 영상 업로드</button>
+                            </a>
                         </Link>
                         <Link href={`${router.pathname}/self`}>
-                            <button name="slef">직접 영상 업로드</button>
+                            <a>
+                                <button name="slef">직접 영상 업로드</button>
+                            </a>
                         </Link>
                     </div>
                 </CSSTransition>
@@ -61,14 +66,17 @@ function MyVideo({}: Props){
                         justify-content: center;
                         width: 100%;
                         bottom: ${88 + TAB_HEIGHT}px;
-                        button {
+                        a {
                             width: 50%;
-                            height: 40px;
                             &:first-child {
                                 margin: 0 10px;
                             }
                             &:last-child {
                                 margin-right: 10px;
+                            }
+                            button {
+                                width: 100%;
+                                height: 40px;
                             }
                         }
                     }
@@ -116,9 +124,13 @@ function MyVideo({}: Props){
 }
 
 export const getServerSideProps: GetServerSideProps = async ()=>{
+    //const result = await fetch('');
+
     return {
         props: {
-            vd: []
+            vd: [
+                {}
+            ]
         }
     }
 }
