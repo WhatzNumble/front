@@ -8,7 +8,11 @@ const LINK_INFOS = [
     {path: '/profile', name: '프로필'},
 ];
 
-function TabBar(){
+interface Props {
+    height?: number;
+}
+
+function TabBar({height = 56}: Props){
     const router = useRouter();
 
     return (
@@ -35,10 +39,12 @@ function TabBar(){
                 .nav-box {
                     display: flex;
                     justify-content: center;
+                    align-items: center;
+                    height: ${height}px;
                 }
 
                 li {
-                    padding: 15px 15px;
+                    padding: 0 15px;
                     font-size: 10px;
                     color: gray;
                 }
