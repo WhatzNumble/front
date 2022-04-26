@@ -15,14 +15,12 @@ function Upload(){
         description: '', 
     }); 
 
-    const onChange = (e: React.ChangeEvent)=>{
-        if(e.currentTarget instanceof HTMLInputElement || e.currentTarget instanceof HTMLTextAreaElement){
-            const {name, value} = e.currentTarget;
-            setInputs({
-                ...inputs,
-                [name]: value
-            });
-        }
+    const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
+        const {name, value} = e.currentTarget;
+        setInputs({
+            ...inputs,
+            [name]: value
+        });
     }
 
     const onClickUpload = ()=>{
