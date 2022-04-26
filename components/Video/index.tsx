@@ -22,9 +22,9 @@ export enum Commands {
 }
 
 const Video: React.FC<VideoProps> = ({ isEmbed = false, videoSrc }) => {
-  const [command, setCommand] = useState<Commands | null>(null);
   const ref = useRef<HTMLDivElement | null>(null);
-  const isOnScreen = useIntersection(ref, '42px');
+  const isOnScreen = useIntersection(ref, '-50% 0% -50% 0%');
+
   useEffect(() => {
     console.log(videoSrc, isOnScreen);
   }, [isOnScreen]);

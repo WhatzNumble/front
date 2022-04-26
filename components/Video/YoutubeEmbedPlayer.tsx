@@ -5,10 +5,9 @@ import { Commands } from '.';
 interface Props {
   embedID: string;
   active: boolean;
-  command?: Commands | null;
 }
 
-const YoutubeEmbedPlayer: React.FC<Props> = ({ embedID, active, command }) => {
+const YoutubeEmbedPlayer: React.FC<Props> = ({ embedID, active }) => {
   const iframeVideoRef = useRef<HTMLIFrameElement | null>(null);
 
   const isRenderedIframePlayer = (ref: MutableRefObject<HTMLIFrameElement | null>) => {
