@@ -1,9 +1,10 @@
 import type { NextPage } from 'next';
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
+import { useState, useRef, createRef } from 'react';
 
 import Layout from 'components/Layout';
-import type { Props as VideoProps } from 'components/Video';
+import type { VideoProps } from 'components/Video';
+import useIntersection from 'hooks/useInterSection';
 
 const Video = dynamic(() => import('components/Video'), { ssr: false });
 
@@ -48,11 +49,20 @@ const mockVideos: VideoProps[] = [
 
 const Test: NextPage = () => {
   const [videos, setVideos] = useState<VideoProps[]>(mockVideos);
+
+
   return (
     <Layout>
       <div className='VideosContainer'>
         {videos?.map(({ id, isEmbed, videoSrc }, index) => {
-          return <Video key={index} id={id} isEmbed={isEmbed} videoSrc={videoSrc} />;
+          return (
+            <Video
+              key={index}
+              id={id}
+              isEmbed={isEmbed}
+              videoSrc={videoSrc}
+            />
+          );
         })}
       </div>
       <style jsx>

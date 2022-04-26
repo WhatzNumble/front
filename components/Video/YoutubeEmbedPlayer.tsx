@@ -1,18 +1,20 @@
-import { useRef, useEffect, MutableRefObject, useCallback } from "react";
-import { Commands } from ".";
+import { useRef, useEffect, MutableRefObject, useCallback } from 'react';
+import useIntersection from 'hooks/useInterSection';
+import { Commands } from '.';
 
 interface Props {
   embedID: string;
+  active: boolean;
   command?: Commands | null;
 }
 
-const YoutubeEmbedPlayer: React.FC<Props> = ({ embedID, command }) => {
+const YoutubeEmbedPlayer: React.FC<Props> = ({ embedID, active, command }) => {
   const iframeVideoRef = useRef<HTMLIFrameElement | null>(null);
 
   const isRenderedIframePlayer = (ref: MutableRefObject<HTMLIFrameElement | null>) => {
     const iframe = ref.current;
     if (iframe) {
-      const src = iframe.getAttribute("src");
+      const src = iframe.getAttribute('src');
       if (src) {
         return !!iframe.contentWindow;
       }
@@ -23,35 +25,18 @@ const YoutubeEmbedPlayer: React.FC<Props> = ({ embedID, command }) => {
     if (isRenderedIframePlayer(iframeVideoRef)) {
       iframeVideoRef.current?.contentWindow?.postMessage(
         JSON.stringify({
-          event: "command",
+          event: 'command',
           func: func,
           args: args || [],
         }),
-        "*"
+        '*'
       );
     }
   }, []);
 
   useEffect(() => {
-    switch (command) {
-      case Commands.play:
-        sendCommand("playVideo");
-        console.log("play");
-        break;
-      case Commands.stop:
-        sendCommand("stopVideo");
-        break;
-      case Commands.pause:
-        sendCommand("pauseVideo");
-        break;
-      case Commands.mute:
-        sendCommand("mute");
-        break;
-      case Commands.unMute:
-        sendCommand("unMute");
-        break;
-    }
-  }, [command, sendCommand]);
+    sendCommand(active ? 'playVideo' : 'stopVideo');
+  }, [active]);
 
   return (
     <iframe

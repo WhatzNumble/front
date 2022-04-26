@@ -1,9 +1,11 @@
-import { useRef, useState } from "react";
-import { Commands } from "..";
-import PlayerUI from "./PlayerUI";
+import useIntersection from 'hooks/useInterSection';
+import { useEffect, useRef, useState } from 'react';
+import { Commands } from '..';
+import PlayerUI from './PlayerUI';
 
 interface Props {
   command?: Commands | null;
+  active: boolean;
   videoSrc: string;
 }
 
@@ -14,40 +16,57 @@ type PlayerState = {
   detail: boolean;
 };
 
-const DefaultPlayer: React.FC<Props> = ({ videoSrc, command }) => {
+const DefaultPlayer: React.FC<Props> = ({ videoSrc, active }) => {
   const [playing, setPlaying] = useState(false);
   const [mute, setMute] = useState(false);
   const [like, setLike] = useState(false);
   const [detail, setDetail] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
+  let videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    handleVideo(active ? 'play' : 'stop');
+  }, [active]);
+
+  const handleVideo = (input: string) => {
+    switch (input) {
+      case 'play':
+        videoRef.current?.play();
+        setPlaying(true);
+        break;
+      case 'pause':
+        setPlaying(false);
+        videoRef.current?.pause();
+        break;
+      case 'stop':
+        setPlaying(false);
+        videoRef.current?.pause();
+        if (videoRef.current?.currentTime) {
+          videoRef.current.currentTime = 0;
+        }
+    }
+  };
 
   const handleToggle = (input: string) => {
     switch (input) {
-      case "mute":
+      case 'mute':
         setMute((prev) => !prev);
         break;
-      case "like":
+      case 'like':
         setLike((prev) => !prev);
         break;
-      case "detail":
+      case 'detail':
         setDetail((prev) => !prev);
         break;
-      case "play":
+      case 'play':
         handleVideoPress();
         break;
     }
   };
 
   const handleVideoPress = () => {
-    if (playing) {
-      setPlaying(false);
-      videoRef.current?.pause();
-    } else {
-      videoRef.current?.play();
-      setPlaying((play) => !play);
-    }
+    handleVideo(playing ? 'pause' : 'play');
   };
 
   const onLoadMetaData = (e: React.SyntheticEvent<HTMLVideoElement>) => {
