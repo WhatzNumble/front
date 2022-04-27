@@ -11,6 +11,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.defaults.headers = {
   Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+  //localhost 에 지정하는것은 자제 해야할듯
 } as CommonHeaderProperties;
 
 axiosInstance.defaults.timeout = 3000;
@@ -38,8 +39,8 @@ axiosInstance.interceptors.response.use(
   },
   (error) => {
     console.log(error);
-    //토큰 만료시 
     if (error.response.status == 403) {
+      //토큰 만료시
       refreshToken();
     }
     return Promise.reject(error);
