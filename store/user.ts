@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import axios from 'axios';
 
 export interface User {
   isLoggedIn: boolean;
@@ -6,20 +7,33 @@ export interface User {
   userEmail: string;
   nickName: string;
   userAvatar: string;
+  token: string;
 }
+
+export type SocialType = 'kakao' | 'google';
 
 const initialState: User = {
   isLoggedIn: false,
-  userID: "",
-  userEmail: "",
-  nickName: "",
-  userAvatar: "",
+  userID: '',
+  userEmail: '',
+  nickName: '',
+  userAvatar: '',
+  token: '',
 };
 
 const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState,
   reducers: {
+    setToken: (
+      state,
+      action: PayloadAction<{token: string}>
+    ) => {
+      return {
+        ...state,
+        token: action.payload.token
+      }
+    },
     login: (
       state,
       action: PayloadAction<{
@@ -29,7 +43,7 @@ const userSlice = createSlice({
         userEmail: string;
       }>
     ) => {
-      const { userID, userEmail, nickName, userAvatar = "defaultAvatar" } = action.payload;
+      const { userID, userEmail, nickName, userAvatar = 'defaultAvatar' } = action.payload;
       return {
         ...state,
         userEmail: userEmail,
@@ -37,6 +51,24 @@ const userSlice = createSlice({
         userID: userID,
         nickName: nickName,
         userAvatar: userAvatar,
+      };
+    },
+    socialLogin: (
+      state,
+      action: PayloadAction<{
+        accessCode: string;
+        socialType: SocialType;
+      }>
+    ) => {
+      const { accessCode, socialType } = action.payload;
+      switch (socialType) {
+        case 'kakao':
+          break;
+        default:
+          return { ...state };
+      }
+      return {
+        ...state,
       };
     },
     logout: () => {
