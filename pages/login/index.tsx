@@ -1,16 +1,19 @@
-import Layout from "components/Layout";
-import { NextPage } from "next";
+import Layout from 'components/Layout';
+import { NextPage } from 'next';
 
 const LoginPage: NextPage = () => {
   const kakaoClientId = "0559b70272231c0dac4a572620586c54";
-  const kakaoRedirectUri = 'http://localhost:3000/auth/callback/kakao';
-  const loginUri = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoClientId}&redirect_uri=${kakaoRedirectUri}&response_type=code`;
+  // const kakaoClientId = 'http://localhost:8080/login/oauth2/code/kakao';
+  const redirectUri = 'http://localhost:3000/oauth/redirect';
+  const loginUri = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoClientId}&redirect_uri=${redirectUri}&response_type=code`;
+
+  const backendRequest = `http://localhost:8080/oauth2/authorization/kakao?redirect_uri=${redirectUri}`;
 
   return (
     <Layout>
       <>
-        <a className='KaKaoLogin' href={"http://localhost:8080/oauth2/authorization/kakao"}>
-          카카오 BE 로그인
+        <a className='KaKaoLogin' href={backendRequest}>
+          카카오 로그인
         </a>
         <a className='KaKaoLogin' href={loginUri}>
           카카오 FE 로그인
