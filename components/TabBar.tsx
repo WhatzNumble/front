@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 const LINK_INFOS = [
     {path: '/', name: '홈'},
-    {path: '/myVideo', name: '마이 비디오'},
+    {path: '/my-video', name: '마이 비디오'},
     {path: '/like', name: '관심 영상'},
     {path: '/profile', name: '프로필'},
 ];

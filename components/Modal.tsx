@@ -30,7 +30,7 @@ function Modal({children, show, transitionTime = 200}: Props){
                             position: fixed;
                             width: 100%;
                             height: 100%;
-                            background-color: rgba(0,0,0,0.3);
+                            background-color: rgba(0,0,0,0.4);
                         }
                 
                         .overlay-enter {
