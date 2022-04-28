@@ -22,13 +22,18 @@ const ProfilePage = () => {
   const logoutRequest = (token: string) => {
     console.log(token);
     axios
-      .get('http://localhost:8080/api/logout', {
-        headers: {
-          // "X-Auth-Token": token,
-          'Access-Control-Allow-Origin': '*',
-          'x-auth-token': token,
+      .post(
+        'http://localhost:8080/api/logout',
+        {
+          //post 인데 명세서에 요청 데이터가 없어 일단 비워둠
+
         },
-      })
+        {
+          headers: {
+            'x-auth-token': token,
+          },
+        }
+      )
       .then((response) => {
         console.log(response);
         dispatch(userActions.logout());
