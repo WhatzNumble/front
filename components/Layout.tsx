@@ -1,7 +1,9 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
+import Header from "./Header";
 import TabBar from "./TabBar";
 
+export const HEADER_HEIGHT = 40;
 export const TAB_HEIGHT = 56;
 
 interface Props {
@@ -23,16 +25,9 @@ function Layout({children, title = '', headerTitle, hasTabBar = true}: Props){
             <Head>
                 <title>{title ? `${title} | Whatz` : 'Whatz'}</title>
             </Head>
+            {headerTitle && <Header title={headerTitle} height={HEADER_HEIGHT} onClickBack={onClickBack}/>}
             <main className="main">
-                {headerTitle && 
-                    <header className="header">
-                        {headerTitle}
-                        <button className="back" onClick={onClickBack}>◀뒤로</button>
-                    </header>
-                }
-                <div className="content">
-                    {children}
-                </div>
+                {children}
             </main>
             {hasTabBar && <TabBar height={TAB_HEIGHT}/>}
             <style jsx>{`
@@ -40,32 +35,11 @@ function Layout({children, title = '', headerTitle, hasTabBar = true}: Props){
                     height: 100vh;
                 }
 
-                .header {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    width: 100%;
-                    height: 35px;
-                    font-weight: bold;
-                    font-size: 13px;
-                    background-color: #ebe9e9;
-                }
-
-                .back {
-                    position: absolute;
-                    left: 15px;
-                    font-weight: bold;
-                }
-
                 .main {
                     display: flex;
                     flex-direction: column;
                     width: 100%;
-                    height: calc(100vh - ${TAB_HEIGHT}px);
-                }
-
-                .content {
-                    flex-grow: 1;
+                    height: calc(100vh - ${(headerTitle ? HEADER_HEIGHT : 0) + TAB_HEIGHT}px);
                 }
             `}</style>
         </div>
