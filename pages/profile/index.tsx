@@ -16,7 +16,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     console.log(isLoggedIn);
-    // if (!isLoggedIn) router.push('/');
+    if (!isLoggedIn) router.push('/');
   }, [isLoggedIn]);
 
   const logoutRequest = (token: string) => {
@@ -36,6 +36,7 @@ const ProfilePage = () => {
       )
       .then((response) => {
         console.log(response);
+        //로그인 성공시 dispatch
         dispatch(userActions.logout());
       })
       .catch((error) => {
@@ -45,12 +46,15 @@ const ProfilePage = () => {
 
   const handleLogout = () => {
     logoutRequest(token);
+
+    //임시로 넣어둠 백엔드 쪽에 로그아웃 로직 구현되면 삭제
+    dispatch(userActions.logout());
   };
 
   return (
     <Layout>
       <div>
-        user info
+        user info // 리덕스 login action 에 지정된 데이터 ,ap login response 데이터 준비되면 수정 
         <div>{`email: ${userEmail}`}</div>
         <div>{`nick: ${nickName}`}</div>
         <div>{`avatarSrc: ${userAvatar}`}</div>
