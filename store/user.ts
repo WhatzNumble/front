@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
 
 export interface User {
   isLoggedIn: boolean;
@@ -25,16 +24,13 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setToken: (
-      state,
-      action: PayloadAction<{token: string}>
-    ) => {
+    setToken: (state, action: PayloadAction<{ token: string }>) => {
       return {
         ...state,
-        token: action.payload.token
-      }
+        token: action.payload.token,
+      };
     },
-    login: (
+    loadUser: (
       state,
       action: PayloadAction<{
         userID: string;
@@ -53,22 +49,26 @@ const userSlice = createSlice({
         userAvatar: userAvatar,
       };
     },
-    socialLogin: (
+    login: (
       state,
       action: PayloadAction<{
-        accessCode: string;
+        token: string;
         socialType: SocialType;
       }>
     ) => {
-      const { accessCode, socialType } = action.payload;
-      switch (socialType) {
-        case 'kakao':
-          break;
-        default:
-          return { ...state };
-      }
+      const { token, socialType } = action.payload;
+      console.log(socialType);
+      //todo token으로 서버에  user data 요청 
+      //response 상태에 따라 회원가입 페이지, or 홈페이지로 이동해야함 
+
+      //일단 서버측에서 구현된 유저데이터 response가 없으므로 mockData 추가
       return {
         ...state,
+        userEmail: 'whatzmock@mock.com',
+        isLoggedIn: true,
+        userID: 'userid',
+        nickName: 'Whatz개발',
+        token: token,
       };
     },
     logout: () => {
