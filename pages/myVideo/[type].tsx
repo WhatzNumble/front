@@ -129,7 +129,7 @@ function Upload(){
                         position: absolute;
                         width: 100%;
                         height: 40px;
-                        bottom: 35px;
+                        bottom: 0;
                         border-radius: 6px;
                         background-color: black;
                         color: white;
