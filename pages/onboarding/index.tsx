@@ -4,13 +4,13 @@ import Router from 'next/router';
 import Image from 'next/image';
 
 const onBoardingPage: NextPage = () => {
-  // const redirectSecond = 3;
+  const redirectSecond = 3;
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     Router.push('/');
-  //   }, redirectSecond * 1000);
-  // }, [redirectSecond]);
+  useEffect(() => {
+    setTimeout(() => {
+      Router.push('/');
+    }, redirectSecond * 1000);
+  }, [redirectSecond]);
 
   return (
     <div className='onBoardPage'>
