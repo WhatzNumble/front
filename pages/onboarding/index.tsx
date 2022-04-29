@@ -15,24 +15,11 @@ const onBoardingPage: NextPage = () => {
   return (
     <div className='onBoardPage'>
       <div className='logoContainer'>
-        <Image src='/logo.svg' width={44.54} height={40.15} className='logo' alt='whatz-logo' />
-        <Image src='/whatz.svg' width={114.46} height={25.63} className='whatz' alt='whatz-logo' />
+        <Image src='/logo.svg' width={44.54} height={40.15} alt='whatz-icon' />
+        <Image src='/whatz.svg' width={114.46} height={25.63} alt='whatz-logo' />
       </div>
       <style jsx>
         {`
-          .logo {
-            position: absolute;
-            left: 98px;
-            top: 386px;
-          }
-          .whatz {
-            position: absolute;
-            width: 114.46px;
-            height: 25.63px;
-            left: 151.54px;
-            top: 393.25px;
-          }
-
           .logoContainer {
             position: absolute;
             width: 180px;
@@ -40,6 +27,8 @@ const onBoardingPage: NextPage = () => {
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
+            display: flex;
+            justify-content: space-around;
           }
           .onBoardPage {
             position: absolute;
