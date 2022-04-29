@@ -1,14 +1,16 @@
 interface Props {
     title: string
+    left?: React.ReactNode
+    right?: React.ReactNode
     height?: number
-    onClickBack: ()=> void
 }
 
-function Header({title, height = 40, onClickBack}: Props){
+function Header({title, left, right, height = 40}: Props){
     return (
         <header  className="Header">
-            <button className="back" onClick={onClickBack}>◀뒤로</button>
-            {title}
+            <h1 className="title">{title}</h1>
+            <div className="left" data-header-button>{left}</div>
+            <div className="right" data-header-button>{right}</div>
             <style jsx>{`
                 .Header {
                     display: flex;
@@ -18,13 +20,41 @@ function Header({title, height = 40, onClickBack}: Props){
                     height: ${height}px;
                     font-weight: bold;
                     font-size: 13px;
-                    background-color: #ebe9e9;
+                    background-color: white;
+                }
+
+                .title {
+                    font-size: 16px;
+                    color: #565656;
+                }
+
+                .left {
+                    position: absolute;
+                    left: 22px;
+                }
+
+                .right {
+                    position: absolute;
+                    right: 22px;
                 }
 
                 .back {
                     position: absolute;
                     left: 15px;
                     font-weight: bold;
+                }
+            `}</style>
+            <style jsx global>{`
+                [data-header-button] {
+                    button {
+                        background-color: transparent; 
+                        color: #565656;
+                        font-size: 16px;
+                        font-weight: 600;
+                        &:disabled {
+                            color: #bbbbbb;
+                        }
+                    }
                 }
             `}</style>
         </header>
