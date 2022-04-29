@@ -10,10 +10,12 @@ interface Props {
     children: React.ReactNode
     title?: string
     headerTitle?: string
+    headerLeft?: React.ReactNode
+    headerRight?: React.ReactNode
     hasTabBar?: boolean
 }
 
-function Layout({children, title = '', headerTitle, hasTabBar = true}: Props){
+function Layout({children, title = '', headerTitle, headerLeft, headerRight, hasTabBar = true}: Props){
     const router = useRouter();
 
     const onClickBack = ()=>{
@@ -25,7 +27,14 @@ function Layout({children, title = '', headerTitle, hasTabBar = true}: Props){
             <Head>
                 <title>{title ? `${title} | Whatz` : 'Whatz'}</title>
             </Head>
-            {headerTitle && <Header title={headerTitle} height={HEADER_HEIGHT} onClickBack={onClickBack}/>}
+            {headerTitle && 
+                <Header 
+                    title={headerTitle} 
+                    left={headerLeft}
+                    right={headerRight}
+                    height={HEADER_HEIGHT} 
+                />
+            }
             <main className="main">
                 {children}
             </main>
