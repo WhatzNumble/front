@@ -10,3 +10,8 @@ export interface User extends Constraint<string> {
     nickname: string
     lastLogin: string
 } 
+
+export interface IFVideo {
+    id: number
+    name: string
+}
