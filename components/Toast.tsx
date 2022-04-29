@@ -7,7 +7,7 @@ interface Props {
     duration?: number
 }
 
-function Toast({message = '', duration = 3}: Props){
+function Toast({message = '', duration = 2.5}: Props){
     const [hasWin, setHasWin] = useState(false);
     const [show, setShow] = useState(true);
 

@@ -12,7 +12,7 @@ function TabBar({ height = 56 }: Props) {
   const { isLoggedIn } = useSelector((state: AppState) => state.user);
   const LINK_INFOS = [
     { path: '/', name: '홈' },
-    { path: '/myVideo', name: '마이 비디오' },
+    { path: '/my-video', name: '마이 비디오' },
     { path: '/like', name: '관심 영상' },
     isLoggedIn ? { path: '/profile', name: '프로필' } : { path: '/login', name: '로그인' },
   ];

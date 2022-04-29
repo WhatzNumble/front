@@ -28,7 +28,7 @@ function Upload(){
 
         dispatch(uiActions.pushToast({message: '영상 업로드가 완료되었습니다.'}));
 
-        router.push('/myVideo');
+        router.push('/my-video');
     }
 
     return (
