@@ -8,9 +8,12 @@ interface Props {
     message: string
     callback?: (ok: boolean)=> void
     show: boolean
+    okText?: string
+    noText?: string
+    isAlert?: boolean
 }
 
-function ConfirmBox({message, callback, show}: Props){
+function ConfirmBox({message, callback, show, okText = '예', noText = '아니오', isAlert = false}: Props){
     const [hasWin, setHasWin] = useState(false);
 
     const onClick = (e: React.MouseEvent<HTMLDivElement>)=>{
@@ -20,8 +23,6 @@ function ConfirmBox({message, callback, show}: Props){
             callback(ok);
         }
     }
-
-    const test = '320px';
 
     useEffect(()=>{
         setHasWin(true);
@@ -39,53 +40,57 @@ function ConfirmBox({message, callback, show}: Props){
                     <div className="ConfirmBox">
                         <div className="msg">{message}</div>
                         <div className="buttons" onClick={onClick}>
-                            <button name="no">아니오</button>
-                            <button name="ok">예</button>
+                            <button className="ok" name="ok">{okText}</button>
+                            {!isAlert && <button className="no" name="no">{noText}</button>}
                         </div>
 
                         <style jsx>{`
-                            $gray: #dddddd;
-                            $radius: 10px;
+                            $dark: #565656;
 
                             .ConfirmBox {
                                 z-index: 98;
                                 position: fixed;
                                 top: 50%;
                                 left: 50%;
-                                width : 320px;
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: space-between;
+                                width : 310px;
+                                min-height: 160px;
                                 transform: translate(-50%, -50%);
                                 background-color: white;
-                                border-radius: $radius;
+                                border-radius: 16px;
                                 box-shadow: 0 0 6px -3px black;
                             }
                             
                             .msg {
-                                border-bottom: 1px solid $gray;
-                                padding: 20px 6px;
+                                padding: 30px 5px 10px 5px;
+                                font-size: 16px;
                                 text-align: center;
                                 white-space: pre-line;
+                                line-height: 24px;
                             }
 
                             .buttons {
                                 display: flex;
                                 justify-content: center;
+                                margin: 20px 0 30px 0;
                                 button {
-                                    width: 50%;
-                                    padding: 20px 0;
+                                    width: 105px;
+                                    padding: 13px 0;
                                     background-color: white;
-                                    transition: .1s;
-                                    &:first-child {
-                                        border-right: 1px solid $gray;
-                                        border-bottom-left-radius: $radius;
+                                    border-radius: 50px;
+                                    font-size: 16px;
+                                    transition: .2s;
+
+                                    &.ok {
+                                        background-color: white;
+                                        box-shadow: inset 0 0 0 1px $dark;
                                     }
-                                    &:last-child {
-                                        border-bottom-right-radius: $radius;
-                                    }
-                                    &:hover {
-                                        background-color: #ebebeb;
-                                    }
-                                    &:active {
-                                        background-color: $gray;
+                                    &.no {
+                                        background-color: $dark;
+                                        color: white;
+                                        margin-left: 5px;
                                     }
                                 }
                             }
@@ -109,7 +114,7 @@ function ConfirmBox({message, callback, show}: Props){
 
                             @media screen and (max-width: ${screen.galaxyS9_plus}){
                                 .ConfirmBox {
-                                    width: 300px;
+                                    width: 280px;
                                 }
                             }
                         `}</style>

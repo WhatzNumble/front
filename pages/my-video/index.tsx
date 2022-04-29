@@ -37,16 +37,13 @@ function MyVideo({videos}: Props){
                                 <VideoCard key={vd.id} video={vd}/>
                             ))}
                         </div>
-                        <PopBox show={showUpload}>
+                        <PopBox show={showUpload} onClosePopBox={onClickClose}>
                             <div className="up">
                                 <h5 className="text">영상 업로드 하기</h5>
                                 <UploadLink 
                                     self={<button className="button-self">직접 영상 업로드 하기</button>}
                                     embed={<button className="button-embed">임베드 영상 업로드 하기</button>}
                                 />
-                                <div className="close">
-                                    <button onClick={onClickClose}>닫기</button>
-                                </div>
                             </div>
                         </PopBox>
                     </div> :
@@ -80,7 +77,7 @@ function MyVideo({videos}: Props){
                     }
 
                     .up {
-                        padding: 15px 20px;
+                        padding: 15px 15px;
                         .text {
                             color: gray;
                             font-size: 14px;
@@ -96,17 +93,6 @@ function MyVideo({videos}: Props){
                             padding: 8px 0;
                             text-align: left;
                             width: 100%;
-                        }
-                        .close {
-                            display: flex;
-                            justify-content: center;
-                            margin: 30px 0;
-                            button {
-                                border: 1px solid $dark;
-                                width: 130px;
-                                padding: 13px 0;
-                                border-radius: 30px;
-                            }
                         }
                     }
 
