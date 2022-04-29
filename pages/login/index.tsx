@@ -13,12 +13,12 @@ const LoginPage: NextPage = () => {
   const { isLoggedIn } = useSelector((state: AppState) => state.user);
 
 
-  // logout action 추가시 사용
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     router.push('/');
-  //   }
-  // }, [isLoggedIn]);
+  //logout action 추가시 사용
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push('/');
+    }
+  }, [isLoggedIn]);
 
   return (
     <Layout>
