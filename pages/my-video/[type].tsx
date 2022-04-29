@@ -32,7 +32,12 @@ function Upload(){
     }
 
     return (
-        <Layout title="영상 업로드" headerTitle={`${isEmbed ? '임베드' : '직접'} 영상 업로드`}>
+        <Layout 
+            title="영상 업로드" 
+            headerTitle={`${isEmbed ? '임베드' : '직접'} 영상 업로드`}
+            headerLeft={<button onClick={()=> router.back()}>취소</button>}
+            headerRight={<button disabled>완료</button>}
+        >
             <div className="Upload">
                 {isEmbed ? 
                     <section>
@@ -71,71 +76,70 @@ function Upload(){
                 </section>
 
                 <button className="upload-button" onClick={onClickUpload}>영상 업로드하기</button>
-
-                <style jsx>{`
-                    $gray: #e7e7e7;
-
-                    .Upload {
-                        position: relative;
-                        height: 100%;
-                        margin: 0 10px;
-                    }
-
-                    .title {
-                        font-size: 13px;
-                        margin: 20px 0 5px 0;
-                    }
-
-                    .link-box {
-                        display: flex;
-                        justify-content: stretch;
-                        height: 42px;
-                        input {
-                            flex-grow: 1;
-                            margin-right: 5px;
-                        }
-                    }
-
-                    .upload-box {
-                        width: 150px;
-                        height: 80px;
-                        background-color: $gray;
-                    }
-
-                    .link {
-                        width: 42px;
-                        height: 100%;
-                        font-size: 12px;
-                        line-height: 40px;
-                        text-align: center;
-                        background-color: $gray;
-                    }
-
-                    input, textarea {
-                        background-color: $gray;
-                    }
-
-                    .input-title {
-                        width: 100%;
-                        height: 30px;
-                    }
-
-                    .input-desc {
-                        width: 100%;
-                        height: 130px;
-                    }
-                    
-                    .upload-button {
-                        position: absolute;
-                        width: 100%;
-                        height: 40px;
-                        bottom: 0;
-                        border-radius: 6px;
-                        background-color: black;
-                        color: white;
-                    }
-                `}</style>
             </div>
+            <style jsx>{`
+                $gray: #e7e7e7;
+
+                .Upload {
+                    position: relative;
+                    height: 100%;
+                    margin: 0 10px;
+                }
+
+                .title {
+                    font-size: 13px;
+                    margin: 20px 0 5px 0;
+                }
+
+                .link-box {
+                    display: flex;
+                    justify-content: stretch;
+                    height: 42px;
+                    input {
+                        flex-grow: 1;
+                        margin-right: 5px;
+                    }
+                }
+
+                .upload-box {
+                    width: 150px;
+                    height: 80px;
+                    background-color: $gray;
+                }
+
+                .link {
+                    width: 42px;
+                    height: 100%;
+                    font-size: 12px;
+                    line-height: 40px;
+                    text-align: center;
+                    background-color: $gray;
+                }
+
+                input, textarea {
+                    background-color: $gray;
+                }
+
+                .input-title {
+                    width: 100%;
+                    height: 30px;
+                }
+
+                .input-desc {
+                    width: 100%;
+                    height: 130px;
+                }
+                
+                .upload-button {
+                    position: absolute;
+                    width: 100%;
+                    height: 40px;
+                    bottom: 0;
+                    border-radius: 6px;
+                    background-color: black;
+                    color: white;
+                }
+            `}</style>
         </Layout>
     );
 }

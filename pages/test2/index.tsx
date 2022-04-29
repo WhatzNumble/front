@@ -58,9 +58,17 @@ const Test2: NextPage = ()=>{
     const onClosePopBox = ()=>{
         setShow4(false);
     }
+    
+    const onHeaderButtonClick = ()=>{
+        dispatch(uiActions.pushToast({message: '헤더 버튼'}));
+    }
 
     return (
-        <Layout title="test-2">
+        <Layout title="test-2"
+            headerTitle="헤더입니다"
+            headerLeft={<button onClick={onHeaderButtonClick} disabled>Left</button>}
+            headerRight={<button onClick={onHeaderButtonClick}>Right</button>}
+        >
             <div className="Test2">
                 <div>
                     <button onClick={onClick}>토스트 출력</button>
