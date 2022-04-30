@@ -21,7 +21,7 @@ const LoginPage: NextPage = () => {
   }, [isLoggedIn]);
 
   return (
-    <Layout hasTabBar={false}>
+    <Layout hasTabBar={false} title='로그인'>
       <div className='loginPage'>
         <div className='info'>
           <Image src='/logo.svg' width={46} height={46} alt='whatz-icon' />
