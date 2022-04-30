@@ -42,7 +42,6 @@ const Video: React.FC<VideoProps> = ({ isEmbed = false, videoSrc }) => {
         .Video {
           position: relative;
           scroll-snap-align: end;
-          scroll-margin-bottom: calc(10vh - 20px);
           width: 100%;
           height: 90vh;
           background: black;
