@@ -4,7 +4,7 @@ import Router from 'next/router';
 import Image from 'next/image';
 import Layout from 'components/Layout';
 
-const onBoardingPage: NextPage = () => {
+const OnBoardingPage: NextPage = () => {
   const redirectSecond = 3;
 
   useEffect(() => {
@@ -37,4 +37,4 @@ const onBoardingPage: NextPage = () => {
   );
 };
 
-export default onBoardingPage;
+export default OnBoardingPage;
