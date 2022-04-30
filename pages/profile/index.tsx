@@ -5,6 +5,8 @@ import { userActions } from 'store/user';
 import axios from 'axios';
 import useUserTypeRedirect from 'hooks/useUserTypeRedirect';
 import Link from 'next/link';
+import Router from 'next/router';
+import { uiActions } from 'store/ui';
 
 const ProfilePage = () => {
   useUserTypeRedirect('/', 'guest');
@@ -37,8 +39,8 @@ const ProfilePage = () => {
 
   const handleLogout = () => {
     logoutRequest(token);
-
     //임시로 넣어둠 백엔드 쪽에 로그아웃 로직 구현되면 삭제
+    Router.push('/')
     dispatch(userActions.logout());
   };
 
