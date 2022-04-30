@@ -1,24 +1,16 @@
-import { useEffect } from 'react';
 import { NextPage } from 'next';
 import { useSelector } from 'react-redux';
 import { AppState } from 'store';
-import Router from 'next/router';
 import Image from 'next/image';
 
 import Layout from 'components/Layout';
 import LoginButton from './LoginButton';
+import useUserTypeRedirect from 'hooks/useUserTypeRedirect';
 
 const LoginPage: NextPage = () => {
   const redirectUri = 'http://localhost:3000/oauth/redirect';
   const backendRequest = `http://localhost:8080/oauth2/authorization/kakao?redirect_uri=${redirectUri}`;
-  const { isLoggedIn } = useSelector((state: AppState) => state.user);
-
-  //logout action 추가시 사용
-  useEffect(() => {
-    if (isLoggedIn) {
-      Router.push('/');
-    }
-  }, [isLoggedIn]);
+  useUserTypeRedirect('/', 'user');
 
   return (
     <Layout hasTabBar={false} title='로그인'>
