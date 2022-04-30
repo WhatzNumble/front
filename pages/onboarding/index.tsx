@@ -11,7 +11,7 @@ const onBoardingPage: NextPage = () => {
     setTimeout(() => {
       Router.push('/');
     }, redirectSecond * 1000);
-  }, [redirectSecond]);
+  }, []);
 
   return (
     <Layout hasTabBar={false}>
