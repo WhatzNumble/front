@@ -66,7 +66,7 @@ const userSlice = createSlice({
         ...state,
         userEmail: 'whatzmock@mock.com',
         isLoggedIn: true,
-        userAvatar: '/logo.svg',
+        userAvatar: 'logo.svg',
         userID: 'userid',
         nickName: 'Whatz개발',
         token: token,
