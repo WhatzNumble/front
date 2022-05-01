@@ -72,7 +72,7 @@ const ProfileEditPage: NextPage = () => {
       <div className='profile'>
         <div className='avatar'>
           <Image src={avatarSrc || '/logo.svg'} width={180} height={180} alt='user-avatar' />
-          <button className='editButton'>
+          <button className='editButton' >
             <Image src='/edit_button.svg' layout='fill' alt='edit-button' />
           </button>
         </div>
