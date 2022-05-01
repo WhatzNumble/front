@@ -1,23 +1,17 @@
-import { useEffect } from 'react';
 import Layout from 'components/Layout';
-import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from 'store';
 import { userActions } from 'store/user';
 import axios from 'axios';
+import useUserTypeRedirect from 'hooks/useUserTypeRedirect';
+import Link from 'next/link';
+import Router from 'next/router';
+import { uiActions } from 'store/ui';
 
 const ProfilePage = () => {
-  const router = useRouter();
+  useUserTypeRedirect('/', 'guest');
   const dispatch = useDispatch();
-  const { isLoggedIn, userEmail, nickName, userAvatar, token } = useSelector(
-    (state: AppState) => state.user
-  );
-
-  useEffect(() => {
-    console.log(isLoggedIn);
-    if (!isLoggedIn) router.push('/');
-  }, [isLoggedIn]);
+  const { userEmail, nickName, userAvatar, token } = useSelector((state: AppState) => state.user);
 
   const logoutRequest = (token: string) => {
     console.log(token);
@@ -26,7 +20,6 @@ const ProfilePage = () => {
         'http://localhost:8080/api/logout',
         {
           //post 인데 명세서에 요청 데이터가 없어 일단 비워둠
-
         },
         {
           headers: {
@@ -46,19 +39,21 @@ const ProfilePage = () => {
 
   const handleLogout = () => {
     logoutRequest(token);
-
     //임시로 넣어둠 백엔드 쪽에 로그아웃 로직 구현되면 삭제
+    Router.push('/')
     dispatch(userActions.logout());
   };
 
   return (
     <Layout>
       <div>
-        user info // 리덕스 login action 에 지정된 데이터 ,ap login response 데이터 준비되면 수정 
+        user info // 리덕스 login action 에 지정된 데이터 ,ap login response 데이터 준비되면 수정
         <div>{`email: ${userEmail}`}</div>
         <div>{`nick: ${nickName}`}</div>
         <div>{`avatarSrc: ${userAvatar}`}</div>
       </div>
+      <Link href={'/profile/edit'}>프로필 수정</Link>
+      <Link href={{ pathname: '/profile/edit', query: { editType: 'signup' } }}>프로필 생성</Link>
       <button onClick={() => handleLogout()}>log out</button>
     </Layout>
   );
