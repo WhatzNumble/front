@@ -70,7 +70,7 @@ const Test: NextPage = () => {
           .VideosContainer {
             position: relative;
             width: 100%;
-            height: calc(100% - 20px);
+            height: 100%;
             overflow: scroll;
             scroll-snap-type: y mandatory;
           }

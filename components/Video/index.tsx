@@ -25,10 +25,6 @@ const Video: React.FC<VideoProps> = ({ isEmbed = false, videoSrc }) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const isOnScreen = useIntersection(ref, '-50% 0% -50% 0%');
 
-  useEffect(() => {
-    console.log(videoSrc, isOnScreen);
-  }, [isOnScreen]);
-
   return (
     <>
       <div className='Video' ref={ref}>
@@ -43,8 +39,10 @@ const Video: React.FC<VideoProps> = ({ isEmbed = false, videoSrc }) => {
           position: relative;
           scroll-snap-align: end;
           width: 100%;
-          height: 90vh;
+          height: 100%;
           background: black;
+          border-radius: 32px;
+          overflow: hidden;
         }
       `}</style>
     </>

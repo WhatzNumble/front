@@ -23,7 +23,7 @@ const DefaultPlayer: React.FC<Props> = ({ videoSrc, active }) => {
   const [detail, setDetail] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-  let videoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     handleVideo(active ? 'play' : 'stop');
