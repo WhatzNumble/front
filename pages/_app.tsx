@@ -18,13 +18,14 @@ function MyApp({ Component, pageProps }: AppProps) {
       </TransitionGroup>
 
       <style jsx global>{`
+        $color-main: #D8FF69;
+        $color-gray: #EFEFEF;
+
         html,
         body {
           overscroll-behavior-y: none;
           padding: 0;
           margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
-            Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
         }
 
         a {
@@ -44,6 +45,19 @@ function MyApp({ Component, pageProps }: AppProps) {
         button {
           cursor: pointer;
           border: 0;
+          &[class*='theme-'] {
+            color: black;
+            border-radius: 50px;
+            padding: 11px 16px;
+            font-size: 16px;
+            font-weight: 500;
+          }
+          &.theme-main {
+            background-color: $color-main;
+          }
+          &.theme-gray {
+            background-color: $color-gray;
+          }
         }
 
         ul,
@@ -55,6 +69,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
         * {
           box-sizing: border-box;
+          font-family: 'Spoqa Han Sans Neo', 'sans-serif';
         }
       `}</style>
     </>

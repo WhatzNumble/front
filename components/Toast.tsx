@@ -34,10 +34,10 @@ function Toast({message = '', duration = 2.5}: Props){
                             position: fixed;
                             top: 80%;
                             left: 50%;
-                            padding: 10px 15px;
-                            background-color: #00000083;
+                            padding: 10px 20px;
+                            background-color: #2c2c2c9a;
                             color: white;
-                            font-size: 12px;
+                            font-size: 16px;
                             border-radius: 30px;
                         }
 

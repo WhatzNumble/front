@@ -27,37 +27,34 @@ function PopBox({show, children, onClosePopBox}: Props){
                     unmountOnExit
                 >
                     <div className="PopBox">
-                        {children}
+                        <div className="content">
+                            {children}
+                        </div>
                         <div className="close">
-                            <button onClick={onClosePopBox}>닫기</button>
+                            <button className="theme-gray" onClick={onClosePopBox}>닫기</button>
                         </div>
                         <style jsx>{`
-                            $dark: #8C8C8C;
-
                             .PopBox {
                                 z-index: 11;
                                 position: fixed;
                                 top: 100%;
-                                border-radius: 16px 16px 0 0;
-                                padding: 3px;
+                                border-radius: 32px 32px 0 0;
                                 background-color: white;
                                 width: 100%;
                                 min-height: 50px;
                                 transition: .3s;
                             }
 
+                            .content {
+                                padding: 32px 10px 0 24px;
+                            }
+
                             .close {
                                 display: flex;
                                 justify-content: center;
-                                margin: 20px 0 30px 0;
+                                margin: 30px 0 30px 0;
                                 button {
-                                    border: 1px solid $dark;
-                                    color: #565656;
-                                    font-size: 16px;
-                                    width: 130px;
-                                    padding: 13px 0;
-                                    border-radius: 30px;
-                                    background-color: white;
+                                    padding: 13px 28px;
                                 }
                             }
             

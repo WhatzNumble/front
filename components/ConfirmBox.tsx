@@ -40,8 +40,8 @@ function ConfirmBox({message, callback, show, okText = '예', noText = '아니�
                     <div className="ConfirmBox">
                         <div className="msg">{message}</div>
                         <div className="buttons" onClick={onClick}>
-                            <button className="ok" name="ok">{okText}</button>
-                            {!isAlert && <button className="no" name="no">{noText}</button>}
+                            <button className="ok theme-gray" name="ok">{okText}</button>
+                            {!isAlert && <button className="no theme-main" name="no">{noText}</button>}
                         </div>
 
                         <style jsx>{`
@@ -59,12 +59,12 @@ function ConfirmBox({message, callback, show, okText = '예', noText = '아니�
                                 min-height: 160px;
                                 transform: translate(-50%, -50%);
                                 background-color: white;
-                                border-radius: 16px;
+                                border-radius: 32px;
                                 box-shadow: 0 0 6px -3px black;
                             }
                             
                             .msg {
-                                padding: 30px 5px 10px 5px;
+                                padding: 32px 16px 0 16px;
                                 font-size: 16px;
                                 text-align: center;
                                 white-space: pre-line;
@@ -74,22 +74,13 @@ function ConfirmBox({message, callback, show, okText = '예', noText = '아니�
                             .buttons {
                                 display: flex;
                                 justify-content: center;
-                                margin: 20px 0 30px 0;
+                                margin: 20px 0 32px 0;
                                 button {
-                                    width: 105px;
-                                    padding: 13px 0;
-                                    background-color: white;
-                                    border-radius: 50px;
-                                    font-size: 16px;
-                                    transition: .2s;
-
+                                    min-width: 100px;
+                                    padding: 13px 22px;
                                     &.ok {
-                                        background-color: white;
-                                        box-shadow: inset 0 0 0 1px $dark;
                                     }
                                     &.no {
-                                        background-color: $dark;
-                                        color: white;
                                         margin-left: 5px;
                                     }
                                 }
