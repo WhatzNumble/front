@@ -15,21 +15,28 @@ const OauthRedirectPage = () => {
     console.log(token);
     if (typeof token === 'string') {
       dispatch(userActions.login({ token: token, socialType: 'kakao' }));
-      const response = axios.get('http://localhost:8080/get/user');
-      console.log(response)
+      const response = axios.get('http://localhost:8080/get/user', {
+        headers: {
+          'x-auth-token': token,
+        },
+      });
+      console.log(response);
     }
   }, [token]);
 
   useEffect(() => {
-    if(isLoggedIn){
+    if (isLoggedIn) {
       router.push('/');
     }
   }, [isLoggedIn]);
 
-  return <div>Loading...
-    kakao 로그인 한 상태에서 다시 로그인 요청시 redirect uri query값에 token 오지 않음.
-    임시로 브라우저 url 입력창에 ?token=cookie access code 입력 해야 클라이언트 측에서 로그인 로직 동작
-  </div>;
+  return (
+    <div>
+      Loading...
+      TODO
+      cookie 로직으로 수정 
+    </div>
+  );
 };
 
 export default OauthRedirectPage;
