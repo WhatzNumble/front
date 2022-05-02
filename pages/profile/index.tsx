@@ -1,18 +1,18 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import Link from 'next/link';
 import Router from 'next/router';
 
 import Layout from 'components/Layout';
-import { AppState } from 'store';
 import { userActions } from 'store/user';
 import useUserTypeRedirect from 'hooks/useUserTypeRedirect';
 import { deleteCookie } from 'utils';
+import useUserState from 'hooks/useUserState';
 
 const ProfilePage = () => {
   useUserTypeRedirect('/', 'guest');
   const dispatch = useDispatch();
-  const { userEmail, nickName, userAvatar, token } = useSelector((state: AppState) => state.user);
+  const { userEmail, nickName, userAvatar, token } = useUserState();
 
   const logoutRequest = () => {
     console.log(token);
