@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import Router from 'next/router';
 
 export interface User {
   isLoggedIn: boolean;
@@ -56,12 +57,13 @@ const userSlice = createSlice({
         socialType: SocialType;
       }>
     ) => {
-      const { token, socialType } = action.payload;
-      console.log(socialType);
+      const { token } = action.payload;
       //todo token으로 서버에  user data 요청
       //response 상태에 따라 회원가입 페이지, or 홈페이지로 이동해야함
 
       //일단 서버측에서 구현된 유저데이터 response가 없으므로 mockData 추가
+      //response 성공시 홈으로 redirect
+      Router.push('/');
       return {
         ...state,
         userEmail: 'whatzmock@mock.com',

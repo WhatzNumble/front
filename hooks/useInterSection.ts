@@ -14,7 +14,7 @@ const useIntersection = (element: MutableRefObject<any>, rootMargin: string) => 
     element && observer.observe(element.current);
 
     // return () => observer.unobserve(element);
-  }, []);
+  }, [rootMargin, element]);
 
   return isVisible;
 };

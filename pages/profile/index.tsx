@@ -1,35 +1,29 @@
-import Layout from 'components/Layout';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppState } from 'store';
-import { userActions } from 'store/user';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import useUserTypeRedirect from 'hooks/useUserTypeRedirect';
 import Link from 'next/link';
 import Router from 'next/router';
-import { uiActions } from 'store/ui';
+
+import Layout from 'components/Layout';
+import { userActions } from 'store/user';
+import useUserTypeRedirect from 'hooks/useUserTypeRedirect';
+import { deleteCookie } from 'utils';
+import useUserState from 'hooks/useUserState';
 
 const ProfilePage = () => {
   useUserTypeRedirect('/', 'guest');
   const dispatch = useDispatch();
-  const { userEmail, nickName, userAvatar, token } = useSelector((state: AppState) => state.user);
+  const { userEmail, nickName, userAvatar, token } = useUserState();
 
-  const logoutRequest = (token: string) => {
+  const logoutRequest = () => {
     console.log(token);
     axios
-      .post(
-        'http://localhost:8080/api/logout',
-        {
-          //post 인데 명세서에 요청 데이터가 없어 일단 비워둠
-        },
-        {
-          headers: {
-            'x-auth-token': token,
-          },
-        }
-      )
+      .post('/api/logout', {
+        //post 인데 명세서에 요청 데이터가 없어 일단 비워둠
+      })
       .then((response) => {
         console.log(response);
         //로그인 성공시 dispatch
+        axios.defaults.headers.common['x-auth-token'] = '';
         dispatch(userActions.logout());
       })
       .catch((error) => {
@@ -38,9 +32,9 @@ const ProfilePage = () => {
   };
 
   const handleLogout = () => {
-    logoutRequest(token);
-    //임시로 넣어둠 백엔드 쪽에 로그아웃 로직 구현되면 삭제
-    Router.push('/')
+    deleteCookie('access-token', '/', 'localhost');
+    logoutRequest();
+    Router.push('/');
     dispatch(userActions.logout());
   };
 

@@ -1,6 +1,4 @@
 import { useRef, useEffect, MutableRefObject, useCallback } from 'react';
-import useIntersection from 'hooks/useInterSection';
-import { Commands } from '.';
 
 interface Props {
   embedID: string;

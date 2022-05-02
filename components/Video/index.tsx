@@ -1,4 +1,4 @@
-import { MutableRefObject, useState, useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import DefaultPlayer from './DefaultPlayer';
 import useIntersection from 'hooks/useInterSection';
