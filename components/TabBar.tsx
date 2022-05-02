@@ -5,9 +5,10 @@ import { useRouter } from 'next/router';
 
 interface Props {
   height?: number;
+  transparent?: boolean
 }
 
-function TabBar({ height = 56 }: Props) {
+function TabBar({ height = 56, transparent = false }: Props) {
   const router = useRouter();
   const { isLoggedIn } = useSelector((state: AppState) => state.user);
   const LINK_INFOS = [
@@ -33,7 +34,11 @@ function TabBar({ height = 56 }: Props) {
           z-index: 9;
           position: fixed;
           bottom: 0;
-          background-color: white;
+          ${transparent ? `
+            background-color: rgba(0,0,0,0.4);
+          ` : `
+            background-color: black;
+          `}
           width: 100%;
           box-shadow: 0 0 20px -15px black;
         }

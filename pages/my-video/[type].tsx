@@ -35,8 +35,8 @@ function Upload(){
         <Layout 
             title="영상 업로드" 
             headerTitle={`${isEmbed ? '임베드' : '직접'} 영상 업로드`}
-            headerLeft={<button onClick={()=> router.back()}>취소</button>}
-            headerRight={<button disabled>완료</button>}
+            showBack={true}
+            headerRight={<button className="theme-main">완료</button>}
         >
             <div className="Upload">
                 {isEmbed ? 

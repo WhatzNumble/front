@@ -1,15 +1,33 @@
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+
 interface Props {
     title: string
     left?: React.ReactNode
     right?: React.ReactNode
     height?: number
+    onBackClick?: ()=> void
+    showBack?: boolean
 }
 
-function Header({title, left, right, height = 40}: Props){
+function Header({title, left, right, height = 40, showBack = false, onBackClick}: Props){
+    const router = useRouter();
+
+    const onClick = ()=>{
+        router.back();
+        if(showBack && onBackClick){
+            onBackClick();
+        }
+    }
+
     return (
         <header  className="Header">
             <h1 className="title">{title}</h1>
-            <div className="left" data-header-button>{left}</div>
+            {showBack && 
+                <button className="left" data-header-button onClick={onClick}>
+                    <Image src='/ic_back.png' width={24} height={24}/>
+                </button>
+            }
             <div className="right" data-header-button>{right}</div>
             <style jsx>{`
                 .Header {
@@ -20,39 +38,32 @@ function Header({title, left, right, height = 40}: Props){
                     height: ${height}px;
                     font-weight: bold;
                     font-size: 13px;
-                    background-color: white;
+                    background-color: black;
                 }
 
                 .title {
+                    font-weight: bold;
                     font-size: 16px;
-                    color: #565656;
+                    color: white;
                 }
 
                 .left {
                     position: absolute;
-                    left: 22px;
+                    left: 16px;
+                    background-color: transparent;
+                    padding: 0 10px 0 0;
                 }
 
                 .right {
                     position: absolute;
-                    right: 22px;
-                }
-
-                .back {
-                    position: absolute;
-                    left: 15px;
-                    font-weight: bold;
+                    right: 8px;
                 }
             `}</style>
             <style jsx global>{`
                 [data-header-button] {
                     button {
-                        background-color: transparent; 
-                        color: #565656;
-                        font-size: 16px;
-                        font-weight: 600;
                         &:disabled {
-                            color: #bbbbbb;
+                            filter: brightness(0.5);
                         }
                     }
                 }
