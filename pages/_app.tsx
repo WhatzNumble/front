@@ -1,5 +1,4 @@
 import App from 'next/app';
-import { GetServerSideProps } from 'next';
 import type { AppContext, AppProps } from 'next/app';
 import { wrapper, AppState } from 'store';
 import { useSelector } from 'react-redux';
@@ -80,7 +79,7 @@ MyApp.getInitialProps = async (context: AppContext) => {
 
   const appProps = await App.getInitialProps(context);
 
-  return { ...appProps };
+  return { ...appProps, props: accessTokenByCookie };
 };
 
 export default wrapper.withRedux(MyApp);
