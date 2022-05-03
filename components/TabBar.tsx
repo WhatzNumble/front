@@ -26,8 +26,8 @@ function TabBar({ height = 56, transparent = false }: Props) {
     if(path === '/'){
       return pathname === path ? TAB_SELECTED : '';
     }
-    let str = pathname.replaceAll('/', '');
-    let str2 = path.replaceAll('/', '');
+    let str = pathname.split('/').join('');
+    let str2 = path.split('/').join('');
     return str.includes(str2) ? TAB_SELECTED : '';
   } 
 
@@ -46,6 +46,7 @@ function TabBar({ height = 56, transparent = false }: Props) {
       </ul>
       <style jsx>{`
         .TabBar {
+          width: 100%;
           z-index: 9;
           position: fixed;
           bottom: 0;
@@ -54,8 +55,6 @@ function TabBar({ height = 56, transparent = false }: Props) {
           ` : `
             background-color: black;
           `}
-          width: 100%;
-          box-shadow: inset 0 0 0 1px red;
         }
 
         .nav-box {
@@ -64,14 +63,6 @@ function TabBar({ height = 56, transparent = false }: Props) {
           align-items: center;
           padding: 0 37px;
           height: ${height}px;
-        }
-
-        li {
-          color: gray;
-        }
-
-        .match {
-          color: red;
         }
       `}</style>
     </nav>

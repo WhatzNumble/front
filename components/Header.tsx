@@ -36,13 +36,12 @@ function Header({title, left, right, height = 40, showBack = false, onBackClick}
                     align-items: center;
                     width: 100%;
                     height: ${height}px;
-                    font-weight: bold;
                     font-size: 13px;
                     background-color: black;
                 }
 
                 .title {
-                    font-weight: bold;
+                    font-weight: normal;
                     font-size: 16px;
                     color: white;
                 }

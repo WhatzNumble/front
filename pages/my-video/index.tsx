@@ -157,12 +157,12 @@ function MyVideo({videos}: Props){
 function UploadLink({self, embed}: {self: React.ReactNode, embed: React.ReactNode}){
     const router = useRouter();
     return <>
-        <Link href={`${router.pathname}/self`}>
+        <Link href={`${router.pathname}/upload/self`}>
             <a>
                 {self}
             </a>
         </Link>
-        <Link href={`${router.pathname}/embed`}>
+        <Link href={`${router.pathname}/upload/embed`}>
             <a>
                 {embed}
             </a>
