@@ -1,21 +1,16 @@
 import type { NextPage } from 'next';
 import dynamic from 'next/dynamic';
-import { useState, useRef, createRef } from 'react';
+import { useState } from 'react';
 
 import Layout from 'components/Layout';
 import type { VideoProps } from 'components/Video';
-import useIntersection from 'hooks/useInterSection';
 
 const Video = dynamic(() => import('components/Video'), { ssr: false });
 
 const mockVideos: VideoProps[] = [
   {
     id: 'mock',
-    videoSrc: 'https://d1dnwjifaecjjv.cloudfront.net/93210b1d-7c54-4208-84a3-c4bc97b02c64.m3u8',
-  },
-  {
-    id: 'mock',
-    videoSrc: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+    videoSrc: 'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
   },
   {
     id: 'mock',
@@ -24,7 +19,7 @@ const mockVideos: VideoProps[] = [
   },
   {
     id: 'mock',
-    videoSrc: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+    videoSrc: 'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
   },
   {
     id: 'mock',
@@ -33,7 +28,7 @@ const mockVideos: VideoProps[] = [
   },
   {
     id: 'mock',
-    videoSrc: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+    videoSrc: 'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
   },
   {
     id: 'mock',
@@ -42,7 +37,7 @@ const mockVideos: VideoProps[] = [
   },
   {
     id: 'mock',
-    videoSrc: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+    videoSrc: 'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
   },
   {
     id: 'mock',
@@ -55,7 +50,7 @@ const Test: NextPage = () => {
   const [videos, setVideos] = useState<VideoProps[]>(mockVideos);
 
   return (
-    <Layout>
+    <Layout tabBarTransparent>
       <div className='VideosContainer'>
         {videos?.map(({ id, isEmbed, videoSrc }, index) => {
           return <Video key={index} id={id} isEmbed={isEmbed} videoSrc={videoSrc} />;
@@ -64,11 +59,14 @@ const Test: NextPage = () => {
       <style jsx>
         {`
           .VideosContainer {
-            position: relative;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             overflow: scroll;
             scroll-snap-type: y mandatory;
+            background-color: #000;
           }
         `}
       </style>
