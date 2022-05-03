@@ -24,9 +24,7 @@ const DefaultPlayer: React.FC<Props> = ({ videoSrc, active }) => {
   const [detail, setDetail] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
-  const videoRef = useRef<HTMLVideoElement>(null);
   const playerRef = useRef<HTMLVideoElement>(null);
-  const vid = CacheStorage;
 
   useEffect(() => {
     handleVideo(active ? 'play' : 'stop');
@@ -90,7 +88,7 @@ const DefaultPlayer: React.FC<Props> = ({ videoSrc, active }) => {
         width='100%'
         height='100%'
         loop
-        src='https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8'
+        src={videoSrc}
         onClick={handleVideoPress}
       />
       <PlayerUI
