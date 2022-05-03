@@ -11,7 +11,18 @@ export interface User extends Constraint<string> {
     lastLogin: string
 } 
 
-export interface IFVideo {
-    id: number
-    name: string
+export interface Video {
+    videoId: number
+    videoThumbnail: string
+    nickname: string
+    profile: string
+    likes: number
+    title: string
+    content: string
+    videoDate: string
+    views: number
+    directDir: string
+    embedLink?: string 
 }
+
+export type VideoList = Pick<Video, 'videoId' | 'videoThumbnail'>[]
