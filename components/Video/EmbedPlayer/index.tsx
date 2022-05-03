@@ -1,11 +1,13 @@
 import { useRef, useEffect, MutableRefObject, useCallback } from 'react';
+import Mask from './Mask';
 
 interface Props {
   embedID: string;
   active: boolean;
+  blockTouch?: boolean;
 }
 
-const YoutubeEmbedPlayer: React.FC<Props> = ({ embedID, active }) => {
+const EmbedPlayer: React.FC<Props> = ({ embedID, active, blockTouch }) => {
   const iframeVideoRef = useRef<HTMLIFrameElement | null>(null);
 
   const isRenderedIframePlayer = (ref: MutableRefObject<HTMLIFrameElement | null>) => {
@@ -36,17 +38,20 @@ const YoutubeEmbedPlayer: React.FC<Props> = ({ embedID, active }) => {
   }, [active]);
 
   return (
-    <iframe
-      ref={iframeVideoRef}
-      width='100%'
-      height='100%'
-      src={`https://www.youtube.com/embed/?playlist=${embedID}&rel=0&modestbranding=1&enablejsapi=1&controls=0&autoplay=1&loop=1&showinfo=0&autohide=1`}
-      frameBorder='0'
-      allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture;'
-      allowFullScreen
-      title={embedID}
-    />
+    <>
+      <iframe
+        ref={iframeVideoRef}
+        width='100%'
+        height='100%'
+        src={`https://www.youtube.com/embed/?playlist=${embedID}&rel=0&modestbranding=1&enablejsapi=1&controls=0&autoplay=1&loop=1&showinfo=0&autohide=1`}
+        frameBorder='0'
+        allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture;'
+        allowFullScreen
+        title={embedID}
+      />
+      {blockTouch && <Mask />}
+    </>
   );
 };
 
-export default YoutubeEmbedPlayer;
+export default EmbedPlayer;
