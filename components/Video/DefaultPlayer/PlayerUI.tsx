@@ -10,6 +10,7 @@ interface Props {
   title: string;
   likeCount: number;
   like: boolean;
+  view: number;
   // userProfile: UserProfile;
   muted: boolean;
   detail: boolean;

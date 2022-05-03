@@ -97,12 +97,13 @@ const DefaultPlayer: React.FC<Props> = ({ videoSrc, active }) => {
         like={like}
         detail={detail}
         detailInfo='detail INFO'
+        view={111}
         likeCount={777}
         handleToggle={handleToggle}
         progress={(currentTime / duration) * 100}
       />
       <style jsx>{`
-        .DefaultPlayer {
+        .DefaultPlayer{
           height: 100%;
           width: 100%;
         }
