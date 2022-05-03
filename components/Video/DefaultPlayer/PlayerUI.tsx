@@ -53,7 +53,7 @@ const PlayerUI: React.FC<Props> = ({
             {detailInfo}
           </div>
         )}
-        {/* <ProgressBar progress={progress} /> */}
+        <ProgressBar progress={progress} />
       </div>
       <style jsx>
         {`

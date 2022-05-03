@@ -11,6 +11,10 @@ const Video = dynamic(() => import('components/Video'), { ssr: false });
 const mockVideos: VideoProps[] = [
   {
     id: 'mock',
+    videoSrc: 'https://d1dnwjifaecjjv.cloudfront.net/93210b1d-7c54-4208-84a3-c4bc97b02c64.m3u8',
+  },
+  {
+    id: 'mock',
     videoSrc: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
   },
   {
@@ -50,19 +54,11 @@ const mockVideos: VideoProps[] = [
 const Test: NextPage = () => {
   const [videos, setVideos] = useState<VideoProps[]>(mockVideos);
 
-
   return (
     <Layout>
       <div className='VideosContainer'>
         {videos?.map(({ id, isEmbed, videoSrc }, index) => {
-          return (
-            <Video
-              key={index}
-              id={id}
-              isEmbed={isEmbed}
-              videoSrc={videoSrc}
-            />
-          );
+          return <Video key={index} id={id} isEmbed={isEmbed} videoSrc={videoSrc} />;
         })}
       </div>
       <style jsx>

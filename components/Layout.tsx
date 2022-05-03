@@ -43,7 +43,6 @@ function Layout({children, title = '', headerTitle, headerLeft, headerRight, has
                 .Layout {
                     height: 100vh;
                 }
-
                 .main {
                     display: flex;
                     flex-direction: column;
