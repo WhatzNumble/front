@@ -86,6 +86,7 @@ const DefaultPlayer: React.FC<Props> = ({ videoSrc, active }) => {
       <ReactHlsPlayer
         className='DefaultPlayer'
         playerRef={playerRef}
+        muted={mute}
         width='100%'
         height='100%'
         loop
