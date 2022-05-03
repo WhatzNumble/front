@@ -62,12 +62,16 @@ const Test2: NextPage = ()=>{
     const onHeaderButtonClick = ()=>{
         dispatch(uiActions.pushToast({message: '헤더 버튼'}));
     }
+    const onClickHeaderBack = ()=>{
+        dispatch(uiActions.pushToast({message: '뒤로'}));
+    }
 
     return (
         <Layout title="test-2"
             headerTitle="헤더입니다"
-            headerLeft={<button onClick={onHeaderButtonClick} disabled>Left</button>}
-            headerRight={<button onClick={onHeaderButtonClick}>Right</button>}
+            headerLeft={<button onClick={onHeaderButtonClick}></button>}
+            showBack={true}
+            headerRight={<button className="theme-main" onClick={onHeaderButtonClick}>완료</button>}
         >
             <div className="Test2">
                 <div>

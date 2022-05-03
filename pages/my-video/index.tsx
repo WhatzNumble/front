@@ -30,7 +30,7 @@ function MyVideo({videos}: Props){
                 {videos.length ? 
                     <div className="video-box">
                         <div className="button-upload">
-                            <button onClick={onClickUpload}>영상 업로드 하기</button>
+                            <button className="theme-main" onClick={onClickUpload}>영상 업로드 하기</button>
                         </div>
                         <div className="cards">
                             {videos.map(vd => (
@@ -39,7 +39,7 @@ function MyVideo({videos}: Props){
                         </div>
                         <PopBox show={showUpload} onClosePopBox={onClickClose}>
                             <div className="up">
-                                <h5 className="text">영상 업로드 하기</h5>
+                                <h2 className="text">영상 업로드 하기</h2>
                                 <UploadLink 
                                     self={<button className="button-self">직접 영상 업로드 하기</button>}
                                     embed={<button className="button-embed">임베드 영상 업로드 하기</button>}
@@ -49,17 +49,17 @@ function MyVideo({videos}: Props){
                     </div> :
                     <div className="empty-box">
                         <Image src='/empty_img.png' alt="Empty" width={120} height={120}/>
-                        <h5 className="text">업로드된 영상이 없습니다.</h5>
+                        <h2 className="text gray">업로드된 영상이 없습니다.</h2>
                         <div className="buttons">
                             <UploadLink 
-                                self={<button className="self">직접 영상 업로드 하기</button>}
+                                self={<button className="theme-main">직접 영상 업로드 하기</button>}
                                 embed={<button className="embed">임베드 영상 업로드 하기</button>}
                             />
                         </div>
                     </div> 
                 }
                 <style jsx>{`
-                    $dark: #565656;
+                    $dark: #2C2C2C;
 
                     .MyVideo {
                         position: relative;
@@ -76,10 +76,14 @@ function MyVideo({videos}: Props){
                         padding: 5px 5px 0 5px;
                     }
 
+                    .gray {
+                        color: #B8B8B8;
+                        font-weight: normal;
+                    }
+
                     .up {
-                        padding: 15px 15px;
                         .text {
-                            color: gray;
+                            color: $dark;
                             font-size: 14px;
                             margin-bottom: 10px;
                         }
@@ -102,9 +106,6 @@ function MyVideo({videos}: Props){
                         padding: 15px 0 20px 0;
                         button {
                             padding: 10px 20px;
-                            background-color: $dark; 
-                            color: white;
-                            border-radius: 40px;
                         }
                     }
 
@@ -129,17 +130,13 @@ function MyVideo({videos}: Props){
                         button {
                             width: 280px;
                             height: 48px;
+                            font-size: 16px;
                             border-radius: 50px;
-                            font-weight: bold;
                             margin: 4px 0;
-                            &.self {
-                                background-color: $dark;
-                                color: white;
-                            }
                             &.embed {
-                                background-color: white;
-                                color: $dark;
-                                border: 1px solid #565656;
+                                color: white;
+                                background-color: black;
+                                border: 1px solid #8F8F8F;
                             }
                         }
                     }
@@ -170,18 +167,18 @@ export const getServerSideProps: GetServerSideProps = async ()=>{
 
     return {
         props: {
-            // videos: [],
-            videos: [
-                {id: 1, name: 'test 1'},
-                {id: 2, name: 'test 2'},
-                {id: 3, name: 'test 3'},
-                {id: 4, name: 'test 4'},
-                {id: 5, name: 'test 5'},
-                {id: 6, name: 'test 6'},
-                {id: 7, name: 'test 7'},
-                {id: 8, name: 'test 8'},
-                {id: 9, name: 'test 9'},
-            ],
+            videos: [],
+            // videos: [
+            //     {id: 1, name: 'test 1'},
+            //     {id: 2, name: 'test 2'},
+            //     {id: 3, name: 'test 3'},
+            //     {id: 4, name: 'test 4'},
+            //     {id: 5, name: 'test 5'},
+            //     {id: 6, name: 'test 6'},
+            //     {id: 7, name: 'test 7'},
+            //     {id: 8, name: 'test 8'},
+            //     {id: 9, name: 'test 9'},
+            // ],
         }
     }
 }

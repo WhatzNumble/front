@@ -4,7 +4,10 @@ class CustomDocument extends Document {
     render() {
         return (
             <Html>
-                <Head/>
+                <Head>
+                    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'/>
+                </Head>
+
                 <body>
                     <div id='modal-root'></div>
                     <Main/> 
