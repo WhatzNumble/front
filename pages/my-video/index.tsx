@@ -81,7 +81,6 @@ function MyVideo({videos}: Props){
                         grid-template-rows: repeat(auto-fill, 198px);
                         gap: 4px;
                         padding: 0 16px;
-                        box-shadow: inset 0 0 0 1px blue;
                     }
 
                     .gray {

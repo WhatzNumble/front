@@ -107,7 +107,7 @@ function Upload(){
                 {isEmbed ? 
                     <Panel title="연결 링크">
                         <div className="box">
-                            <input placeholder="링크추가" value={inputs.embedLink} onChange={onChange}></input>
+                            <input placeholder="링크추가" name="embedLink" value={inputs.embedLink} onChange={onChange}></input>
                             <Image src='/btn_link.svg' width={44} height={44}/>
                         </div>
                     </Panel> :
@@ -122,7 +122,7 @@ function Upload(){
                     </Panel>
                 }
                 <Panel title="설명">
-                    <textarea className="desc" value={inputs.description} placeholder="영상에 대해 이야기해주세요"></textarea>
+                    <textarea className="desc" value={inputs.description} name="description" onChange={onChange} placeholder="영상에 대해 이야기해주세요"></textarea>
                 </Panel>
 
                 <ConfirmBox show={confirm.show} message={confirm.msg} callback={onConfirmCallback} isAlert/>
