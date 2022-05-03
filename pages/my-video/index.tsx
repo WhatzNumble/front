@@ -89,6 +89,11 @@ function MyVideo({videos}: Props){
                         font-weight: normal;
                     }
 
+                    .gray {
+                        color: #B8B8B8;
+                        font-weight: normal;
+                    }
+
                     .up {
                         .text {
                             color: $dark;

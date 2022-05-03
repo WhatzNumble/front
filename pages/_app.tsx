@@ -1,11 +1,18 @@
-import Toast from 'components/Toast';
-import type { AppProps } from 'next/app';
+import App from 'next/app';
+import type { AppContext, AppProps } from 'next/app';
 import { wrapper, AppState } from 'store';
 import { useSelector } from 'react-redux';
 import { TransitionGroup } from 'react-transition-group';
+import cookies from 'next-cookies';
+import axios from 'axios';
+
+import Toast from 'components/Toast';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { toasts } = useSelector((state: AppState) => state.ui);
+  // axios.defaults.withCredentials = true;
+  axios.defaults.baseURL = 'http://localhost:8080';
+  axios.defaults.timeout = 10000;
 
   return (
     <>
@@ -75,5 +82,19 @@ function MyApp({ Component, pageProps }: AppProps) {
     </>
   );
 }
+
+MyApp.getInitialProps = async (context: AppContext) => {
+  const { ctx } = context;
+  const allCookies = cookies(ctx);
+
+  const accessTokenByCookie = allCookies['access-token'];
+  if (accessTokenByCookie) {
+    axios.defaults.headers.common['x-auth-token'] = accessTokenByCookie;
+  }
+
+  const appProps = await App.getInitialProps(context);
+
+  return { ...appProps, props: accessTokenByCookie };
+};
 
 export default wrapper.withRedux(MyApp);

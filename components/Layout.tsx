@@ -58,7 +58,6 @@ function Layout({
                 .Layout {
                     height: 100vh;
                 }
-
                 .main {
                     display: flex;
                     flex-direction: column;

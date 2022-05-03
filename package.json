@@ -11,12 +11,14 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.1",
     "@types/react-transition-group": "^4.4.4",
-    "@types/youtube-player": "^5.5.6",
     "axios": "^0.27.1",
     "next": "12.1.5",
+    "next-cookies": "^2.0.3",
     "next-redux-wrapper": "^7.0.5",
     "react": "18.0.0",
+    "react-cookies": "^0.1.1",
     "react-dom": "18.0.0",
+    "react-hls-player": "^3.0.7",
     "react-redux": "^8.0.0",
     "react-transition-group": "^4.4.2",
     "youtube-player": "^5.5.2"
@@ -24,6 +26,7 @@
   "devDependencies": {
     "@types/node": "17.0.24",
     "@types/react": "18.0.5",
+    "@types/react-cookies": "^0.1.0",
     "@types/react-dom": "18.0.1",
     "@types/react-redux": "^7.1.24",
     "@types/styled-jsx": "^3.4.4",
