@@ -4,12 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import {IFVideo} from 'libs/types';
+import {Video, VideoList} from 'libs/types';
 import VideoCard from "components/VideoCard";
 import PopBox from "components/PopBox";
 
 interface Props {
-    videos: IFVideo[]
+    videos: Video[]
 }
 
 function MyVideo({videos}: Props){
@@ -17,11 +17,11 @@ function MyVideo({videos}: Props){
     const router = useRouter();
 
     const onClickUpload = ()=>{
-        setShowUploads(pre => !pre);
+        setShowUploads(true);
     }
 
     const onClickClose = ()=>{
-        setShowUploads(pre => !pre);
+        setShowUploads(false);
     }
 
     return (
@@ -34,7 +34,7 @@ function MyVideo({videos}: Props){
                         </div>
                         <div className="cards">
                             {videos.map(vd => (
-                                <VideoCard key={vd.id} video={vd}/>
+                                <VideoCard key={vd.videoId} video={vd}/>
                             ))}
                         </div>
                         <PopBox show={showUpload} onClosePopBox={onClickClose}>
@@ -68,12 +68,20 @@ function MyVideo({videos}: Props){
                         overflow: auto;
                     }
 
+                    .video-box {
+                        height: 100%;
+                        display: flex;
+                        flex-direction: column;
+                    }
+
                     .cards {
+                        flex-grow: 1;
                         display: grid;
                         grid-template-columns: repeat(3, 1fr);
-                        grid-template-rows: repeat(3, 205px);
+                        grid-template-rows: repeat(auto-fill, 198px);
                         gap: 4px;
-                        padding: 5px 5px 0 5px;
+                        padding: 0 16px;
+                        box-shadow: inset 0 0 0 1px blue;
                     }
 
                     .gray {
@@ -163,11 +171,12 @@ function UploadLink({self, embed}: {self: React.ReactNode, embed: React.ReactNod
 }
 
 export const getServerSideProps: GetServerSideProps = async ()=>{
-    //const result = await fetch('');
+    const res = await fetch('http://52.78.135.138:8080/api/video');
+    const list = await res.json();
 
     return {
         props: {
-            videos: [],
+            videos: list.videos,
             // videos: [
             //     {id: 1, name: 'test 1'},
             //     {id: 2, name: 'test 2'},
@@ -178,6 +187,8 @@ export const getServerSideProps: GetServerSideProps = async ()=>{
             //     {id: 7, name: 'test 7'},
             //     {id: 8, name: 'test 8'},
             //     {id: 9, name: 'test 9'},
+            //     {id: 10, name: 'test 10'},
+            //     {id: 11, name: 'test 11'},
             // ],
         }
     }
