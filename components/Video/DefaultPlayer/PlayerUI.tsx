@@ -14,7 +14,7 @@ interface Props {
   muted: boolean;
   detail: boolean;
   detailInfo: string;
-  progress: number;
+  progress?: number;
   handleToggle: (input: string) => void;
 }
 
@@ -53,7 +53,7 @@ const PlayerUI: React.FC<Props> = ({
             {detailInfo}
           </div>
         )}
-        <ProgressBar progress={progress} />
+        {/* <ProgressBar progress={progress} /> */}
       </div>
       <style jsx>
         {`
