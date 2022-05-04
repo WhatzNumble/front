@@ -27,7 +27,7 @@ const Video: React.FC<VideoProps> = ({ isEmbed = false, videoSrc }) => {
 
   return (
     <>
-      <div className='Video' style={{ opacity: isOnScreen ? 1 : 0.5 }} ref={ref}>
+      <div className='Video' style={{ opacity: isOnScreen ? 1 : 0.7 }} ref={ref}>
         {isEmbed ? (
           <EmbedPlayer embedID={videoSrc} active={isOnScreen} blockTouch />
         ) : (
