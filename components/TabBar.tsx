@@ -38,7 +38,7 @@ function TabBar({ height = 56, transparent = false }: Props) {
           <li key={info.path}>
             <Link href={info.path}>
               <a>
-                <Image src={info.icon + getSuffix(info.path) + '.svg'} width={32} height={32}/>
+                <Image src={info.icon + getSuffix(info.path) + '.svg'} width={32} height={32} alt={`${info.path} icon`}/>
               </a>
             </Link>
           </li>

@@ -1,13 +1,9 @@
 import { useRef, useEffect } from 'react';
 import dynamic from 'next/dynamic';
-// import DefaultPlayer from './DefaultPlayer';
+import EmbedPlayer from './EmbedPlayer';
 import useIntersection from 'hooks/useInterSection';
 
 const DefaultPlayer = dynamic(() => import('./DefaultPlayer'), {
-  ssr: false,
-});
-
-const EmbedPlayer = dynamic(() => import('./EmbedPlayer'), {
   ssr: false,
 });
 
@@ -31,7 +27,7 @@ const Video: React.FC<VideoProps> = ({ isEmbed = false, videoSrc }) => {
 
   return (
     <>
-      <div className='Video' ref={ref}>
+      <div className='Video' style={{ opacity: isOnScreen ? 1 : 0.7 }} ref={ref}>
         {isEmbed ? (
           <EmbedPlayer embedID={videoSrc} active={isOnScreen} blockTouch />
         ) : (
