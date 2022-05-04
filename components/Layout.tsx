@@ -63,7 +63,7 @@ function Layout({
                     flex-direction: column;
                     width: 100%;
                     background-color: black;
-                    height: calc(100vh - ${(headerTitle ? HEADER_HEIGHT : 0) + TAB_HEIGHT}px);
+                    height: calc(100vh - ${(headerTitle ? HEADER_HEIGHT : 0) + (hasTabBar ? TAB_HEIGHT : 0)}px);
                 }
             `}</style>
         </div>
