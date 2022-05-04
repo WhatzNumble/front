@@ -2,25 +2,27 @@ import ConfirmBox from "components/ConfirmBox";
 import Layout from "components/Layout";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import {uiActions} from 'store/ui';
 
 function Upload(){
     const dispatch = useDispatch();
     const router = useRouter();
+    const formRef = useRef<HTMLFormElement>(null);
     const {type} = router.query;
     const isEmbed = type === 'embed';
+    const [preview, setPreview] = useState('');
     const [confirm, setConfirm] = useState({
         show: false,
         msg: '',
     });
     const [inputs, setInputs] = useState({
-        embedLink: '',
+        link: '',
         title: '',
-        description: '', 
-        selfVideoName: '',
-        thumbnailImage: '',
+        content: '', 
+        fileName: '',
+        videoThumbnail: '',
         isFinish: false,
     }); 
 
@@ -38,12 +40,18 @@ function Upload(){
 
         if(files && files.length === 1){
             try{
-                const fileContent = await fileLoader(files[0]);
-                console.log(fileContent);
-                if(name === 'thumbnail'){
-
-                }else{
-        
+                switch(name){
+                    case 'videoThumbnail':
+                        const fileContent = await fileLoader(files[0]);
+                        setPreview(fileContent as string);
+                        break;
+                    case 'file':
+                        if(!validateFile(files[0])) return;
+                        setInputs({
+                            ...inputs,
+                            fileName: files[0].name
+                        });
+                        break;
                 }
             }catch(ex){
                 dispatch(uiActions.pushToast({message: '업로드중 문제가 발생하였습니다.'}));
@@ -53,20 +61,54 @@ function Upload(){
                 show: true,
                 msg: '파일을 하나만 선택해 주세요.'
             });
-            setInputs({
-                ...inputs,
-
-            });
         }
 
         // todo - 영상 업로드 api 처리 
 
     }
 
+    const validateFile = async (file: File)=>{
+        let msg = '';
+        const SIZE = 100; // MB
+        const TIME = 15;  // 분
+
+        if(formatByte(file.size) >= SIZE){
+            msg = `${SIZE}MB 이상은
+            업로드할 수 없습니다.`;
+        }
+        
+        const duration = await getDuration(file);
+        if(duration > TIME){
+            msg = `영상은 ${TIME}분을 넘을 수 없습니다.
+            ${TIME}분 이하의 영상만 올려주세요.`;
+        }
+        
+        if(msg){
+            setConfirm({
+                show: true,
+                msg,
+            });
+            return false;
+        }
+
+        return true;
+    }
+
+    const getDuration = (file: File)=>{
+        return new Promise<number>((res, rej)=>{
+            const reader = new FileReader();
+            reader.onload = ()=> {
+                const media = new Audio(reader.result as string);
+                media.onloadedmetadata = ()=> res(media.duration / 60);
+            };
+            reader.readAsDataURL(file);
+        });
+    };
+
     const fileLoader = (file: File)=>{
         return new Promise(res => {
             const reader = new FileReader();
-            reader.readAsText(file);
+            reader.readAsDataURL(file);
     
             reader.onload = ()=> {
                 res(reader.result);
@@ -86,6 +128,11 @@ function Upload(){
         });
     }
 
+    const formatByte = (byte: number)=>{
+        const mb = 1024 * 1024;
+        return Number((byte / mb).toFixed(3));
+    }
+
     return (
         <Layout 
             title="영상 업로드" 
@@ -93,28 +140,55 @@ function Upload(){
             showBack={true}
             headerRight={<button className="theme-main" disabled={!inputs.isFinish} onClick={onClickComplete}>완료</button>}
         >
-            <div className="Upload">
+            <form className="Upload" ref={formRef}>
                 <Panel title="썸네일 업로드">
-                    <label className="label" htmlFor="fileUpload">
-                        <div className="thumbnail">
-                            <div className="add">
-                                <Image src='/btn_add.svg' width={20} height={20}/>
-                            </div>
+                    <label className="label" htmlFor="thmbnailUpload">
+                        <div className="thumbnail image-cover">
+                            {preview ? 
+                                <Image src={preview} layout='fill'/> :
+                                <div className="add">
+                                    <Image src="/btn_add.svg" width={20} height={20}/>
+                                </div>
+                            }
                         </div>
                     </label>
-                    <input id="fileUpload" type="file" name="thumbnail" value={inputs.thumbnailImage} onChange={onFileChange} hidden={true}></input>
+                    <input 
+                        id="thmbnailUpload" 
+                        type="file" 
+                        name="videoThumbnail" 
+                        value={inputs.videoThumbnail} 
+                        onChange={onFileChange} 
+                        accept="image/*" 
+                        hidden={true}
+                    />
                 </Panel>
                 {isEmbed ? 
                     <Panel title="연결 링크">
                         <div className="box">
-                            <input placeholder="링크추가" name="embedLink" value={inputs.embedLink} onChange={onChange}></input>
+                            <input 
+                                placeholder="링크추가" 
+                                name="link" 
+                                value={inputs.link} 
+                                onChange={onChange}
+                            />
                             <Image src='/btn_link.svg' width={44} height={44}/>
                         </div>
                     </Panel> :
                     <Panel title="영상 업로드">
                         <div className="box">
-                            <input id="videoUpload" type="file" name="self" onChange={onFileChange} hidden={true}></input>
-                            <input placeholder="영상을 업로드 해주세요" value={inputs.selfVideoName} disabled></input>
+                            <input 
+                                id="videoUpload" 
+                                type="file" 
+                                name="file" 
+                                onChange={onFileChange} 
+                                accept="video/*"
+                                hidden={true}
+                            />
+                            <input 
+                                value={inputs.fileName} 
+                                placeholder="영상을 업로드 해주세요" 
+                                disabled
+                            />
                             <label htmlFor="videoUpload">
                                 <Image src='/btn_add2.svg' width={44} height={44}/>
                             </label>
@@ -122,7 +196,13 @@ function Upload(){
                     </Panel>
                 }
                 <Panel title="설명">
-                    <textarea className="desc" value={inputs.description} name="description" onChange={onChange} placeholder="영상에 대해 이야기해주세요"></textarea>
+                    <textarea 
+                        className="desc" 
+                        value={inputs.content} 
+                        name="content" 
+                        onChange={onChange} 
+                        placeholder="영상에 대해 이야기해주세요"
+                    />
                 </Panel>
 
                 <ConfirmBox show={confirm.show} message={confirm.msg} callback={onConfirmCallback} isAlert/>
@@ -138,6 +218,7 @@ function Upload(){
 
                     .label {
                         width: fit-content;
+                        border-radius: 8px;
                     }
 
                     .thumbnail {
@@ -147,6 +228,7 @@ function Upload(){
                         border-radius: 8px;
                         background-color: #2C2C2C;
                         cursor: pointer;
+                        overflow: hidden;
                         .add {
                             position: absolute;
                             top: 50%;
@@ -182,7 +264,7 @@ function Upload(){
                         }
                     }
                 `}</style>
-            </div>
+            </form>
         </Layout>
     );
 }
