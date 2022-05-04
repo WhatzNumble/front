@@ -57,7 +57,7 @@ function TabBar({ height = 56, transparent = false }: Props) {
           `}
           width: 100%;
         }
-        
+
         .nav-box {
           display: flex;
           justify-content: space-between;

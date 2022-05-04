@@ -78,6 +78,12 @@ function MyApp({ Component, pageProps }: AppProps) {
           box-sizing: border-box;
           font-family: 'Spoqa Han Sans Neo', 'sans-serif';
         }
+
+        .image-cover {
+          img {
+            object-fit: cover;
+          }
+        }
       `}</style>
     </>
   );
