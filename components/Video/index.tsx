@@ -7,7 +7,6 @@ const DefaultPlayer = dynamic(() => import('./DefaultPlayer'), {
   ssr: false,
 });
 
-
 export interface VideoProps {
   id: string;
   isEmbed?: boolean;
@@ -28,7 +27,7 @@ const Video: React.FC<VideoProps> = ({ isEmbed = false, videoSrc }) => {
 
   return (
     <>
-      <div className='Video' ref={ref}>
+      <div className='Video' style={{ opacity: isOnScreen ? 1 : 0.5 }} ref={ref}>
         {isEmbed ? (
           <EmbedPlayer embedID={videoSrc} active={isOnScreen} blockTouch />
         ) : (
