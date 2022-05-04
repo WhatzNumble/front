@@ -25,7 +25,7 @@ function Header({title, left, right, height = 40, showBack = false, onBackClick}
             <h1 className="title">{title}</h1>
             {showBack && 
                 <button className="left" data-header-button onClick={onClick}>
-                    <Image src='/ic_back.png' width={24} height={24}/>
+                    <Image src='/ic_back.svg' width={24} height={24}/>
                 </button>
             }
             <div className="right" data-header-button>{right}</div>
@@ -36,13 +36,12 @@ function Header({title, left, right, height = 40, showBack = false, onBackClick}
                     align-items: center;
                     width: 100%;
                     height: ${height}px;
-                    font-weight: bold;
                     font-size: 13px;
                     background-color: black;
                 }
 
                 .title {
-                    font-weight: bold;
+                    font-weight: normal;
                     font-size: 16px;
                     color: white;
                 }
