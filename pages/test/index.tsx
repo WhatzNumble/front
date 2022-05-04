@@ -7,7 +7,7 @@ import type { VideoProps } from 'components/Video';
 
 const Video = dynamic(() => import('components/Video'), { ssr: false });
 
-const mockVideos: VideoProps[] = [
+export const mockVideos: VideoProps[] = [
   {
     id: 'mock',
     videoSrc: 'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',

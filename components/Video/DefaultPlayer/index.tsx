@@ -1,5 +1,5 @@
 import useIntersection from 'hooks/useInterSection';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Commands } from '..';
 import PlayerUI from './PlayerUI';
 import ReactHlsPlayer, { HlsPlayerProps } from 'react-hls-player';
@@ -16,6 +16,23 @@ type PlayerState = {
   like: boolean;
   detail: boolean;
 };
+
+const detailMockString: string = `
+1. Use gridlines to balance your shot.
+2. Set your camera's focus.
+3. Focus on one subject.
+4. Embrace negative space.
+5. Find different perspectives.
+6. Play with reflections.
+7. Use leading lines.
+8. Look for symmetry.
+9. Keep an eye out for repetitive patterns.
+10. Play around with color blocking.
+11. Avoid zooming in.
+12. Capture small details.
+13. Use natural light.
+14. If you use flash, only do so during the day.
+`;
 
 const DefaultPlayer: React.FC<Props> = ({ videoSrc, active }) => {
   const [playing, setPlaying] = useState(false);
@@ -95,8 +112,10 @@ const DefaultPlayer: React.FC<Props> = ({ videoSrc, active }) => {
         title='mocksting'
         muted={mute}
         like={like}
-        detail={detail}
-        detailInfo='detail INFO'
+        showDetail={detail}
+        detailInfo={detailMockString}
+        view={111}
+        date={'2022.2.12'}
         likeCount={777}
         handleToggle={handleToggle}
         progress={(currentTime / duration) * 100}

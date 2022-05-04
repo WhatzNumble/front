@@ -1,4 +1,6 @@
-import ProgressBar from "./ProgressBar";
+import ProgressBar from './ProgressBar';
+import Avatar from './Avatar';
+import Image from 'next/image';
 
 type UserProfile = {
   name: string;
@@ -10,9 +12,11 @@ interface Props {
   title: string;
   likeCount: number;
   like: boolean;
+  view: number;
+  date: string;
   // userProfile: UserProfile;
   muted: boolean;
-  detail: boolean;
+  showDetail: boolean;
   detailInfo: string;
   progress?: number;
   handleToggle: (input: string) => void;
@@ -20,83 +24,114 @@ interface Props {
 
 const PlayerUI: React.FC<Props> = ({
   muted,
+  view,
+  date,
   title,
   likeCount,
   like,
   progress,
   handleToggle,
-  detail,
+  showDetail,
   detailInfo,
 }) => {
   return (
     <>
       <div className='PlayerUI'>
-        <div className='Top'>
-          <div className='MuteButton' onClick={() => handleToggle("mute")}>
-            {muted ? "unmute" : "mute"}
+        <div className='leftWrapper'>
+          <div className='detailWrapper'>
+            <div className={showDetail ? 'detail' : 'hidden_detail'}>{detailInfo}</div>
+          </div>
+
+          <div className='infoWrapper'>
+            <Avatar link='test' avatarImage='/profile.png' />
+            <div className='info'>
+              <div className='title'>{title}</div>
+              <div className='viewDate'>
+                {`조회수 ${view}`}
+                &#183;
+                {date}
+              </div>
+            </div>
           </div>
         </div>
-        <div className='Bottom'>
-          <div className='Title'>{title}</div>
+        <div className='buttonWrapper'>
+          <div className='button'>
+            <button onClick={() => handleToggle('detail')}>
+              <Image src={'/more_button.svg'} width={32} height={32} alt='bookmark' />
+            </button>
+          </div>
+          <div className='button'>
+            <button onClick={() => handleToggle('like')}>
+              <Image
+                src={like ? '/bookmark_selected.svg' : '/bookmark.svg'}
+                width={32}
+                height={32}
+                alt='bookmark'
+              />
+            </button>
+            <div className='count'>{likeCount} </div>
+          </div>
         </div>
-        <div className='Side'>
-          <div className='ICon' onClick={() => handleToggle("like")}>
-            {like ? "dislike" : "like"}
-            <label className='label'>{likeCount} </label>
-          </div>
-          <div className='Icon' onClick={() => handleToggle("detail")}>
-            detail
-          </div>
-        </div>
-        {detail && (
-          <div className='Detail' onClick={() => handleToggle("detail")}>
-            {detailInfo}
-          </div>
-        )}
-        {/* <ProgressBar progress={progress} /> */}
+        {!!progress && <ProgressBar progress={progress} />}
       </div>
       <style jsx>
         {`
           * {
             color: white;
           }
-          .Top {
+          .PlayerUI {
             position: absolute;
-            min-width: fit-content;
-            top: 10px;
-            width: 100%;
+            bottom: 0px;
+            margin: 0 24px 24px 24px;
+            width: calc(100% - 48px);
             display: flex;
             justify-content: space-between;
-            .MuteButton {
-              position: absolute;
-              right: 1rem;
-              padding: 10px;
+            align-items: flex-end;
+          }
+
+          .leftWrapper {
+            max-width: 80%;
+            .detailWrapper {
+              font-weight: 500;
+              font-size: 14px;
+              line-height: 140%;
+              /* identical to box height, or 20px */
+              display: flex;
+              align-items: flex-end;
+              letter-spacing: -0.002em;
+              .detail {
+                overflow: scroll;
+                height: 260px;
+              }
+              .hidden_detail {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+              }
+            }
+            .infoWrapper {
+              margin-top: 20px;
+              display: flex;
+              .info {
+                margin-left: 12px;
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 140%;
+                letter-spacing: -0.002em;
+                .title {
+                  font-weight: 500;
+                  font-size: 16px;
+                }
+                .viewDate {
+                  opacity: 0.7;
+                }
+              }
             }
           }
-          .Bottom {
-            display: flex;
-            position: absolute;
-            flex-direction: column;
-            bottom: 10px;
-          }
-          .Side {
-            position: absolute;
-            right: 10px;
-            bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            .Icon {
-              margin: 1rem;
+          .buttonWrapper {
+            button {
+              all: unset;
             }
-          }
-          .Detail {
-            width: 100%;
-            position: absolute;
-            flex-direction: column;
-            bottom: 10px;
-            background: grey;
-            padding: 1rem;
           }
         `}
       </style>
