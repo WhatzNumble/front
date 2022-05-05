@@ -92,7 +92,7 @@ const PlayerUI: React.FC<Props> = ({ videoID, view, date, title, like, progress,
           }
 
           .leftWrapper {
-            max-width: 80%;
+            max-width: 70%;
             .detailWrapper {
               font-weight: 500;
               font-size: 14px;
