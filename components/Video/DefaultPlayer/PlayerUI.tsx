@@ -16,15 +16,7 @@ interface Props {
   progress?: number;
 }
 
-const PlayerUI: React.FC<Props> = ({
-  videoID,
-  view,
-  date,
-  title,
-  like,
-  progress,
-  detail,
-}) => {
+const PlayerUI: React.FC<Props> = ({ videoID, view, date, title, like, progress, detail }) => {
   const [isLike, setIsLike] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
 
@@ -57,20 +49,22 @@ const PlayerUI: React.FC<Props> = ({
         </div>
         <div className='buttonWrapper'>
           <div className='button'>
-            <button onClick={()=>handleDetail()}>
+            <button onClick={() => handleDetail()}>
               <Image src={'/more_button.svg'} width={32} height={32} alt='bookmark' />
             </button>
           </div>
           <div className='button'>
-            <button onClick={()=>handleLike()}>
+            <button onClick={() => handleLike()}>
               <Image
                 src={isLike ? '/bookmark_selected.svg' : '/bookmark.svg'}
                 width={32}
                 height={32}
                 alt='bookmark'
               />
+              <div className='count' style={isLike ? { opacity: 1 } : { opacity: 0.5 }}>
+                {like}
+              </div>
             </button>
-            <div className='count'>{like}</div>
           </div>
         </div>
         {!!progress && <ProgressBar progress={progress} />}
@@ -84,11 +78,17 @@ const PlayerUI: React.FC<Props> = ({
             z-index: 10;
             position: absolute;
             bottom: 0px;
-            margin: 0 24px 24px 24px;
-            width: calc(100% - 48px);
+            padding: 0 24px 24px 24px;
+            width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
+            background: rgb(0, 0, 0);
+            background: linear-gradient(
+              0deg,
+              rgba(0, 0, 0, 0.61) 0%,
+              rgba(0, 0, 0, 0.01) 100%
+            );
           }
 
           .leftWrapper {
@@ -132,6 +132,11 @@ const PlayerUI: React.FC<Props> = ({
           .buttonWrapper {
             button {
               all: unset;
+            }
+            .count {
+              text-align: center;
+              font-size: 14px;
+              letter-spacing: -0.002em;
             }
           }
         `}
