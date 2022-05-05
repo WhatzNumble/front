@@ -81,6 +81,7 @@ const PlayerUI: React.FC<Props> = ({
             color: white;
           }
           .PlayerUI {
+            z-index: 10;
             position: absolute;
             bottom: 0px;
             margin: 0 24px 24px 24px;

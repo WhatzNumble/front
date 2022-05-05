@@ -39,17 +39,6 @@ const DefaultPlayer: React.FC<Props> = ({ active, video }) => {
     }
   };
 
-  const handleToggle = (input: string) => {
-    switch (input) {
-      case 'mute':
-        setMute((prev) => !prev);
-        break;
-      case 'play':
-        handleVideoPress();
-        break;
-    }
-  };
-
   const handleVideoPress = () => {
     handleVideo(playing ? 'pause' : 'play');
   };
