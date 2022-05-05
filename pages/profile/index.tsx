@@ -3,6 +3,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import Router from 'next/router';
 
+import config from 'utils/config';
 import Layout from 'components/Layout';
 import { userActions } from 'store/user';
 import useUserTypeRedirect from 'hooks/useUserTypeRedirect';
@@ -32,7 +33,7 @@ const ProfilePage = () => {
   };
 
   const handleLogout = () => {
-    deleteCookie('access-token', '/', 'localhost');
+    deleteCookie('access-token', '/', config.hostDomain);
     logoutRequest();
     Router.push('/');
     dispatch(userActions.logout());

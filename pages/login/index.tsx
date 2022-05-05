@@ -6,10 +6,12 @@ import Image from 'next/image';
 import Layout from 'components/Layout';
 import LoginButton from './LoginButton';
 import useUserTypeRedirect from 'hooks/useUserTypeRedirect';
+import config from 'utils/config';
 
 const LoginPage: NextPage = () => {
-  const redirectUri = 'http://localhost:3000/oauth/redirect';
-  const backendRequest = `http://localhost:8080/oauth2/authorization/kakao?redirect_uri=${redirectUri}`;
+  const redirectPath = '/oauth/redirect';
+  const redirectURI = `${config.hostURL}${redirectPath}`;
+  const backendRequest = `${config.apiBaseURL}/oauth2/authorization/kakao?redirect_uri=${redirectURI}`;
   useUserTypeRedirect('/', 'user');
 
   return (
@@ -52,9 +54,8 @@ const LoginPage: NextPage = () => {
             color: #8c8c8c;
           }
         }
-        .loginButton{
+        .loginButton {
           margin-top: 34px;
-
         }
       `}</style>
     </Layout>

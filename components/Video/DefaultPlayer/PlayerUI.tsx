@@ -1,47 +1,40 @@
+import { useState } from 'react';
 import ProgressBar from './ProgressBar';
 import Avatar from './Avatar';
+import { IUploadUser } from '..';
 import Image from 'next/image';
 
-type UserProfile = {
-  name: string;
-  avatar: string;
-  id: string;
-};
-
 interface Props {
+  videoID: string;
   title: string;
-  likeCount: number;
-  like: boolean;
+  like: number;
   view: number;
   date: string;
-  // userProfile: UserProfile;
-  muted: boolean;
-  showDetail: boolean;
-  detailInfo: string;
+  uploader: IUploadUser;
+  muted?: boolean;
+  detail: string;
   progress?: number;
-  handleToggle: (input: string) => void;
 }
 
-const PlayerUI: React.FC<Props> = ({
-  muted,
-  view,
-  date,
-  title,
-  likeCount,
-  like,
-  progress,
-  handleToggle,
-  showDetail,
-  detailInfo,
-}) => {
+const PlayerUI: React.FC<Props> = ({ videoID, view, date, title, like, progress, detail }) => {
+  const [isLike, setIsLike] = useState(false);
+  const [showDetail, setShowDetail] = useState(false);
+
+  const handleLike = () => {
+    setIsLike((prev) => !prev);
+  };
+
+  const handleDetail = () => {
+    setShowDetail((prev) => !prev);
+  };
+
   return (
     <>
       <div className='PlayerUI'>
         <div className='leftWrapper'>
           <div className='detailWrapper'>
-            <div className={showDetail ? 'detail' : 'hidden_detail'}>{detailInfo}</div>
+            <div className={showDetail ? 'detail' : 'hidden_detail'}>{detail}</div>
           </div>
-
           <div className='infoWrapper'>
             <Avatar link='test' avatarImage='/profile.png' />
             <div className='info'>
@@ -56,20 +49,22 @@ const PlayerUI: React.FC<Props> = ({
         </div>
         <div className='buttonWrapper'>
           <div className='button'>
-            <button onClick={() => handleToggle('detail')}>
+            <button onClick={() => handleDetail()}>
               <Image src={'/more_button.svg'} width={32} height={32} alt='bookmark' />
             </button>
           </div>
           <div className='button'>
-            <button onClick={() => handleToggle('like')}>
+            <button onClick={() => handleLike()}>
               <Image
-                src={like ? '/bookmark_selected.svg' : '/bookmark.svg'}
+                src={isLike ? '/bookmark_selected.svg' : '/bookmark.svg'}
                 width={32}
                 height={32}
                 alt='bookmark'
               />
+              <div className='count' style={isLike ? { opacity: 1 } : { opacity: 0.5 }}>
+                {like}
+              </div>
             </button>
-            <div className='count'>{likeCount} </div>
           </div>
         </div>
         {!!progress && <ProgressBar progress={progress} />}
@@ -80,22 +75,28 @@ const PlayerUI: React.FC<Props> = ({
             color: white;
           }
           .PlayerUI {
+            z-index: 10;
             position: absolute;
             bottom: 0px;
-            margin: 0 24px 24px 24px;
-            width: calc(100% - 48px);
+            padding: 0 24px 24px 24px;
+            width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
+            background: rgb(0, 0, 0);
+            background: linear-gradient(
+              0deg,
+              rgba(0, 0, 0, 0.61) 0%,
+              rgba(0, 0, 0, 0.01) 100%
+            );
           }
 
           .leftWrapper {
-            max-width: 80%;
+            max-width: 70%;
             .detailWrapper {
               font-weight: 500;
               font-size: 14px;
               line-height: 140%;
-              /* identical to box height, or 20px */
               display: flex;
               align-items: flex-end;
               letter-spacing: -0.002em;
@@ -131,6 +132,11 @@ const PlayerUI: React.FC<Props> = ({
           .buttonWrapper {
             button {
               all: unset;
+            }
+            .count {
+              text-align: center;
+              font-size: 14px;
+              letter-spacing: -0.002em;
             }
           }
         `}

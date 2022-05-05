@@ -5,14 +5,18 @@ import { useSelector } from 'react-redux';
 import { TransitionGroup } from 'react-transition-group';
 import cookies from 'next-cookies';
 import axios from 'axios';
+import config from 'utils/config';
 
 import Toast from 'components/Toast';
+import { useEffect } from 'react';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { toasts } = useSelector((state: AppState) => state.ui);
   // axios.defaults.withCredentials = true;
-  axios.defaults.baseURL = 'http://localhost:8080';
-  axios.defaults.timeout = 10000;
+  useEffect(() => {
+    axios.defaults.baseURL = config.apiBaseURL;
+    axios.defaults.timeout = 10000;
+  }, []);
 
   return (
     <>
@@ -25,8 +29,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       </TransitionGroup>
 
       <style jsx global>{`
-        $color-main: #D8FF69;
-        $color-gray: #EFEFEF;
+        $color-main: #d8ff69;
+        $color-gray: #efefef;
 
         html,
         body {
