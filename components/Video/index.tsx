@@ -7,31 +7,39 @@ const DefaultPlayer = dynamic(() => import('./DefaultPlayer'), {
   ssr: false,
 });
 
-export interface VideoProps {
+export interface IUploadUser {
+  name: string;
+  avatar: string;
+}
+
+export interface IVideo {
   id: string;
+  title: string;
   isEmbed?: boolean;
+  view: number;
   videoSrc: string;
+  like: number;
+  uploader: IUploadUser;
+  date: string;
+  detail: string;
 }
 
-export enum Commands {
-  play,
-  pause,
-  stop,
-  mute,
-  unMute,
+interface Props {
+  video: IVideo;
 }
 
-const Video: React.FC<VideoProps> = ({ isEmbed = false, videoSrc }) => {
+const Video: React.FC<Props> = ({ video }) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const isOnScreen = useIntersection(ref, '-50% 0% -50% 0%');
+  const { isEmbed } = video;
 
   return (
     <>
       <div className='Video' style={{ opacity: isOnScreen ? 1 : 0.7 }} ref={ref}>
         {isEmbed ? (
-          <EmbedPlayer embedID={videoSrc} active={isOnScreen} blockTouch />
+          <EmbedPlayer video={video} active={isOnScreen} blockTouch />
         ) : (
-          <DefaultPlayer active={isOnScreen} videoSrc={videoSrc} />
+          <DefaultPlayer active={isOnScreen} video={video} />
         )}
       </div>
       <style jsx>{`

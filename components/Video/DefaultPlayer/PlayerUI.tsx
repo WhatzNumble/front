@@ -1,47 +1,48 @@
+import { useState } from 'react';
 import ProgressBar from './ProgressBar';
 import Avatar from './Avatar';
+import { IUploadUser } from '..';
 import Image from 'next/image';
 
-type UserProfile = {
-  name: string;
-  avatar: string;
-  id: string;
-};
-
 interface Props {
+  videoID: string;
   title: string;
-  likeCount: number;
-  like: boolean;
+  like: number;
   view: number;
   date: string;
-  // userProfile: UserProfile;
-  muted: boolean;
-  showDetail: boolean;
-  detailInfo: string;
+  uploader: IUploadUser;
+  muted?: boolean;
+  detail: string;
   progress?: number;
-  handleToggle: (input: string) => void;
 }
 
 const PlayerUI: React.FC<Props> = ({
-  muted,
+  videoID,
   view,
   date,
   title,
-  likeCount,
   like,
   progress,
-  handleToggle,
-  showDetail,
-  detailInfo,
+  detail,
 }) => {
+  const [isLike, setIsLike] = useState(false);
+  const [showDetail, setShowDetail] = useState(false);
+
+  const handleLike = () => {
+    setIsLike((prev) => !prev);
+  };
+
+  const handleDetail = () => {
+    setShowDetail((prev) => !prev);
+  };
+
   return (
     <>
       <div className='PlayerUI'>
         <div className='leftWrapper'>
           <div className='detailWrapper'>
-            <div className={showDetail ? 'detail' : 'hidden_detail'}>{detailInfo}</div>
+            <div className={showDetail ? 'detail' : 'hidden_detail'}>{detail}</div>
           </div>
-
           <div className='infoWrapper'>
             <Avatar link='test' avatarImage='/profile.png' />
             <div className='info'>
@@ -56,20 +57,20 @@ const PlayerUI: React.FC<Props> = ({
         </div>
         <div className='buttonWrapper'>
           <div className='button'>
-            <button onClick={() => handleToggle('detail')}>
+            <button onClick={()=>handleDetail()}>
               <Image src={'/more_button.svg'} width={32} height={32} alt='bookmark' />
             </button>
           </div>
           <div className='button'>
-            <button onClick={() => handleToggle('like')}>
+            <button onClick={()=>handleLike()}>
               <Image
-                src={like ? '/bookmark_selected.svg' : '/bookmark.svg'}
+                src={isLike ? '/bookmark_selected.svg' : '/bookmark.svg'}
                 width={32}
                 height={32}
                 alt='bookmark'
               />
             </button>
-            <div className='count'>{likeCount} </div>
+            <div className='count'>{like}</div>
           </div>
         </div>
         {!!progress && <ProgressBar progress={progress} />}
@@ -95,7 +96,6 @@ const PlayerUI: React.FC<Props> = ({
               font-weight: 500;
               font-size: 14px;
               line-height: 140%;
-              /* identical to box height, or 20px */
               display: flex;
               align-items: flex-end;
               letter-spacing: -0.002em;
