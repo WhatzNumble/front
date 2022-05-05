@@ -16,20 +16,15 @@ const OnBoardingPage: NextPage = () => {
   return (
     <Layout hasTabBar={false}>
       <div className='logoContainer'>
-        <Image src='/logo.svg' width={44.54} height={40.15} alt='whatz-icon' />
-        <Image src='/whatz.svg' width={114.46} height={25.63} alt='whatz-logo' />
+        <Image src='/logo_with_title.svg' width={180} height={40.15} alt='whatz-logo' />
       </div>
       <style jsx>
         {`
           .logoContainer {
             position: absolute;
-            width: 180px;
-            height: 40px;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            display: flex;
-            justify-content: space-around;
           }
         `}
       </style>
