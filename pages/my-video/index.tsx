@@ -8,6 +8,8 @@ import {Video, VideoList} from 'libs/types';
 import VideoCard from "components/VideoCard";
 import PopBox from "components/PopBox";
 
+const HEIGHT = 85;
+
 interface Props {
     videos: Video[]
 }
@@ -33,19 +35,11 @@ function MyVideo({videos}: Props){
                             <button className="theme-main" onClick={onClickUpload}>영상 업로드 하기</button>
                         </div>
                         <div className="cards">
+                            <div className="space"></div>
                             {videos.map(vd => (
                                 <VideoCard key={vd.videoId} video={vd}/>
                             ))}
                         </div>
-                        <PopBox show={showUpload} onClosePopBox={onClickClose}>
-                            <div className="up">
-                                <h2 className="text">영상 업로드 하기</h2>
-                                <UploadLink 
-                                    self={<button className="button-self">직접 영상 업로드 하기</button>}
-                                    embed={<button className="button-embed">임베드 영상 업로드 하기</button>}
-                                />
-                            </div>
-                        </PopBox>
                     </div> :
                     <div className="empty-box">
                         <Image src='/empty_img.png' alt="Empty" width={120} height={120}/>
@@ -58,6 +52,15 @@ function MyVideo({videos}: Props){
                         </div>
                     </div> 
                 }
+                <PopBox show={showUpload} onClosePopBox={onClickClose}>
+                    <div className="up">
+                        <h2 className="text">영상 업로드 하기</h2>
+                        <UploadLink 
+                            self={<button className="button-self">직접 영상 업로드 하기</button>}
+                            embed={<button className="button-embed">임베드 영상 업로드 하기</button>}
+                        />
+                    </div>
+                </PopBox>
                 <style jsx>{`
                     $dark: #2C2C2C;
 
@@ -69,6 +72,7 @@ function MyVideo({videos}: Props){
                     }
 
                     .video-box {
+                        position: relative;
                         height: 100%;
                         display: flex;
                         flex-direction: column;
@@ -78,14 +82,13 @@ function MyVideo({videos}: Props){
                         flex-grow: 1;
                         display: grid;
                         grid-template-columns: repeat(3, 1fr);
-                        grid-template-rows: repeat(auto-fill, 198px);
                         gap: 4px;
-                        padding: 0 16px;
-                    }
-
-                    .gray {
-                        color: #B8B8B8;
-                        font-weight: normal;
+                        padding: 0 16px 0 16px;
+                        .space {
+                            height: ${HEIGHT}px;
+                            grid-column-start: 1;
+                            grid-column-end: 4;
+                        }
                     }
 
                     .gray {
@@ -113,11 +116,16 @@ function MyVideo({videos}: Props){
                     }
 
                     .button-upload {
+                        z-index: 2;
+                        position: fixed;
+                        width: 100%;
                         display: flex;
                         justify-content: center;
-                        padding: 15px 0 20px 0;
+                        padding: 20px 0 0 0;
+                        min-height: ${HEIGHT}px;
                         button {
-                            padding: 10px 20px;
+                            height: 48px;
+                            padding: 0 20px;
                         }
                     }
 
@@ -175,25 +183,25 @@ function UploadLink({self, embed}: {self: React.ReactNode, embed: React.ReactNod
 }
 
 export const getServerSideProps: GetServerSideProps = async ()=>{
-    const res = await fetch('http://52.78.135.138:8080/api/video');
-    const list = await res.json();
+    // const res = await fetch('http://www.whatz.kro.kr:8080/api/video');
+    // const list = await res.json();
 
     return {
         props: {
-            videos: list.videos,
-            // videos: [
-            //     {id: 1, name: 'test 1'},
-            //     {id: 2, name: 'test 2'},
-            //     {id: 3, name: 'test 3'},
-            //     {id: 4, name: 'test 4'},
-            //     {id: 5, name: 'test 5'},
-            //     {id: 6, name: 'test 6'},
-            //     {id: 7, name: 'test 7'},
-            //     {id: 8, name: 'test 8'},
-            //     {id: 9, name: 'test 9'},
-            //     {id: 10, name: 'test 10'},
-            //     {id: 11, name: 'test 11'},
-            // ],
+            // videos: list.videos,
+            videos: [
+                {videoId: 1, name: 'test 1'},
+                {videoId: 2, name: 'test 2'},
+                {videoId: 3, name: 'test 3'},
+                {videoId: 4, name: 'test 4'},
+                {videoId: 5, name: 'test 5'},
+                {videoId: 6, name: 'test 6'},
+                {videoId: 7, name: 'test 7'},
+                {videoId: 8, name: 'test 8'},
+                {videoId: 9, name: 'test 9'},
+                {videoId: 10, name: 'test 10'},
+                {videoId: 11, name: 'test 11'},
+            ],
         }
     }
 }
