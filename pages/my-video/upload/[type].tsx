@@ -2,7 +2,7 @@ import ConfirmBox from "components/ConfirmBox";
 import Layout from "components/Layout";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import {uiActions} from 'store/ui';
 
@@ -23,6 +23,7 @@ function Upload(){
         content: '', 
         fileName: '',
         videoThumbnail: '',
+        thumbnailName: '',
         isFinish: false,
     }); 
 
@@ -39,22 +40,30 @@ function Upload(){
         const {name, files} = targ;
 
         if(files && files.length === 1){
+            const fileName = files[0].name;
             try{
                 switch(name){
                     case 'videoThumbnail':
                         const fileContent = await fileLoader(files[0]);
                         setPreview(fileContent as string);
+                        setInputs({
+                            ...inputs,
+                            thumbnailName: fileName
+                        });
                         break;
                     case 'file':
                         if(!validateFile(files[0])) return;
                         setInputs({
                             ...inputs,
-                            fileName: files[0].name
+                            fileName
                         });
                         break;
                 }
             }catch(ex){
-                dispatch(uiActions.pushToast({message: '업로드중 문제가 발생하였습니다.'}));
+                setConfirm({
+                    show: true,
+                    msg: '업로드중 문제가 발생하였습니다.' 
+                });
             }
         }else{
             setConfirm({
@@ -62,9 +71,6 @@ function Upload(){
                 msg: '파일을 하나만 선택해 주세요.'
             });
         }
-
-        // todo - 영상 업로드 api 처리 
-
     }
 
     const validateFile = async (file: File)=>{
@@ -90,7 +96,6 @@ function Upload(){
             });
             return false;
         }
-
         return true;
     }
 
@@ -115,8 +120,31 @@ function Upload(){
             };
         });
     }
-    
-    const onClickComplete = ()=>{
+
+    const validateEmbedLink = (url: string)=>{
+        var p = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+        return url.match(p) ? true : false;
+    }
+
+    const onClickComplete = async ()=>{
+        if(isEmbed){
+            if(!validateEmbedLink(inputs.link)){
+                setConfirm({
+                    show: true,
+                    msg: '올바른 Youtube 영상 링크가 아닙니다.' 
+                });
+                return;
+            }
+        }else{
+
+        }
+        
+        const res = await fetch('/', {
+            method: 'POST',
+            body: new FormData(formRef.current!),
+        });
+        debugger;
+        
         dispatch(uiActions.pushToast({message: '영상 업로드가 완료되었습니다.'}));
         router.push('/my-video');
     }
@@ -133,6 +161,35 @@ function Upload(){
         return Number((byte / mb).toFixed(3));
     }
 
+    const strInvalid = (str: string)=> !str || !str.trim();
+
+    const validateInputs = ()=>{
+        let valid = true;
+        const {thumbnailName, title, content, fileName, link} = inputs;
+
+        if(strInvalid(thumbnailName) || strInvalid(title) || strInvalid(content)){
+            valid = false;
+        }
+        
+        if(isEmbed){
+            if(strInvalid(link)){
+                valid = false;
+            }
+        }else{
+            if(strInvalid(fileName)){
+                valid = false;
+            }
+        }
+        return valid;
+    }
+
+    useEffect(()=>{
+        setInputs({
+            ...inputs,
+            isFinish: validateInputs()
+        });
+    }, [inputs.title, inputs.content, inputs.fileName, inputs.thumbnailName, inputs.link]);
+
     return (
         <Layout 
             title="영상 업로드" 
@@ -145,9 +202,9 @@ function Upload(){
                     <label className="label" htmlFor="thmbnailUpload">
                         <div className="thumbnail image-cover">
                             {preview ? 
-                                <Image src={preview} layout='fill'/> :
+                                <Image src={preview} alt="썸네일" layout='fill'/> :
                                 <div className="add">
-                                    <Image src="/btn_add.svg" width={20} height={20}/>
+                                    <Image src="/btn_add.svg" alt="썸네일 업로드" width={20} height={20}/>
                                 </div>
                             }
                         </div>
@@ -156,22 +213,28 @@ function Upload(){
                         id="thmbnailUpload" 
                         type="file" 
                         name="videoThumbnail" 
-                        value={inputs.videoThumbnail} 
                         onChange={onFileChange} 
                         accept="image/*" 
                         hidden={true}
+                    />
+                    <input 
+                        className="input"
+                        name="thumbnailName"
+                        value={inputs.thumbnailName} 
+                        type="hidden"
                     />
                 </Panel>
                 {isEmbed ? 
                     <Panel title="연결 링크">
                         <div className="box">
                             <input 
+                                className="input"
                                 placeholder="링크추가" 
                                 name="link" 
                                 value={inputs.link} 
                                 onChange={onChange}
                             />
-                            <Image src='/btn_link.svg' width={44} height={44}/>
+                            <Image src='/btn_link.svg' alt="링크추가" width={44} height={44}/>
                         </div>
                     </Panel> :
                     <Panel title="영상 업로드">
@@ -185,23 +248,33 @@ function Upload(){
                                 hidden={true}
                             />
                             <input 
+                                className="input"
                                 value={inputs.fileName} 
-                                placeholder="영상을 업로드 해주세요" 
+                                placeholder="영상을 업로드 해주세요." 
                                 disabled
                             />
                             <label htmlFor="videoUpload">
-                                <Image src='/btn_add2.svg' width={44} height={44}/>
+                                <Image src='/btn_add2.svg' alt="영상 업로드" width={44} height={44}/>
                             </label>
                         </div>
                     </Panel>
                 }
+                <Panel title="제목">
+                    <input 
+                        className="input"
+                        value={inputs.title} 
+                        name="title" 
+                        onChange={onChange} 
+                        placeholder="영상의 제목을 입력해주세요."
+                    />
+                </Panel>
                 <Panel title="설명">
                     <textarea 
                         className="desc" 
                         value={inputs.content} 
                         name="content" 
                         onChange={onChange} 
-                        placeholder="영상에 대해 이야기해주세요"
+                        placeholder="영상에 대해 이야기해주세요."
                     />
                 </Panel>
 
@@ -239,16 +312,19 @@ function Upload(){
 
                     .box {
                         display: flex;
-                        input {
-                            flex-grow: 1;
-                            background-color: black;
-                            border: 0;
-                            margin-right: 15px;
-                            font-size: 20px;
-                            color: white;
-                            &::placeholder {
-                               color: #8F8F8F;
-                            }
+                        align-items: center;
+                    }
+
+                    .input {
+                        height: 28px;
+                        flex-grow: 1;
+                        background-color: black;
+                        border: 0;
+                        margin-right: 15px;
+                        font-size: 20px;
+                        color: white;
+                        &::placeholder {
+                            color: #8F8F8F;
                         }
                     }
 

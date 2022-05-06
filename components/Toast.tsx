@@ -7,7 +7,7 @@ interface Props {
     duration?: number
 }
 
-function Toast({message = '', duration = 2.5}: Props){
+function Toast({message = '', duration = 2.8}: Props){
     const [hasWin, setHasWin] = useState(false);
     const [show, setShow] = useState(true);
 
@@ -22,7 +22,7 @@ function Toast({message = '', duration = 2.5}: Props){
         {ReactDOM.createPortal(
             <CSSTransition
                 in={show}
-                timeout={200}
+                timeout={300}
                 classNames="toast"
                 unmountOnExit
             >
@@ -32,8 +32,10 @@ function Toast({message = '', duration = 2.5}: Props){
                         .Toast {
                             z-index: 99;
                             position: fixed;
-                            top: 80%;
+                            bottom: 15%;
                             left: 50%;
+                            width: fit-content;
+                            max-width: calc(100% - 10px);
                             padding: 10px 20px;
                             background-color: #2c2c2c9a;
                             color: white;
@@ -48,7 +50,7 @@ function Toast({message = '', duration = 2.5}: Props){
                         .toast-enter-active {
                             opacity: 1;
                             transform: translate(-50%, -20px);
-                            transition: .2s;
+                            transition: .3s;
                         }
                         .toast-enter-done {
                             opacity: 1;
@@ -61,7 +63,7 @@ function Toast({message = '', duration = 2.5}: Props){
                         .toast-exit-active {
                             opacity: 0;
                             transform: translate(-50%, 0);
-                            transition: .2s;
+                            transition: .3s;
                         }
                     `}</style>
                 </div>
