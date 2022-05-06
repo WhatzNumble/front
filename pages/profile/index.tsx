@@ -12,6 +12,7 @@ import useUserState from 'hooks/useUserState';
 import Button from './Button';
 
 import ProfileAvatar from './ProfileAvatar';
+import ProfileInfo from './ProfileInfo';
 
 const profileWrapper = css`
   .profileWrapper {
@@ -51,16 +52,18 @@ const ProfilePage = () => {
   return (
     <Layout>
       <div className='profileWrapper'>
-        <div className='avatar'>
-          <ProfileAvatar avatarSrc={userAvatar} />
-        </div>
-        <div className='nameWrapper'>
-          <div>{`email: ${userEmail}`}</div>
-          <div>{`nick: ${nickName}`}</div>
-        </div>
+        <ProfileAvatar avatarSrc={userAvatar} />
+        <ProfileInfo name={nickName} email={userEmail} />
+
         <div className='buttonWrapper'>
-          <Button onClick={handleLogout} width={'100%'} text='프로필 편집'  />
-          <Button onClick={handleLogout} width={'100%'} text='로그아웃' theme='dark'/>
+          <Button
+            onClick={() => {
+              Router.push('/profile/edit');
+            }}
+            width={'100%'}
+            text='프로필 편집'
+          />
+          <Button onClick={handleLogout} width={'100%'} text='로그아웃' theme='dark' />
           <Button onClick={handleLogout} width={'100%'} text='탈퇴하기' theme='dark' />
         </div>
         <Link href={'/profile/edit'}>프로필 수정</Link>
