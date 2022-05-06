@@ -33,11 +33,11 @@ const Home: NextPage<Props> = ({ token }) => {
   useEffect(() => {
     if (token && !isLoggedIn) {
       console.log('login');
-      const response = axios.get('/get/user');
+      const response = axios.get('/api/profile');
       dispatch(userActions.login({ token: token, socialType: 'kakao' }));
       console.log(response);
     }
-  }, [token, dispatch, isLoggedIn]);
+  }, []);
 
   return (
     <Layout title='홈'>
