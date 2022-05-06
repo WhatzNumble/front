@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { uiActions } from 'store/ui';
+import ProfileAvatar from '../ProfileAvatar';
 
 import useUserTypeRedirect from 'hooks/useUserTypeRedirect';
 import { userActions } from 'store/user';
@@ -23,7 +24,7 @@ const ProfileEditPage: NextPage = () => {
   const dispatch = useDispatch();
   const userState = useSelector((state: AppState) => state.user);
   const [nickName, setNickName] = useState<string>(userState.nickName);
-  const [avatarSrc, setAvatarSrc] = useState<string>(userState.nickName);
+  const [avatarSrc, setAvatarSrc] = useState<string>(userState.userAvatar);
 
   const { editType } = useRouter().query;
   const isSignUp = editType === 'signup';
@@ -70,12 +71,8 @@ const ProfileEditPage: NextPage = () => {
       headerRight={<button onClick={() => handleNext()}>완료</button>}
     >
       <div className='profile'>
-        <div className='avatar'>
-          <Image src={avatarSrc || '/logo.svg'} width={180} height={180} alt='user-avatar' />
-          <button className='editButton' >
-            <Image src='/edit_button.svg' layout='fill' alt='edit-button' />
-          </button>
-        </div>
+        <ProfileAvatar avatarSrc={avatarSrc} />
+
         <div className='nickNameForm'>
           <input onChange={handleNickName} value={nickName} />
           <p className='info'>
