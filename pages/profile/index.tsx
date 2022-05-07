@@ -1,55 +1,116 @@
 import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import Router from 'next/router';
+import css from 'styled-jsx/css';
 
-import config from 'utils/config';
 import Layout from 'components/Layout';
 import { userActions } from 'store/user';
 import useUserTypeRedirect from 'hooks/useUserTypeRedirect';
-import { deleteCookie } from 'utils';
+import { deleteCookie } from 'utils/cookie';
 import useUserState from 'hooks/useUserState';
+import Button from './Button';
+
+import ProfileAvatar from './ProfileAvatar';
+import ProfileInfo from './ProfileInfo';
+import ConfirmBox from 'components/ConfirmBox';
+
+const profileWrapper = css`
+  .profileWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    margin-top: 30%;
+    padding: 0px 32px;
+  }
+`;
 
 const ProfilePage = () => {
-  useUserTypeRedirect('/', 'guest');
+  // useUserTypeRedirect('/', 'guest');
   const dispatch = useDispatch();
+  const [showConfirm, setConfirm] = useState(false);
   const { userEmail, nickName, userAvatar, token } = useUserState();
 
-  const logoutRequest = () => {
-    console.log(token);
-    axios
-      .post('/api/logout', {
+  const logoutRequest = async () => {
+    await axios
+      .post('/member/logout', {
         //post 인데 명세서에 요청 데이터가 없어 일단 비워둠
       })
       .then((response) => {
-        console.log(response);
-        //로그인 성공시 dispatch
-        axios.defaults.headers.common['x-auth-token'] = '';
-        dispatch(userActions.logout());
+        console.log(response.data);
       })
       .catch((error) => {
         console.error(error);
       });
   };
 
-  const handleLogout = () => {
-    deleteCookie('access-token', '/', config.hostDomain);
+  const onClickLogout = () => {
     logoutRequest();
-    Router.push('/');
     dispatch(userActions.logout());
+  };
+
+  const openConfirm = () => {
+    setConfirm(true);
+  };
+
+  const closeConfirm = () => {
+    setConfirm(false);
+  };
+
+  const onClickUserLeave = () => {
+    openConfirm();
+    //user 탈퇴 request
+  };
+
+  const confirmUserLeave = (confirm: boolean) => {
+    //user 탈퇴 request
+    if (confirm) {
+      console.log('userLeabe');
+      dispatch(userActions.logout());
+      Router.push('/');
+    } else {
+      closeConfirm();
+    }
   };
 
   return (
     <Layout>
-      <div>
-        user info // 리덕스 login action 에 지정된 데이터 ,ap login response 데이터 준비되면 수정
-        <div>{`email: ${userEmail}`}</div>
-        <div>{`nick: ${nickName}`}</div>
-        <div>{`avatarSrc: ${userAvatar}`}</div>
+      <div className='profileWrapper'>
+        <ProfileAvatar avatarSrc={userAvatar} />
+        <ProfileInfo name={nickName} email={userEmail} />
+
+        <div className='buttonWrapper'>
+          <Button
+            onClick={() => {
+              Router.push('/profile/edit');
+            }}
+            text='프로필 편집'
+          />
+          <Button onClick={onClickLogout} text='로그아웃' theme='dark' />
+          <Button onClick={onClickUserLeave} text='탈퇴하기' theme='dark' />
+        </div>
+        <Link href={'/profile/edit'}>프로필 수정</Link>
+        <Link href={{ pathname: '/profile/edit', query: { editType: 'signup' } }}>프로필 생성</Link>
+        <ConfirmBox
+          show={showConfirm}
+          callback={confirmUserLeave}
+          message='정말로 탈퇴하시겠습니까?'
+        />
       </div>
-      <Link href={'/profile/edit'}>프로필 수정</Link>
-      <Link href={{ pathname: '/profile/edit', query: { editType: 'signup' } }}>프로필 생성</Link>
-      <button onClick={() => handleLogout()}>log out</button>
+      <style jsx>{profileWrapper}</style>
+      <style jsx>
+        {`
+          .avatar {
+            display: flex;
+            justify-content: center;
+          }
+          .buttonWrapper {
+            width: 100%;
+          }
+        `}
+      </style>
     </Layout>
   );
 };
