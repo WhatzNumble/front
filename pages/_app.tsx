@@ -12,9 +12,9 @@ import Toast from 'components/Toast';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { toasts } = useSelector((state: AppState) => state.ui);
-  // axios.defaults.withCredentials = true;
 
   useEffect(() => {
+    axios.defaults.withCredentials = true;
     axios.defaults.baseURL = config.apiBaseURL;
     axios.defaults.timeout = 10000;
   }, []);
