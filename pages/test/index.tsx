@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import { useState } from 'react';
 
 import Layout from 'components/Layout';
-import type { IUploadUser,  IVideo} from 'components/Video';
+import type { IUploadUser, IVideo } from 'components/Video';
 
 const Video = dynamic(() => import('components/Video'), { ssr: false });
 
@@ -38,7 +38,7 @@ export const mockVideos: IVideo[] = [
     uploader: mockProfile,
     like: 777,
     detail: detailMockString,
-    date: '2022.12.22'
+    date: '2022.12.22',
   },
   {
     id: 'mock',
@@ -49,7 +49,7 @@ export const mockVideos: IVideo[] = [
     uploader: mockProfile,
     like: 777,
     detail: detailMockString,
-    date: '2022.12.22'
+    date: '2022.12.22',
   },
   {
     id: 'mock',
@@ -59,7 +59,7 @@ export const mockVideos: IVideo[] = [
     uploader: mockProfile,
     like: 777,
     detail: detailMockString,
-    date: '2022.12.22'
+    date: '2022.12.22',
   },
   {
     id: 'mock',
@@ -70,7 +70,7 @@ export const mockVideos: IVideo[] = [
     uploader: mockProfile,
     like: 777,
     detail: detailMockString,
-    date: '2022.12.22'
+    date: '2022.12.22',
   },
   {
     id: 'mock',
@@ -80,7 +80,7 @@ export const mockVideos: IVideo[] = [
     uploader: mockProfile,
     like: 777,
     detail: detailMockString,
-    date: '2022.12.22'
+    date: '2022.12.22',
   },
   {
     id: 'mock',
@@ -91,11 +91,15 @@ export const mockVideos: IVideo[] = [
     uploader: mockProfile,
     like: 777,
     detail: detailMockString,
-    date: '2022.12.22'
+    date: '2022.12.22',
   },
 ];
 
-const Test: NextPage = () => {
+interface Props {
+  query: string;
+}
+
+const Test: NextPage<Props> = ({ query }) => {
   const [videos, setVideos] = useState<IVideo[]>(mockVideos);
 
   return (

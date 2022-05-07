@@ -10,7 +10,7 @@ interface Props {
 const Button: React.FC<Props> = ({
   onClick,
   theme = 'light',
-  width,
+  width = '100%',
   text,
   buttonColor,
   textColor = '#000',
@@ -24,11 +24,12 @@ const Button: React.FC<Props> = ({
       <style jsx>
         {`
           .wrapper {
+            width: ${width};
             margin: 4px 0;
           }
           .button {
-            width: ${width || 'auto'};
             height: 48px;
+            width: 100%;
             background: ${backgroundColor};
             border-radius: 30px;
             color: ${theme === 'dark' ? '#fff' : textColor};

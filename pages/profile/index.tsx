@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import Router from 'next/router';
@@ -7,16 +8,21 @@ import css from 'styled-jsx/css';
 import Layout from 'components/Layout';
 import { userActions } from 'store/user';
 import useUserTypeRedirect from 'hooks/useUserTypeRedirect';
-import { deleteCookie } from 'utils';
+import { deleteCookie } from 'utils/cookie';
 import useUserState from 'hooks/useUserState';
 import Button from './Button';
 
 import ProfileAvatar from './ProfileAvatar';
 import ProfileInfo from './ProfileInfo';
+import ConfirmBox from 'components/ConfirmBox';
 
 const profileWrapper = css`
   .profileWrapper {
-    margin-top: 168px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    margin-top: 30%;
     padding: 0px 32px;
   }
 `;
@@ -24,6 +30,7 @@ const profileWrapper = css`
 const ProfilePage = () => {
   // useUserTypeRedirect('/', 'guest');
   const dispatch = useDispatch();
+  const [showConfirm, setConfirm] = useState(false);
   const { userEmail, nickName, userAvatar, token } = useUserState();
 
   const logoutRequest = async () => {
@@ -37,14 +44,35 @@ const ProfilePage = () => {
       .catch((error) => {
         console.error(error);
       });
-    axios.defaults.headers.common['x-auth-token'] = '';
   };
 
-  const handleLogout = () => {
+  const onClickLogout = () => {
     logoutRequest();
-    deleteCookie('access-token', '/');
     dispatch(userActions.logout());
-    Router.push('/');
+  };
+
+  const openConfirm = () => {
+    setConfirm(true);
+  };
+
+  const closeConfirm = () => {
+    setConfirm(false);
+  };
+
+  const onClickUserLeave = () => {
+    openConfirm();
+    //user 탈퇴 request
+  };
+
+  const confirmUserLeave = (confirm: boolean) => {
+    //user 탈퇴 request
+    if (confirm) {
+      console.log('userLeabe');
+      dispatch(userActions.logout());
+      Router.push('/');
+    } else {
+      closeConfirm();
+    }
   };
 
   return (
@@ -58,14 +86,18 @@ const ProfilePage = () => {
             onClick={() => {
               Router.push('/profile/edit');
             }}
-            width={'100%'}
             text='프로필 편집'
           />
-          <Button onClick={handleLogout} width={'100%'} text='로그아웃' theme='dark' />
-          <Button onClick={handleLogout} width={'100%'} text='탈퇴하기' theme='dark' />
+          <Button onClick={onClickLogout} text='로그아웃' theme='dark' />
+          <Button onClick={onClickUserLeave} text='탈퇴하기' theme='dark' />
         </div>
         <Link href={'/profile/edit'}>프로필 수정</Link>
         <Link href={{ pathname: '/profile/edit', query: { editType: 'signup' } }}>프로필 생성</Link>
+        <ConfirmBox
+          show={showConfirm}
+          callback={confirmUserLeave}
+          message='정말로 탈퇴하시겠습니까?'
+        />
       </div>
       <style jsx>{profileWrapper}</style>
       <style jsx>
@@ -75,8 +107,7 @@ const ProfilePage = () => {
             justify-content: center;
           }
           .buttonWrapper {
-            width: fit-contents;
-            margin: 0 auto;
+            width: 100%;
           }
         `}
       </style>

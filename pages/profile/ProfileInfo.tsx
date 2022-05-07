@@ -32,7 +32,7 @@ const ProfileInfo: React.FC<Props> = ({ name, isEdit = true, email }) => {
       <style jsx>
         {`
           .profileInfo {
-            margin-top: 48px;
+            margin-top: 8px;
             color: #fff;
             p {
               color: #8f8f8f;
@@ -40,6 +40,7 @@ const ProfileInfo: React.FC<Props> = ({ name, isEdit = true, email }) => {
             .nickName {
               border: 0;
               border-bottom: 2px solid #8f8f8f;
+              background-color: transparent;
               width: 315px;
               font-family: 'Apple SD Gothic Neo';
               font-style: normal;

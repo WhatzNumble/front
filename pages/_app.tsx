@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import App from 'next/app';
 import type { AppContext, AppProps } from 'next/app';
 import { wrapper, AppState } from 'store';
@@ -5,14 +6,14 @@ import { useSelector } from 'react-redux';
 import { TransitionGroup } from 'react-transition-group';
 import cookies from 'next-cookies';
 import axios from 'axios';
-import config from 'utils/config';
 
+import config from 'utils/config';
 import Toast from 'components/Toast';
-import { useEffect } from 'react';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { toasts } = useSelector((state: AppState) => state.ui);
   // axios.defaults.withCredentials = true;
+
   useEffect(() => {
     axios.defaults.baseURL = config.apiBaseURL;
     axios.defaults.timeout = 10000;
@@ -97,9 +98,9 @@ MyApp.getInitialProps = async (context: AppContext) => {
   const { ctx } = context;
   const allCookies = cookies(ctx);
 
-  const accessTokenByCookie = allCookies['access-token'];
+  const accessTokenByCookie = allCookies[config.cookieAuthHeaderKey];
   if (accessTokenByCookie) {
-    axios.defaults.headers.common['x-auth-token'] = accessTokenByCookie;
+    axios.defaults.headers.common[config.authHeaderKey] = accessTokenByCookie;
   }
 
   const appProps = await App.getInitialProps(context);

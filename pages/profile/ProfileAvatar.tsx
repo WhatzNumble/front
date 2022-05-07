@@ -17,6 +17,7 @@ const ProfileAvatar: React.FC<Props> = ({ avatarSrc, isEdit = false }) => {
       <style jsx>
         {`
           .avatar {
+            margin: 0 auto;
             border-radius: 50%;
             width: 180px;
             height: 180px;

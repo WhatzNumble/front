@@ -11,6 +11,7 @@ import useUserTypeRedirect from 'hooks/useUserTypeRedirect';
 import Button from '../Button';
 import ProfileAvatar from '../ProfileAvatar';
 import ProfileInfo from '../ProfileInfo';
+import { HEADER_HEIGHT } from 'components/Layout';
 
 const ProfileEditPage: NextPage = () => {
   const dispatch = useDispatch();
