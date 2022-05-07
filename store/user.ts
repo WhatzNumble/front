@@ -1,5 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import Router from 'next/router';
+import { deleteCookie } from 'utils/cookie';
+import axios from 'axios';
+import config from 'utils/config';
 
 export interface User {
   isLoggedIn: boolean;
@@ -75,6 +78,10 @@ const userSlice = createSlice({
       };
     },
     logout: () => {
+      console.log('logout');
+      deleteCookie('access-token', '/');
+      Router.push('/');
+      axios.defaults.headers.common[config.authHeaderKey] = '';
       return {
         ...initialState,
       };
