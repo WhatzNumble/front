@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import useUserState from 'hooks/useUserState';
 
 import { userActions } from 'store/user';
+import config from 'utils/config';
 
 interface Props {
   token: string | null;
@@ -33,11 +34,11 @@ const Home: NextPage<Props> = ({ token }) => {
   useEffect(() => {
     if (token && !isLoggedIn) {
       console.log('login');
-      const response = axios.get('/get/user');
+      const response = axios.get('/api/profile');
       dispatch(userActions.login({ token: token, socialType: 'kakao' }));
       console.log(response);
     }
-  }, [token, dispatch, isLoggedIn]);
+  }, []);
 
   return (
     <Layout title='홈'>
@@ -49,9 +50,9 @@ const Home: NextPage<Props> = ({ token }) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const allCookies = cookies(context);
 
-  const accessTokenByCookie = allCookies['access-token'];
+  const accessTokenByCookie = allCookies[config.cookieAuthHeaderKey];
   if (accessTokenByCookie) {
-    axios.defaults.headers.common['x-auth-token'] = accessTokenByCookie;
+    axios.defaults.headers.common[config.authHeaderKey] = accessTokenByCookie;
   }
 
   return {

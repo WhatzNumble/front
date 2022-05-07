@@ -5,6 +5,8 @@ import axios from 'axios';
 import cookies from 'next-cookies';
 import { GetServerSideProps, NextPage } from 'next';
 
+import config from 'utils/config';
+
 interface Props {
   token: string;
 }
@@ -27,9 +29,9 @@ const OauthRedirectPage: NextPage<Props> = ({ token }) => {
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const allCookies = cookies(context);
 
-  const accessTokenByCookie = allCookies['access-token'];
+  const accessTokenByCookie = allCookies[config.cookieAuthHeaderKey];
   if (accessTokenByCookie) {
-    axios.defaults.headers.common['x-auth-token'] = accessTokenByCookie;
+    axios.defaults.headers.common[config.authHeaderKey] = accessTokenByCookie;
   }
 
   return {

@@ -6,6 +6,7 @@ interface ISocialLoginButton {
 const LoginButton: React.FC<ISocialLoginButton> = ({ label, hrefLink }) => {
   return (
     <a href={hrefLink}>
+      <button className='SocialLoginButton'>{label}</button>
       <style jsx>
         {`
           .SocialLoginButton {
@@ -15,16 +16,8 @@ const LoginButton: React.FC<ISocialLoginButton> = ({ label, hrefLink }) => {
             border-radius: 28px;
             color: #fff;
           }
-          .KaKaoLogin {
-            border-radius: 12px;
-            background-color: #fee500;
-            color: #000000;
-            height: fit-content;
-            padding: 1rem;
-          }
         `}
       </style>
-      <button className='SocialLoginButton'>{label}</button>
     </a>
   );
 };
