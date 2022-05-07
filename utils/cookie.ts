@@ -18,7 +18,6 @@ function getCookie2(name: string) {
 const deleteCookie = (name: string, path?: string, domain?: string) => {
   console.log(getCookie(name));
   if (getCookie(name)) {
-    console.log('!!');
     console.log(
       name +
         '=' +
