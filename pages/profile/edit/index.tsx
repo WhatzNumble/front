@@ -8,7 +8,6 @@ import { useDispatch } from 'react-redux';
 import { uiActions } from 'store/ui';
 
 import useUserTypeRedirect from 'hooks/useUserTypeRedirect';
-import { userActions } from 'store/user';
 import Button from '../Button';
 import ProfileAvatar from '../ProfileAvatar';
 import ProfileInfo from '../ProfileInfo';

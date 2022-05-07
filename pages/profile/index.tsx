@@ -26,20 +26,18 @@ const ProfilePage = () => {
   const dispatch = useDispatch();
   const { userEmail, nickName, userAvatar, token } = useUserState();
 
-  const logoutRequest = () => {
-    console.log(token);
-    axios
+  const logoutRequest = async () => {
+    await axios
       .post('/member/logout', {
         //post 인데 명세서에 요청 데이터가 없어 일단 비워둠
       })
       .then((response) => {
         console.log(response.data);
-        //로그아웃 성공시 dispatch
-        axios.defaults.headers.common['x-auth-token'] = '';
       })
       .catch((error) => {
         console.error(error);
       });
+    axios.defaults.headers.common['x-auth-token'] = '';
   };
 
   const handleLogout = () => {
