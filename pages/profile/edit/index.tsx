@@ -11,18 +11,18 @@ import useUserTypeRedirect from 'hooks/useUserTypeRedirect';
 import Button from '../Button';
 import ProfileAvatar from '../ProfileAvatar';
 import ProfileInfo from '../ProfileInfo';
+import { profileWrapper } from '..';
 import { HEADER_HEIGHT } from 'components/Layout';
 
 const ProfileEditPage: NextPage = () => {
   const dispatch = useDispatch();
-  const {nickName, userEmail, userAvatar}= useSelector((state: AppState) => state.user);
+  const { nickName, userAvatar } = useSelector((state: AppState) => state.user);
   const [avatarSrc, setAvatarSrc] = useState<string>(userAvatar);
 
   const { editType } = useRouter().query;
   const isSignUp = editType === 'signup';
 
   // useUserTypeRedirect('/', 'guest'); //guest 일 경우 홈으로 redirect
-
 
   const successUpdateProfile = () => {
     //dispatch(userActions.loadUser(response));
@@ -56,12 +56,13 @@ const ProfileEditPage: NextPage = () => {
     <Layout
       headerLeft={<div>취소</div>}
       headerTitle={isSignUp ? '프로필 생성하기' : '프로필 수정하기'}
-      headerRight={<Button onClick={() => handleNext()} width='62px' text='완료'/>}
+      headerRight={<Button onClick={() => handleNext()} width='62px' text='완료' />}
     >
-      <div className='profile'>
+      <div className='profileWrapper'>
         <ProfileAvatar avatarSrc={avatarSrc} />
         <ProfileInfo isEdit name={nickName} />
       </div>
+      <style jsx>{profileWrapper}</style>
       <style jsx>
         {`
           .profile {
@@ -69,21 +70,6 @@ const ProfileEditPage: NextPage = () => {
             display: flex;
             flex-direction: column;
             align-items: center;
-            .avatar {
-              border-radius: 50%;
-              width: 180px;
-              height: 180px;
-              .editButton {
-                position: absolute;
-                border-radius: 50%;
-                width: 44px;
-                height: 44px;
-                left: 234px;
-                top: 304px;
-                background: #ffffff;
-              }
-            }
-            
           }
         `}
       </style>

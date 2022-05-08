@@ -8,7 +8,6 @@ import css from 'styled-jsx/css';
 import Layout from 'components/Layout';
 import { userActions } from 'store/user';
 import useUserTypeRedirect from 'hooks/useUserTypeRedirect';
-import { deleteCookie } from 'utils/cookie';
 import useUserState from 'hooks/useUserState';
 import Button from './Button';
 
@@ -16,7 +15,7 @@ import ProfileAvatar from './ProfileAvatar';
 import ProfileInfo from './ProfileInfo';
 import ConfirmBox from 'components/ConfirmBox';
 
-const profileWrapper = css`
+export const profileWrapper = css`
   .profileWrapper {
     display: flex;
     flex-direction: column;
@@ -80,7 +79,6 @@ const ProfilePage = () => {
       <div className='profileWrapper'>
         <ProfileAvatar avatarSrc={userAvatar} />
         <ProfileInfo name={nickName} email={userEmail} />
-
         <div className='buttonWrapper'>
           <Button
             onClick={() => {
