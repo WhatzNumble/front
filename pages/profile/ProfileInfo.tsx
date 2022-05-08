@@ -6,7 +6,7 @@ interface Props {
   name: string;
 }
 
-const ProfileInfo: React.FC<Props> = ({ name, isEdit = true, email }) => {
+const ProfileInfo: React.FC<Props> = ({ name, isEdit = false, email }) => {
   const [nickName, setNickName] = useState<string>(name);
 
   const handleNickName = (e: React.ChangeEvent<HTMLInputElement>) => {
