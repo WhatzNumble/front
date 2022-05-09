@@ -1,3 +1,4 @@
+import useWindow from "hooks/useWindow";
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import {CSSTransition} from "react-transition-group";
@@ -14,7 +15,7 @@ interface Props {
 }
 
 function ConfirmBox({message, callback, show, okText = '예', noText = '아니오', isAlert = false}: Props){
-    const [hasWin, setHasWin] = useState(false);
+    const hasWin = useWindow();
 
     const onClick = (e: React.MouseEvent<HTMLDivElement>)=>{
         const targ = e.target as HTMLButtonElement;
@@ -23,10 +24,6 @@ function ConfirmBox({message, callback, show, okText = '예', noText = '아니�
             callback(ok);
         }
     }
-
-    useEffect(()=>{
-        setHasWin(true);
-    }, []);
 
     return hasWin ? <>
         {ReactDOM.createPortal(
