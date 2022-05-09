@@ -59,7 +59,7 @@ const ProfileEditPage: NextPage = () => {
       headerRight={<Button onClick={() => handleNext()} width='62px' text='완료' />}
     >
       <div className='profileWrapper'>
-        <ProfileAvatar avatarSrc={avatarSrc} />
+        <ProfileAvatar isEdit  avatarSrc={avatarSrc} />
         <ProfileInfo isEdit name={nickName} />
       </div>
       <style jsx>{profileWrapper}</style>
