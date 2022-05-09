@@ -24,8 +24,11 @@ function SideBar(){
                 ))}
             </ul>
             <style jsx>{`
+                $color: rgb(115, 255, 0);
+
                 .SideBar {
-                    border-right: 1px solid black;
+                    background-color: rgb(75, 75, 75);
+                    color: white;
                 }
 
                 .nav-box {
@@ -37,13 +40,13 @@ function SideBar(){
                     padding: 10px;
                     font-weight: bold;
                     &:hover {
-                        color: red;
+                        color: $color;
                     }
                 }
 
                 .match {
                     position: relative;
-                    color: red;
+                    color: $color;
                     &:after {
                         position: absolute;
                         content: '◀';

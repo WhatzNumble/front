@@ -1,26 +1,20 @@
+import Image from "next/image";
+
 interface Props {
-    height?: 60; 
+    height?: number; 
 }
 
 function Header({height}: Props){
     return (
         <header className="Header">
-            <div className="logo">로고</div>
+            <Image src="/admin_logo.svg" width={180} height={40.2}/>
             <style jsx>{`
                 .Header {
                     height: ${height}px;
                     display: flex;
                     align-items: center;
                     padding: 0 20px;
-                    border-bottom: 1px solid black;
-                }
-
-                .logo {
-                    padding: 10px;
-                    border: 1px solid black;
                     background-color: black;
-                    color: white;
-                    font-weight: bold;
                 }
             `}</style>
         </header>
