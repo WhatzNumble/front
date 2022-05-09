@@ -3,7 +3,7 @@ import { NextPage } from 'next';
 import Router, { useRouter } from 'next/router';
 import { AppState } from 'store';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { uiActions } from 'store/ui';
 
@@ -18,6 +18,7 @@ const ProfileEditPage: NextPage = () => {
   const dispatch = useDispatch();
   const { nickName, userAvatar } = useSelector((state: AppState) => state.user);
   const [avatarSrc, setAvatarSrc] = useState<string>(userAvatar);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const { editType } = useRouter().query;
   const isSignUp = editType === 'signup';
@@ -58,10 +59,10 @@ const ProfileEditPage: NextPage = () => {
       headerTitle={isSignUp ? '프로필 생성하기' : '프로필 수정하기'}
       headerRight={<Button onClick={() => handleNext()} width='62px' text='완료' />}
     >
-      <div className='profileWrapper'>
+      <form className='profileWrapper' ref={formRef}>
         <ProfileAvatar isEdit  avatarSrc={avatarSrc} />
         <ProfileInfo isEdit name={nickName} />
-      </div>
+      </form>
       <style jsx>{profileWrapper}</style>
       <style jsx>
         {`

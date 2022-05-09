@@ -10,9 +10,23 @@ const ProfileAvatar: React.FC<Props> = ({ avatarSrc, isEdit = false }) => {
     <div className='avatar'>
       <Image src={avatarSrc || '/logo.svg'} width={180} height={180} alt='user-avatar' />
       {isEdit && (
-        <button className='editButton'>
-          <Image src='/btn_edit.svg' layout='fill' alt='edit-button' />
-        </button>
+        <>
+          <label className='editButton' htmlFor='profileUpload'>
+            <Image src='/btn_edit.svg' layout='fill' alt='edit-button' />
+          </label>
+          <input
+            className='input'
+            name='profileUpload'
+            accept='image/*'
+            type='hidden'
+          />
+          <input
+            className='input'
+            name='thumbnailName'
+            value={avatarSrc}
+            type='hidden'
+          />
+        </>
       )}
       <style jsx>
         {`
