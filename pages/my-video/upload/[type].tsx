@@ -33,6 +33,11 @@ function Upload(){
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
         const {name, value} = e.currentTarget;
+
+        if(name === 'link'){
+            setDefaultThumbnail(value);
+        }
+
         setInputs({
             ...inputs,
             [name]: value
@@ -139,17 +144,26 @@ function Upload(){
                 });
                 return;
             }
-        }else{
-
         }
-        
-        const res = await fetch(`http://localhost:8080/api/video/add/${isEmbed ? 'embed': 'direct'}`, {
-            method: 'POST',
-            headers: {
-                [`${config.authHeaderKey}`]: user.token
-            },
-            body: new FormData(formRef.current!),
-        });
+
+        try{
+            const res = await fetch(`http://localhost:8080/api/video/add/${isEmbed ? 'embed': 'direct'}`, {
+                method: 'POST',
+                headers: {
+                    [`${config.authHeaderKey}`]: user.token
+                },
+                body: new FormData(formRef.current!),
+            });
+            if(res.ok){
+                throw new Error();
+            }
+        }catch(ex){
+            const err = ex as Error;
+            setConfirm({
+                show: true,
+                msg: '업로드중 문제가 발생하였습니다.',
+            });
+        }
         debugger;
         
         dispatch(uiActions.pushToast({message: '영상 업로드가 완료되었습니다.'}));
@@ -172,9 +186,9 @@ function Upload(){
 
     const validateInputs = ()=>{
         let valid = true;
-        const {thumbnailName, title, content, fileName, link} = inputs;
+        const {title, content, fileName, link} = inputs;
 
-        if(strInvalid(thumbnailName) || strInvalid(title) || strInvalid(content)){
+        if(strInvalid(preview) || strInvalid(title) || strInvalid(content)){
             valid = false;
         }
         
@@ -190,12 +204,42 @@ function Upload(){
         return valid;
     }
 
+    const setDefaultThumbnail = (link: string)=>{
+        const thumbnail = getYoutubeThumbnail(link);
+        setPreview(thumbnail);
+    }
+
+    const getYoutubeThumbnail = (url: string, quality: string = 'medium')=>{
+        let videoId;
+        let result;
+    
+        if(result = url.match(/youtube\.com.*(\?v=|\/embed\/)(.{11})/)){
+            videoId = result.pop();
+        }else if(result = url.match(/youtu.be\/(.{11})/)){
+            videoId = result.pop();
+        }
+    
+        if(videoId){
+            let quality_key = 'maxresdefault'; // Max quality
+            if(quality == 'low'){
+                quality_key = 'sddefault';
+            }else if(quality == 'medium'){
+                quality_key = 'mqdefault';
+            } else if (quality == 'high') {
+                quality_key = 'hqdefault';
+            }
+    
+            return `http://img.youtube.com/vi/${videoId}/${quality_key}.jpg`;
+        }
+        return '';
+    }
+
     useEffect(()=>{
         setInputs({
             ...inputs,
             isFinish: validateInputs()
         });
-    }, [inputs.title, inputs.content, inputs.fileName, inputs.thumbnailName, inputs.link]);
+    }, [inputs.title, inputs.content, inputs.fileName, inputs.link, preview]);
 
     return (
         <Layout 

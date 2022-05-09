@@ -7,16 +7,20 @@ import { useEffect, useState } from "react";
 import {Video, VideoList} from 'libs/types';
 import VideoCard from "components/VideoCard";
 import PopBox from "components/PopBox";
-import useUserState from "hooks/useUserState";
 import cookies from 'next-cookies';
+import ConfirmBox from "components/ConfirmBox";
+import { useDispatch } from "react-redux";
+import { uiActions } from "store/ui";
 
 const HEIGHT = 85;
 
 interface Props {
     videos: Video[]
+    errorMsg: string
 }
 
-function MyVideo({videos}: Props){
+function MyVideo({videos, errorMsg}: Props){
+    const disptch = useDispatch();
     const [showUpload, setShowUploads] = useState(false);
     const router = useRouter();
 
@@ -29,6 +33,9 @@ function MyVideo({videos}: Props){
     }
 
     useEffect(()=>{
+        if(errorMsg){
+            disptch(uiActions.pushToast({message: errorMsg}));
+        }
     }, []);
 
     return (
@@ -187,24 +194,32 @@ function UploadLink({self, embed}: {self: React.ReactNode, embed: React.ReactNod
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx)=>{
-    // const res = await fetch('http://localhost:8080/api/home?page=1&size=3');
-    // const list = await res.json();
-    // const user = useUserState();
-
     const allCookies = cookies(ctx);
-
-    const res = await fetch('http://localhost:8080/api/video?page=1&size=3', {
-        headers: {
-            'x-auth-token': allCookies['access-token'] || ''
+    let result;
+    let errorMsg = '';
+    try{
+        const token = allCookies['access-token'] || '';
+        if(!token){
+            throw new Error();
         }
-    });
-    const result = await res.json();
-    console.log('123');
-    console.log(result);
-    // result.likeList;
+
+        const res = await fetch('http://localhost:8080/api/video?page=1&size=3', {
+            headers: {
+                'x-auth-token': token
+            }
+        });
+        result = await res.json();
+        console.log(result);
+    }catch(ex){
+        errorMsg = '조회중 문제가 발생하였습니다.';
+        result = {
+            videos: []
+        };
+    }
 
     return {
         props: {
+            errorMsg,
             videos: result.videos,
             // videos: [
             //     {videoId: 1, name: 'test 1'},
