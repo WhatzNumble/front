@@ -1,9 +1,10 @@
-import type { NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Layout from 'components/Layout';
 import type { IUploadUser, IVideo } from 'components/Video';
+import axios from 'axios';
 
 const Video = dynamic(() => import('components/Video'), { ssr: false });
 
@@ -101,6 +102,13 @@ interface Props {
 
 const Test: NextPage<Props> = ({ query }) => {
   const [videos, setVideos] = useState<IVideo[]>(mockVideos);
+
+  useEffect(() => {
+    (async function () {
+      const res = await axios.get('/api/home');
+      console.log(res);
+    })();
+  }, []);
 
   return (
     <Layout tabBarTransparent>
