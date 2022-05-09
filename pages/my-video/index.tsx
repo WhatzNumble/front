@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import {Video, VideoList} from 'libs/types';
 import VideoCard from "components/VideoCard";
 import PopBox from "components/PopBox";
+import useUserState from "hooks/useUserState";
+import cookies from 'next-cookies';
 
 const HEIGHT = 85;
 
@@ -25,6 +27,9 @@ function MyVideo({videos}: Props){
     const onClickClose = ()=>{
         setShowUploads(false);
     }
+
+    useEffect(()=>{
+    }, []);
 
     return (
         <Layout title="마이 비디오">
@@ -79,7 +84,6 @@ function MyVideo({videos}: Props){
                     }
 
                     .cards {
-                        flex-grow: 1;
                         display: grid;
                         grid-template-columns: repeat(3, 1fr);
                         gap: 4px;
@@ -182,26 +186,39 @@ function UploadLink({self, embed}: {self: React.ReactNode, embed: React.ReactNod
     </>;
 }
 
-export const getServerSideProps: GetServerSideProps = async ()=>{
-    // const res = await fetch('http://www.whatz.kro.kr:8080/api/video');
+export const getServerSideProps: GetServerSideProps = async (ctx)=>{
+    // const res = await fetch('http://localhost:8080/api/home?page=1&size=3');
     // const list = await res.json();
+    // const user = useUserState();
+
+    const allCookies = cookies(ctx);
+
+    const res = await fetch('http://localhost:8080/api/video?page=1&size=3', {
+        headers: {
+            'x-auth-token': allCookies['access-token'] || ''
+        }
+    });
+    const result = await res.json();
+    console.log('123');
+    console.log(result);
+    // result.likeList;
 
     return {
         props: {
-            // videos: list.videos,
-            videos: [
-                {videoId: 1, name: 'test 1'},
-                {videoId: 2, name: 'test 2'},
-                {videoId: 3, name: 'test 3'},
-                {videoId: 4, name: 'test 4'},
-                {videoId: 5, name: 'test 5'},
-                {videoId: 6, name: 'test 6'},
-                {videoId: 7, name: 'test 7'},
-                {videoId: 8, name: 'test 8'},
-                {videoId: 9, name: 'test 9'},
-                {videoId: 10, name: 'test 10'},
-                {videoId: 11, name: 'test 11'},
-            ],
+            videos: result.videos,
+            // videos: [
+            //     {videoId: 1, name: 'test 1'},
+            //     {videoId: 2, name: 'test 2'},
+            //     {videoId: 3, name: 'test 3'},
+            //     {videoId: 4, name: 'test 4'},
+            //     {videoId: 5, name: 'test 5'},
+            //     {videoId: 6, name: 'test 6'},
+            //     {videoId: 7, name: 'test 7'},
+            //     {videoId: 8, name: 'test 8'},
+            //     {videoId: 9, name: 'test 9'},
+            //     {videoId: 10, name: 'test 10'},
+            //     {videoId: 11, name: 'test 11'},
+            // ],
         }
     }
 }

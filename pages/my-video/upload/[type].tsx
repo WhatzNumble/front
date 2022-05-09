@@ -1,12 +1,16 @@
 import ConfirmBox from "components/ConfirmBox";
 import Layout from "components/Layout";
+import useUserState from "hooks/useUserState";
+import cookies from "next-cookies";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import {uiActions} from 'store/ui';
+import config from "utils/config";
 
 function Upload(){
+    const user = useUserState();
     const dispatch = useDispatch();
     const router = useRouter();
     const formRef = useRef<HTMLFormElement>(null);
@@ -139,8 +143,11 @@ function Upload(){
 
         }
         
-        const res = await fetch('/', {
+        const res = await fetch('http://localhost:8080/api/video/add/embed', {
             method: 'POST',
+            headers: {
+                [`${config.authHeaderKey}`]: user.token
+            },
             body: new FormData(formRef.current!),
         });
         debugger;
