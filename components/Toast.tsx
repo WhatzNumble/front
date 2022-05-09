@@ -1,3 +1,4 @@
+import useWindow from "hooks/useWindow";
 import { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import { CSSTransition } from 'react-transition-group';
@@ -8,11 +9,10 @@ interface Props {
 }
 
 function Toast({message = '', duration = 2.8}: Props){
-    const [hasWin, setHasWin] = useState(false);
+    const hasWin = useWindow();
     const [show, setShow] = useState(true);
 
     useEffect(()=>{
-        setHasWin(true);
         setTimeout(()=> {
             setShow(false);
         }, duration * 1000);

@@ -1,6 +1,7 @@
 import {CSSTransition} from 'react-transition-group';
 import ReactDOM from 'react-dom';
 import {useEffect, useState} from 'react';
+import useWindow from 'hooks/useWindow';
 
 interface Props {
     children: React.ReactNode
@@ -9,10 +10,7 @@ interface Props {
 }
 
 function Modal({children, show, transitionTime = 200}: Props){
-    const [hasWin, setHasWin] = useState(false);
-    useEffect(()=>{
-        setHasWin(true);
-    }, []);
+    const hasWin = useWindow();
 
     return hasWin ? <>
         {children}
