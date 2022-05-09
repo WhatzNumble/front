@@ -143,7 +143,7 @@ function Upload(){
 
         }
         
-        const res = await fetch('http://localhost:8080/api/video/add/embed', {
+        const res = await fetch(`http://localhost:8080/api/video/add/${isEmbed ? 'embed': 'direct'}`, {
             method: 'POST',
             headers: {
                 [`${config.authHeaderKey}`]: user.token

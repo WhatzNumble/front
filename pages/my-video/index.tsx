@@ -47,7 +47,7 @@ function MyVideo({videos}: Props){
                         </div>
                     </div> :
                     <div className="empty-box">
-                        <Image src='/empty_img.png' alt="Empty" width={120} height={120}/>
+                        <Image src='/empty_img.svg' alt="Empty" width={120} height={120}/>
                         <h2 className="text gray">업로드된 영상이 없습니다.</h2>
                         <div className="buttons">
                             <UploadLink 
