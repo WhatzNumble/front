@@ -6,6 +6,7 @@ interface Props {
 }
 
 function VideoCard({video}: Props){
+    debugger;
     return (
         <div className="VideoCard">
             <Image className="thumbnail" src="/empty_img.svg" layout="fill"/>
@@ -16,6 +17,7 @@ function VideoCard({video}: Props){
                     border-radius: 8px;
                     background-color: #C4C4C4;
                     height: 198px;
+                    max-height: 198px;
                 }
             `}</style>
             <style jsx global>{`

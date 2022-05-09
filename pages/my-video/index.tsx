@@ -7,14 +7,20 @@ import { useEffect, useState } from "react";
 import {Video, VideoList} from 'libs/types';
 import VideoCard from "components/VideoCard";
 import PopBox from "components/PopBox";
+import cookies from 'next-cookies';
+import ConfirmBox from "components/ConfirmBox";
+import { useDispatch } from "react-redux";
+import { uiActions } from "store/ui";
 
 const HEIGHT = 85;
 
 interface Props {
     videos: Video[]
+    errorMsg: string
 }
 
-function MyVideo({videos}: Props){
+function MyVideo({videos, errorMsg}: Props){
+    const disptch = useDispatch();
     const [showUpload, setShowUploads] = useState(false);
     const router = useRouter();
 
@@ -25,6 +31,12 @@ function MyVideo({videos}: Props){
     const onClickClose = ()=>{
         setShowUploads(false);
     }
+
+    useEffect(()=>{
+        if(errorMsg){
+            disptch(uiActions.pushToast({message: errorMsg}));
+        }
+    }, []);
 
     return (
         <Layout title="마이 비디오">
@@ -42,7 +54,7 @@ function MyVideo({videos}: Props){
                         </div>
                     </div> :
                     <div className="empty-box">
-                        <Image src='/empty_img.png' alt="Empty" width={120} height={120}/>
+                        <Image src='/empty_img.svg' alt="Empty" width={120} height={120}/>
                         <h2 className="text gray">업로드된 영상이 없습니다.</h2>
                         <div className="buttons">
                             <UploadLink 
@@ -79,7 +91,6 @@ function MyVideo({videos}: Props){
                     }
 
                     .cards {
-                        flex-grow: 1;
                         display: grid;
                         grid-template-columns: repeat(3, 1fr);
                         gap: 4px;
@@ -182,26 +193,47 @@ function UploadLink({self, embed}: {self: React.ReactNode, embed: React.ReactNod
     </>;
 }
 
-export const getServerSideProps: GetServerSideProps = async ()=>{
-    // const res = await fetch('http://www.whatz.kro.kr:8080/api/video');
-    // const list = await res.json();
+export const getServerSideProps: GetServerSideProps = async (ctx)=>{
+    const allCookies = cookies(ctx);
+    let result;
+    let errorMsg = '';
+    try{
+        const token = allCookies['access-token'] || '';
+        if(!token){
+            throw new Error();
+        }
+
+        const res = await fetch('http://localhost:8080/api/video?page=1&size=3', {
+            headers: {
+                'x-auth-token': token
+            }
+        });
+        result = await res.json();
+        console.log(result);
+    }catch(ex){
+        errorMsg = '조회중 문제가 발생하였습니다.';
+        result = {
+            videos: []
+        };
+    }
 
     return {
         props: {
-            // videos: list.videos,
-            videos: [
-                {videoId: 1, name: 'test 1'},
-                {videoId: 2, name: 'test 2'},
-                {videoId: 3, name: 'test 3'},
-                {videoId: 4, name: 'test 4'},
-                {videoId: 5, name: 'test 5'},
-                {videoId: 6, name: 'test 6'},
-                {videoId: 7, name: 'test 7'},
-                {videoId: 8, name: 'test 8'},
-                {videoId: 9, name: 'test 9'},
-                {videoId: 10, name: 'test 10'},
-                {videoId: 11, name: 'test 11'},
-            ],
+            errorMsg,
+            videos: result.videos,
+            // videos: [
+            //     {videoId: 1, name: 'test 1'},
+            //     {videoId: 2, name: 'test 2'},
+            //     {videoId: 3, name: 'test 3'},
+            //     {videoId: 4, name: 'test 4'},
+            //     {videoId: 5, name: 'test 5'},
+            //     {videoId: 6, name: 'test 6'},
+            //     {videoId: 7, name: 'test 7'},
+            //     {videoId: 8, name: 'test 8'},
+            //     {videoId: 9, name: 'test 9'},
+            //     {videoId: 10, name: 'test 10'},
+            //     {videoId: 11, name: 'test 11'},
+            // ],
         }
     }
 }

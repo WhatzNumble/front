@@ -2,6 +2,7 @@ import { CSSTransition } from "react-transition-group";
 import ReactDOM from 'react-dom';
 import Modal from "components/Modal";
 import { useState, useEffect } from "react";
+import useWindow from "hooks/useWindow";
 
 
 interface Props {
@@ -11,11 +12,7 @@ interface Props {
 }
 
 function PopBox({show, children, onClosePopBox}: Props){
-    const [hasWin, setHasWin] = useState(false);
-
-    useEffect(()=>{
-        setHasWin(true);
-    }, []);
+    const hasWin = useWindow();
 
     return hasWin ? <>
         {ReactDOM.createPortal(

@@ -6,6 +6,7 @@ import ConfirmBox from "components/ConfirmBox";
 import { useState } from "react";
 import {CSSTransition} from "react-transition-group";
 import PopBox from "components/PopBox";
+import Loading from "components/Loading";
 
 const Test2: NextPage = ()=>{
     const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const Test2: NextPage = ()=>{
     const [show2, setShow2] = useState(false);
     const [show3, setShow3] = useState(false);
     const [show4, setShow4] = useState(false);
+    const [loading, setLoading] = useState(false);
     const confirmMsg = `회원가입을 종료 하시겠습니까?
         회원가입을 종료 하시겠습니까?
         회원가입을 종료 하시겠습니까?`;
@@ -74,12 +76,15 @@ const Test2: NextPage = ()=>{
             headerRight={<button className="theme-main" onClick={onHeaderButtonClick}>완료</button>}
         >
             <div className="Test2">
+                {loading && <Loading/>}
+
                 <div>
                     <button onClick={onClick}>토스트 출력</button>
                     <button onClick={onClickConfirm}>컨펌 메시지</button>
                     <button onClick={onClickConfirm2}>컨펌 메시지 2</button>
                     <button onClick={onClickConfirm3}>컨펌 메시지 3</button>
                     <button onClick={onClickPopBox}>Pop Box</button>
+                    <button onClick={()=> setLoading(true)}>로딩</button>
                 </div>
 
                 <ConfirmBox message={confirmMsg} show={show} callback={confirmCallback}/>
