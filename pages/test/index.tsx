@@ -3,10 +3,10 @@ import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 
 import Layout from 'components/Layout';
-import type { IUploadUser, IVideo } from 'components/Video';
+import type { IUploadUser, IVideo } from 'components/ShortFormPlayer/Video';
 import axios from 'axios';
 
-const Video = dynamic(() => import('components/Video'), { ssr: false });
+const Video = dynamic(() => import('components/ShortFormPlayer/Video'), { ssr: false });
 
 const detailMockString: string = `
 1. Use gridlines to balance your shot.
