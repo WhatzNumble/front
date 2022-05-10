@@ -4,23 +4,30 @@ import { deleteCookie } from 'utils/cookie';
 import axios from 'axios';
 import config from 'utils/config';
 
-export interface User {
-  isLoggedIn: boolean;
-  userID: string;
-  userEmail: string;
+export type LoginUser = {
+  id: string;
+  email: string;
   nickName: string;
-  userAvatar: string;
+  avatar: string;
+};
+
+export interface UserState {
+  user: LoginUser;
+  isLoggedIn: boolean;
   token: string;
 }
 
 export type SocialType = 'kakao' | 'google';
-
-const initialState: User = {
-  isLoggedIn: false,
-  userID: '',
-  userEmail: '',
+const initLoginUser: LoginUser = {
+  id: '',
+  email: '',
   nickName: '',
-  userAvatar: '',
+  avatar: '',
+};
+
+const initialState: UserState = {
+  isLoggedIn: false,
+  user: initLoginUser,
   token: '',
 };
 
@@ -34,46 +41,22 @@ const userSlice = createSlice({
         token: action.payload.token,
       };
     },
-    loadUser: (
-      state,
-      action: PayloadAction<{
-        userID: string;
-        nickName: string;
-        userAvatar: string;
-        userEmail: string;
-      }>
-    ) => {
-      const { userID, userEmail, nickName, userAvatar = 'defaultAvatar' } = action.payload;
-      return {
-        ...state,
-        userEmail: userEmail,
-        isLoggedIn: true,
-        userID: userID,
-        nickName: nickName,
-        userAvatar: userAvatar,
-      };
-    },
     login: (
       state,
       action: PayloadAction<{
         token: string;
+        loginUser: LoginUser;
         socialType: SocialType;
       }>
     ) => {
-      const { token } = action.payload;
+      const { token, loginUser } = action.payload;
       //todo token으로 서버에  user data 요청
       //response 상태에 따라 회원가입 페이지, or 홈페이지로 이동해야함
-
-      //일단 서버측에서 구현된 유저데이터 response가 없으므로 mockData 추가
-      //response 성공시 홈으로 redirect
       Router.push('/');
       return {
         ...state,
-        userEmail: 'whatzmock@mock.com',
         isLoggedIn: true,
-        userAvatar: '/profile.png',
-        userID: 'userid',
-        nickName: 'Whatz개발',
+        user: loginUser,
         token: token,
       };
     },

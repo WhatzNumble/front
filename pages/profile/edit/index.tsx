@@ -16,8 +16,8 @@ import { HEADER_HEIGHT } from 'components/Layout';
 
 const ProfileEditPage: NextPage = () => {
   const dispatch = useDispatch();
-  const { nickName, userAvatar } = useSelector((state: AppState) => state.user);
-  const [avatarSrc, setAvatarSrc] = useState<string>(userAvatar);
+  const { user } = useSelector((state: AppState) => state.user);
+  const [avatarSrc, setAvatarSrc] = useState<string>(user.avatar);
   const formRef = useRef<HTMLFormElement>(null);
 
   const { editType } = useRouter().query;
@@ -61,7 +61,7 @@ const ProfileEditPage: NextPage = () => {
     >
       <form className='profileWrapper' ref={formRef}>
         <ProfileAvatar isEdit  avatarSrc={avatarSrc} />
-        <ProfileInfo isEdit name={nickName} />
+        <ProfileInfo isEdit name={user.nickName} />
       </form>
       <style jsx>{profileWrapper}</style>
       <style jsx>

@@ -30,7 +30,7 @@ const ProfilePage = () => {
   // useUserTypeRedirect('/', 'guest');
   const dispatch = useDispatch();
   const [showConfirm, setConfirm] = useState(false);
-  const { userEmail, nickName, userAvatar, token } = useUserState();
+  const { user , token } = useUserState();
 
   const logoutRequest = async () => {
     await axios
@@ -77,8 +77,8 @@ const ProfilePage = () => {
   return (
     <Layout>
       <div className='profileWrapper'>
-        <ProfileAvatar avatarSrc={userAvatar} />
-        <ProfileInfo name={nickName} email={userEmail} />
+        <ProfileAvatar avatarSrc={user.avatar} />
+        <ProfileInfo name={user.nickName} email={user.email} />
         <div className='buttonWrapper'>
           <Button
             onClick={() => {
