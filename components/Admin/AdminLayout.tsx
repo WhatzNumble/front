@@ -8,7 +8,7 @@ interface Props {
 }
 
 function AdminLayout({children, title = ''}: Props){
-    const headerHeight = 60;
+    const headerHeight = 80;
 
     return (
         <div>

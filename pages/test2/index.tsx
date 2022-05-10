@@ -76,7 +76,7 @@ const Test2: NextPage = ()=>{
             headerRight={<button className="theme-main" onClick={onHeaderButtonClick}>완료</button>}
         >
             <div className="Test2">
-                {loading && <Loading/>}
+                <Loading show={loading}/>
 
                 <div>
                     <button onClick={onClick}>토스트 출력</button>

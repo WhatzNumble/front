@@ -1,5 +1,6 @@
 import ConfirmBox from "components/ConfirmBox";
 import Layout from "components/Layout";
+import Loading from "components/Loading";
 import useUserState from "hooks/useUserState";
 import cookies from "next-cookies";
 import Image from "next/image";
@@ -16,6 +17,7 @@ function Upload(){
     const formRef = useRef<HTMLFormElement>(null);
     const {type} = router.query;
     const isEmbed = type === 'embed';
+    const [loading, setLoading] = useState(false);
     const [preview, setPreview] = useState('');
     const [confirm, setConfirm] = useState({
         show: false,
@@ -33,10 +35,6 @@ function Upload(){
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>)=>{
         const {name, value} = e.currentTarget;
-
-        if(name === 'link'){
-            setDefaultThumbnail(value);
-        }
 
         setInputs({
             ...inputs,
@@ -147,6 +145,7 @@ function Upload(){
         }
 
         try{
+            setLoading(true);
             const res = await fetch(`http://localhost:8080/api/video/add/${isEmbed ? 'embed': 'direct'}`, {
                 method: 'POST',
                 headers: {
@@ -163,8 +162,9 @@ function Upload(){
                 show: true,
                 msg: '업로드중 문제가 발생하였습니다.',
             });
+        }finally{
+            setLoading(false);
         }
-        debugger;
         
         dispatch(uiActions.pushToast({message: '영상 업로드가 완료되었습니다.'}));
         router.push('/my-video');
@@ -202,36 +202,6 @@ function Upload(){
             }
         }
         return valid;
-    }
-
-    const setDefaultThumbnail = (link: string)=>{
-        const thumbnail = getYoutubeThumbnail(link);
-        setPreview(thumbnail);
-    }
-
-    const getYoutubeThumbnail = (url: string, quality: string = 'medium')=>{
-        let videoId;
-        let result;
-    
-        if(result = url.match(/youtube\.com.*(\?v=|\/embed\/)(.{11})/)){
-            videoId = result.pop();
-        }else if(result = url.match(/youtu.be\/(.{11})/)){
-            videoId = result.pop();
-        }
-    
-        if(videoId){
-            let quality_key = 'maxresdefault'; // Max quality
-            if(quality == 'low'){
-                quality_key = 'sddefault';
-            }else if(quality == 'medium'){
-                quality_key = 'mqdefault';
-            } else if (quality == 'high') {
-                quality_key = 'hqdefault';
-            }
-    
-            return `http://img.youtube.com/vi/${videoId}/${quality_key}.jpg`;
-        }
-        return '';
     }
 
     useEffect(()=>{
@@ -329,6 +299,7 @@ function Upload(){
                     />
                 </Panel>
 
+                <Loading show={loading}/>
                 <ConfirmBox show={confirm.show} message={confirm.msg} callback={onConfirmCallback} isAlert/>
 
                 <style jsx>{`

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import {Video, VideoList} from 'libs/types';
+import { VideoBasic } from 'libs/types';
 import VideoCard from "components/VideoCard";
 import PopBox from "components/PopBox";
 import cookies from 'next-cookies';
@@ -15,7 +15,7 @@ import { uiActions } from "store/ui";
 const HEIGHT = 85;
 
 interface Props {
-    videos: Video[]
+    videos: VideoBasic[]
     errorMsg: string
 }
 
@@ -208,8 +208,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx)=>{
                 'x-auth-token': token
             }
         });
-        result = await res.json();
-        console.log(result);
+
+        if(res.ok){
+            result = await res.json();
+        }else{
+            throw new Error();
+        }
     }catch(ex){
         errorMsg = '조회중 문제가 발생하였습니다.';
         result = {
@@ -222,17 +226,17 @@ export const getServerSideProps: GetServerSideProps = async (ctx)=>{
             errorMsg,
             videos: result.videos,
             // videos: [
-            //     {videoId: 1, name: 'test 1'},
-            //     {videoId: 2, name: 'test 2'},
-            //     {videoId: 3, name: 'test 3'},
-            //     {videoId: 4, name: 'test 4'},
-            //     {videoId: 5, name: 'test 5'},
-            //     {videoId: 6, name: 'test 6'},
-            //     {videoId: 7, name: 'test 7'},
-            //     {videoId: 8, name: 'test 8'},
-            //     {videoId: 9, name: 'test 9'},
-            //     {videoId: 10, name: 'test 10'},
-            //     {videoId: 11, name: 'test 11'},
+            //     {videoId: 1, videoThumbnail: 'test 1'},
+            //     {videoId: 2, videoThumbnail: 'test 2'},
+            //     {videoId: 3, videoThumbnail: 'test 3'},
+            //     {videoId: 4, videoThumbnail: 'test 4'},
+            //     {videoId: 5, videoThumbnail: 'test 5'},
+            //     {videoId: 6, videoThumbnail: 'test 6'},
+            //     {videoId: 7, videoThumbnail: 'test 7'},
+            //     {videoId: 8, videoThumbnail: 'test 8'},
+            //     {videoId: 9, videoThumbnail: 'test 9'},
+            //     {videoId: 10, videoThumbnail: 'test 10'},
+            //     {videoId: 11, videoThumbnail: 'test 11'},
             // ],
         }
     }
