@@ -12,15 +12,15 @@ export interface User extends Constraint<string> {
 }
 
 export interface Video {
-  videoId: number;
-  videoThumbnail: string;
   nickname: string;
   profile: string;
-  likes: number;
-  title: string;
-  content: string;
-  videoDate: string;
-  views: number;
+  videoId: number;
+  videoLike: number;
+  videoTitle: string;
+  videoThumbnail: string;
+  videoContent: string;
+  videoCreationDate: string;
+  videoViews: number;
   directDir: string | null;
   embedLink?: string | null;
 }

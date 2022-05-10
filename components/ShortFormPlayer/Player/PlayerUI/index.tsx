@@ -12,7 +12,7 @@ interface Props {
 }
 
 const PlayerUI: React.FC<Props> = ({ video, progress }) => {
-  const { profile, title, views, videoDate, likes, content } = video;
+  const { profile, videoTitle, videoViews, videoCreationDate, videoLike, videoContent} = video;
   const [isLike, setIsLike] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
 
@@ -29,16 +29,16 @@ const PlayerUI: React.FC<Props> = ({ video, progress }) => {
       <div className='PlayerUI'>
         <div className='leftWrapper'>
           <div className='contentWrapper'>
-            <div className={showDetail ? 'content' : 'hidden_content'}>{content}</div>
+            <div className={showDetail ? 'content' : 'hidden_content'}>{videoContent}</div>
           </div>
           <div className='infoWrapper'>
             <Avatar link='test' avatarImage={profile || '/profile.png'} />
             <div className='info'>
-              <div className='title'>{title}</div>
+              <div className='title'>{videoTitle}</div>
               <div className='viewDate'>
-                {`조회수 ${views}`}
+                {`조회수 ${videoViews}`}
                 &#183;
-                {videoDate}
+                {videoCreationDate}
               </div>
             </div>
           </div>
@@ -58,7 +58,7 @@ const PlayerUI: React.FC<Props> = ({ video, progress }) => {
                 alt='bookmark'
               />
               <div className='count' style={isLike ? { opacity: 1 } : { opacity: 0.5 }}>
-                {likes}
+                {videoLike}
               </div>
             </button>
           </div>
