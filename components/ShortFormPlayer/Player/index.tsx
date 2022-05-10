@@ -9,23 +9,6 @@ const DefaultPlayer = dynamic(() => import('./DefaultPlayer'), {
   ssr: false,
 });
 
-export interface IUploadUser {
-  name: string;
-  avatar: string;
-}
-
-export interface IVideo {
-  id: string;
-  title: string;
-  isEmbed?: boolean;
-  view: number;
-  videoSrc: string;
-  like: number;
-  uploader: IUploadUser;
-  date: string;
-  detail: string;
-}
-
 interface Props {
   video: Video;
 }

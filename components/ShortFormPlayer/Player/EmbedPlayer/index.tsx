@@ -1,7 +1,7 @@
 import { useRef, useEffect, MutableRefObject, useCallback } from 'react';
 
 import { Video } from 'libs/types';
-import PlayerUI from '../DefaultPlayer/PlayerUI';
+import PlayerUI from '../PlayerUI';
 import Mask from './Mask';
 
 interface Props {
@@ -11,9 +11,9 @@ interface Props {
 }
 
 const EmbedPlayer: React.FC<Props> = ({ video, active, blockTouch }) => {
-  const { videoId, videoThumbnail, nickname, profile, likes, title, content, videoDate, views, embedLink }  = video;
+  const { title, embedLink } = video;
   const iframeVideoRef = useRef<HTMLIFrameElement | null>(null);
-  const embedSrc = `https://www.youtube.com/embed/?playlist=${videoSrc}&rel=0&modestbranding=1&enablejsapi=1&controls=0&autoplay=1&loop=1&showinfo=0&autohide=1`;
+  const embedSrc = `https://www.youtube.com/embed/?playlist=${embedLink}&rel=0&modestbranding=1&enablejsapi=1&controls=0&autoplay=1&loop=1&showinfo=0&autohide=1`;
 
   const isRenderedIframePlayer = (ref: MutableRefObject<HTMLIFrameElement | null>) => {
     const iframe = ref.current;
@@ -54,9 +54,7 @@ const EmbedPlayer: React.FC<Props> = ({ video, active, blockTouch }) => {
         allowFullScreen
         title={title}
       />
-      <PlayerUI
-        video={video}
-      />
+      <PlayerUI video={video} />
       {blockTouch && <Mask />}
     </>
   );

@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import ProgressBar from './DefaultPlayer/ProgressBar';
-import Avatar from './DefaultPlayer/Avatar';
-import { Video } from 'libs/types';
 import Image from 'next/image';
+
+import { Video } from 'libs/types';
+import Avatar from './Avatar';
+import ProgressBar from '../DefaultPlayer/ProgressBar';
 
 interface Props {
   video: Video;

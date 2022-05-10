@@ -9,7 +9,7 @@ interface Props {
 }
 
 const DefaultPlayer: React.FC<Props> = ({ active, video }) => {
-  const { directDir} = video;
+  const { directDir } = video;
   const [playing, setPlaying] = useState(false);
   const [mute, setMute] = useState(false);
   const [duration, setDuration] = useState(0);
@@ -54,20 +54,19 @@ const DefaultPlayer: React.FC<Props> = ({ active, video }) => {
 
   return (
     <>
-      <ReactHlsPlayer
-        className='DefaultPlayer'
-        playerRef={playerRef}
-        muted={mute}
-        width='100%'
-        height='100%'
-        loop
-        src={directDir}
-        onClick={handleVideoPress}
-      />
-      <PlayerUI
-        video={video}
-        progress={(currentTime / duration) * 100}
-      />
+      {directDir && (
+        <ReactHlsPlayer
+          className='DefaultPlayer'
+          playerRef={playerRef}
+          muted={mute}
+          width='100%'
+          height='100%'
+          loop
+          src={directDir}
+          onClick={handleVideoPress}
+        />
+      )}
+      <PlayerUI video={video} progress={(currentTime / duration) * 100} />
       <style jsx>{`
         .DefaultPlayer {
           height: 100%;

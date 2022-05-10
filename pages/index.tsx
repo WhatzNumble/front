@@ -7,6 +7,8 @@ import { GetServerSideProps } from 'next';
 import { useEffect } from 'react';
 
 import config from 'utils/config';
+import ShortFormPlayer from 'components/ShortFormPlayer';
+import mockVideos from 'components/ShortFormPlayer/mockVideos'
 
 interface Props {
   token: string | null;
@@ -27,8 +29,8 @@ const Home: NextPage<Props> = ({ token }) => {
   }, []);
 
   return (
-    <Layout title='홈'>
-      <div>홈</div>
+    <Layout tabBarTransparent>
+      <ShortFormPlayer preLoadedVideos={mockVideos} />
     </Layout>
   );
 };
