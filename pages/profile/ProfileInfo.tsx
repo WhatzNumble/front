@@ -6,7 +6,7 @@ interface Props {
   name: string;
 }
 
-const ProfileInfo: React.FC<Props> = ({ name, isEdit = true, email }) => {
+const ProfileInfo: React.FC<Props> = ({ name, isEdit = false, email }) => {
   const [nickName, setNickName] = useState<string>(name);
 
   const handleNickName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,6 +34,10 @@ const ProfileInfo: React.FC<Props> = ({ name, isEdit = true, email }) => {
           .profileInfo {
             margin-top: 8px;
             color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
             p {
               color: #8f8f8f;
             }
@@ -50,8 +54,8 @@ const ProfileInfo: React.FC<Props> = ({ name, isEdit = true, email }) => {
               /* identical to box height, or 100% */
               text-align: center;
               letter-spacing: -0.3px;
+              color: #fff;
               /* wirefram */
-              color: #565656;
               &:focus {
                 outline: none;
               }
