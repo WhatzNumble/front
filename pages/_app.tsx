@@ -94,18 +94,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-MyApp.getInitialProps = async (context: AppContext) => {
-  const { ctx } = context;
-  const allCookies = cookies(ctx);
-
-  const accessTokenByCookie = allCookies[config.cookieAuthHeaderKey];
-  if (accessTokenByCookie) {
-    axios.defaults.headers.common[config.authHeaderKey] = accessTokenByCookie;
-  }
-
-  const appProps = await App.getInitialProps(context);
-
-  return { ...appProps, props: accessTokenByCookie };
-};
-
 export default wrapper.withRedux(MyApp);

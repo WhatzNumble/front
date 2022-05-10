@@ -14,18 +14,8 @@ const ProfileAvatar: React.FC<Props> = ({ avatarSrc, isEdit = false }) => {
           <label className='editButton' htmlFor='profileUpload'>
             <Image src='/btn_edit.svg' layout='fill' alt='edit-button' />
           </label>
-          <input
-            className='input'
-            name='profileUpload'
-            accept='image/*'
-            type='hidden'
-          />
-          <input
-            className='input'
-            name='thumbnailName'
-            value={avatarSrc}
-            type='hidden'
-          />
+          <input className='input' name='profileUpload' accept='image/*' type='hidden' />
+          <input className='input' name='thumbnailName' value={avatarSrc} type='hidden' />
         </>
       )}
       <style jsx>
@@ -36,6 +26,7 @@ const ProfileAvatar: React.FC<Props> = ({ avatarSrc, isEdit = false }) => {
             border-radius: 50%;
             width: 180px;
             height: 180px;
+            overflow: hidden;
           }
           .editButton {
             position: absolute;
