@@ -25,4 +25,4 @@ export interface Video {
   embedLink?: string | null;
 }
 
-export type VideoList = Pick<Video, 'videoId' | 'videoThumbnail'>[];
+export type VideoBasic = Pick<Video, 'videoId' | 'videoThumbnail'>;
