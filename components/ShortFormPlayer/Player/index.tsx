@@ -11,17 +11,24 @@ const DefaultPlayer = dynamic(() => import('./DefaultPlayer'), {
 
 interface Props {
   video: Video;
+  activeCallback: () => void;
 }
 
-const Player: React.FC<Props> = ({ video }) => {
+const Player: React.FC<Props> = ({ video, activeCallback }) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const isOnScreen = useIntersection(ref, '-50% 0% -50% 0%');
   const { embedLink } = video;
 
+  useEffect(()=>{
+    if(isOnScreen){
+      activeCallback();
+    }
+  },[isOnScreen, activeCallback])
+
   return (
     <>
       <div className='Video' style={{ opacity: isOnScreen ? 1 : 0.7 }} ref={ref}>
-        {embedLink? (
+        {embedLink ? (
           <EmbedPlayer video={video} active={isOnScreen} blockTouch />
         ) : (
           <DefaultPlayer active={isOnScreen} video={video} />

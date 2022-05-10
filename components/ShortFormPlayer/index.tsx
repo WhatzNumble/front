@@ -3,14 +3,18 @@ import axios from 'axios';
 
 import { Video } from 'libs/types';
 import Player from './Player';
+import mockVideos from './mockVideos';
 
 interface Props {
   query?: string;
   preLoadedVideos: Video[];
+  requestIndex?: number;
 }
 
-const ShortFormPlayer: React.FC<Props> = ({ query, preLoadedVideos }) => {
+const ShortFormPlayer: React.FC<Props> = ({ query, preLoadedVideos, requestIndex = 4 }) => {
   const [videos, setVideos] = useState<Video[]>([...preLoadedVideos]);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [lastIndex, setLastIndex] = useState(videos.length - 1);
 
   useEffect(() => {
     (async function () {
@@ -19,11 +23,29 @@ const ShortFormPlayer: React.FC<Props> = ({ query, preLoadedVideos }) => {
     })();
   }, []);
 
+  useEffect(() => {
+    console.log(activeIndex);
+    if (lastIndex - requestIndex === activeIndex) {
+      console.log('callAPI');
+      setVideos((prev) => [...prev, ...mockVideos]);
+      setLastIndex((prev) => prev + mockVideos.length);
+    }
+  }, [videos, activeIndex]);
+
   return (
     <>
       <div className='VideosContainer'>
         {videos?.map((video, index) => {
-          return <Player key={index} video={video} />;
+          return (
+            <Player
+              key={index}
+              activeCallback={() => {
+                setActiveIndex(index);
+                console.log('!!' + index);
+              }}
+              video={video}
+            />
+          );
         })}
       </div>
       <style jsx>

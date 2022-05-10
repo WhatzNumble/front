@@ -28,8 +28,7 @@ const mockVideos: Video[] = [
     videoDate: '2022-05-06T12:07:35.052847',
     views: 20,
     videoThumbnail: '/profile.png',
-    directDir:
-      'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
+    directDir: 'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
     embedLink: null,
   },
   {
@@ -42,8 +41,7 @@ const mockVideos: Video[] = [
     videoDate: '2022-05-06T12:07:35.052847',
     views: 20,
     videoThumbnail: '/profile.png',
-    directDir:
-      'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
+    directDir: 'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
     embedLink: null,
   },
   {
@@ -56,8 +54,7 @@ const mockVideos: Video[] = [
     videoDate: '2022-05-06T12:07:35.052847',
     views: 20,
     videoThumbnail: '/profile.png',
-    directDir:
-      'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
+    directDir: 'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
     embedLink: null,
   },
   {
@@ -70,8 +67,46 @@ const mockVideos: Video[] = [
     videoDate: '2022-05-06T12:07:35.052847',
     views: 20,
     videoThumbnail: '/profile.png',
-    directDir:
-      'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
+    directDir: 'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
+    embedLink: null,
+  },
+  {
+    videoId: 123123,
+    nickname: 'user1',
+    profile: '/profile.png',
+    likes: 5,
+    title: 'title1',
+    content: detailMockString,
+    videoDate: '2022-05-06T12:07:35.052847',
+    views: 20,
+    videoThumbnail: '/profile.png',
+    directDir: 'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
+    embedLink: null,
+  },
+  {
+    videoId: 123123,
+    nickname: 'user1',
+    profile: '/profile.png',
+    likes: 5,
+    title: 'title1',
+    content: detailMockString,
+    videoDate: '2022-05-06T12:07:35.052847',
+    views: 20,
+    videoThumbnail: '/profile.png',
+    directDir: 'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
+    embedLink: null,
+  },
+  {
+    videoId: 123123,
+    nickname: 'user1',
+    profile: '/profile.png',
+    likes: 5,
+    title: 'title1',
+    content: detailMockString,
+    videoDate: '2022-05-06T12:07:35.052847',
+    views: 20,
+    videoThumbnail: '/profile.png',
+    directDir: null,
     embedLink: 'https://www.youtube.com/watch?v=_whaAD__3vI',
   },
 ];
