@@ -1,5 +1,7 @@
 import { useRef, useEffect } from 'react';
 import dynamic from 'next/dynamic';
+
+import { Video } from 'libs/types';
 import EmbedPlayer from './EmbedPlayer';
 import useIntersection from 'hooks/useInterSection';
 
@@ -7,36 +9,26 @@ const DefaultPlayer = dynamic(() => import('./DefaultPlayer'), {
   ssr: false,
 });
 
-export interface IUploadUser {
-  name: string;
-  avatar: string;
-}
-
-export interface IVideo {
-  id: string;
-  title: string;
-  isEmbed?: boolean;
-  view: number;
-  videoSrc: string;
-  like: number;
-  uploader: IUploadUser;
-  date: string;
-  detail: string;
-}
-
 interface Props {
-  video: IVideo;
+  video: Video;
+  activeCallback: () => void;
 }
 
-const Video: React.FC<Props> = ({ video }) => {
+const Player: React.FC<Props> = ({ video, activeCallback }) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const isOnScreen = useIntersection(ref, '-50% 0% -50% 0%');
-  const { isEmbed } = video;
+  const { embedLink } = video;
+
+  useEffect(()=>{
+    if(isOnScreen){
+      activeCallback();
+    }
+  },[isOnScreen, activeCallback])
 
   return (
     <>
       <div className='Video' style={{ opacity: isOnScreen ? 1 : 0.7 }} ref={ref}>
-        {isEmbed ? (
+        {embedLink ? (
           <EmbedPlayer video={video} active={isOnScreen} blockTouch />
         ) : (
           <DefaultPlayer active={isOnScreen} video={video} />
@@ -58,4 +50,4 @@ const Video: React.FC<Props> = ({ video }) => {
   );
 };
 
-export default Video;
+export default Player;

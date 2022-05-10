@@ -1,18 +1,19 @@
 import { useRef, useEffect, MutableRefObject, useCallback } from 'react';
-import { IVideo } from '..';
-import PlayerUI from '../DefaultPlayer/PlayerUI';
+
+import { Video } from 'libs/types';
+import PlayerUI from '../PlayerUI';
 import Mask from './Mask';
 
 interface Props {
-  video: IVideo;
+  video: Video;
   active: boolean;
   blockTouch?: boolean;
 }
 
 const EmbedPlayer: React.FC<Props> = ({ video, active, blockTouch }) => {
-  const { uploader, like, detail, videoSrc, id, view, title, date } = video;
+  const { videoTitle, embedLink } = video;
   const iframeVideoRef = useRef<HTMLIFrameElement | null>(null);
-  const embedSrc = `https://www.youtube.com/embed/?playlist=${videoSrc}&rel=0&modestbranding=1&enablejsapi=1&controls=0&autoplay=1&loop=1&showinfo=0&autohide=1`;
+  const embedSrc = `https://www.youtube.com/embed/?playlist=${embedLink}&rel=0&modestbranding=1&enablejsapi=1&controls=0&autoplay=1&loop=1&showinfo=0&autohide=1`;
 
   const isRenderedIframePlayer = (ref: MutableRefObject<HTMLIFrameElement | null>) => {
     const iframe = ref.current;
@@ -51,17 +52,9 @@ const EmbedPlayer: React.FC<Props> = ({ video, active, blockTouch }) => {
         frameBorder='0'
         allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture;'
         allowFullScreen
-        title={videoSrc}
+        title={videoTitle}
       />
-      <PlayerUI
-        videoID={id}
-        title={title}
-        like={like}
-        detail={detail}
-        uploader={uploader}
-        view={view}
-        date={date}
-      />
+      <PlayerUI video={video} />
       {blockTouch && <Mask />}
     </>
   );
