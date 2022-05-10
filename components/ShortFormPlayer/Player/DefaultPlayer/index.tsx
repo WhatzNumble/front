@@ -1,15 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
-import PlayerUI from './PlayerUI';
+import PlayerUI from '../PlayerUI';
 import ReactHlsPlayer from 'react-hls-player';
-import { IVideo } from '..';
+import { Video } from 'libs/types';
 
 interface Props {
   active: boolean;
-  video: IVideo;
+  video: Video;
 }
 
 const DefaultPlayer: React.FC<Props> = ({ active, video }) => {
-  const { uploader, like, detail, videoSrc, id, view, title, date } = video;
+  const { directDir} = video;
   const [playing, setPlaying] = useState(false);
   const [mute, setMute] = useState(false);
   const [duration, setDuration] = useState(0);
@@ -61,18 +61,11 @@ const DefaultPlayer: React.FC<Props> = ({ active, video }) => {
         width='100%'
         height='100%'
         loop
-        src={videoSrc}
+        src={directDir}
         onClick={handleVideoPress}
       />
       <PlayerUI
-        videoID={id}
-        title={title}
-        muted={mute}
-        like={like}
-        detail={detail}
-        uploader={uploader}
-        view={view}
-        date={date}
+        video={video}
         progress={(currentTime / duration) * 100}
       />
       <style jsx>{`

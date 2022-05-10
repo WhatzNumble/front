@@ -1,16 +1,17 @@
 import { useRef, useEffect, MutableRefObject, useCallback } from 'react';
-import { IVideo } from '..';
+
+import { Video } from 'libs/types';
 import PlayerUI from '../DefaultPlayer/PlayerUI';
 import Mask from './Mask';
 
 interface Props {
-  video: IVideo;
+  video: Video;
   active: boolean;
   blockTouch?: boolean;
 }
 
 const EmbedPlayer: React.FC<Props> = ({ video, active, blockTouch }) => {
-  const { uploader, like, detail, videoSrc, id, view, title, date } = video;
+  const { videoId, videoThumbnail, nickname, profile, likes, title, content, videoDate, views, embedLink }  = video;
   const iframeVideoRef = useRef<HTMLIFrameElement | null>(null);
   const embedSrc = `https://www.youtube.com/embed/?playlist=${videoSrc}&rel=0&modestbranding=1&enablejsapi=1&controls=0&autoplay=1&loop=1&showinfo=0&autohide=1`;
 
@@ -51,16 +52,10 @@ const EmbedPlayer: React.FC<Props> = ({ video, active, blockTouch }) => {
         frameBorder='0'
         allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture;'
         allowFullScreen
-        title={videoSrc}
+        title={title}
       />
       <PlayerUI
-        videoID={id}
-        title={title}
-        like={like}
-        detail={detail}
-        uploader={uploader}
-        view={view}
-        date={date}
+        video={video}
       />
       {blockTouch && <Mask />}
     </>

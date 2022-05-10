@@ -1,22 +1,17 @@
 import { useState } from 'react';
-import ProgressBar from './ProgressBar';
-import Avatar from './Avatar';
-import { IUploadUser } from '..';
+import ProgressBar from './DefaultPlayer/ProgressBar';
+import Avatar from './DefaultPlayer/Avatar';
+import { Video } from 'libs/types';
 import Image from 'next/image';
 
 interface Props {
-  videoID: string;
-  title: string;
-  like: number;
-  view: number;
-  date: string;
-  uploader: IUploadUser;
+  video: Video;
   muted?: boolean;
-  detail: string;
   progress?: number;
 }
 
-const PlayerUI: React.FC<Props> = ({ videoID, view, date, title, like, progress, detail }) => {
+const PlayerUI: React.FC<Props> = ({ video, progress }) => {
+  const { profile, title, views, videoDate, likes, content } = video;
   const [isLike, setIsLike] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
 
@@ -32,17 +27,17 @@ const PlayerUI: React.FC<Props> = ({ videoID, view, date, title, like, progress,
     <>
       <div className='PlayerUI'>
         <div className='leftWrapper'>
-          <div className='detailWrapper'>
-            <div className={showDetail ? 'detail' : 'hidden_detail'}>{detail}</div>
+          <div className='contentWrapper'>
+            <div className={showDetail ? 'content' : 'hidden_content'}>{content}</div>
           </div>
           <div className='infoWrapper'>
-            <Avatar link='test' avatarImage='/profile.png' />
+            <Avatar link='test' avatarImage={profile || '/profile.png'} />
             <div className='info'>
               <div className='title'>{title}</div>
               <div className='viewDate'>
-                {`조회수 ${view}`}
+                {`조회수 ${views}`}
                 &#183;
-                {date}
+                {videoDate}
               </div>
             </div>
           </div>
@@ -62,7 +57,7 @@ const PlayerUI: React.FC<Props> = ({ videoID, view, date, title, like, progress,
                 alt='bookmark'
               />
               <div className='count' style={isLike ? { opacity: 1 } : { opacity: 0.5 }}>
-                {like}
+                {likes}
               </div>
             </button>
           </div>
@@ -84,27 +79,23 @@ const PlayerUI: React.FC<Props> = ({ videoID, view, date, title, like, progress,
             justify-content: space-between;
             align-items: flex-end;
             background: rgb(0, 0, 0);
-            background: linear-gradient(
-              0deg,
-              rgba(0, 0, 0, 0.61) 0%,
-              rgba(0, 0, 0, 0.01) 100%
-            );
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0.61) 0%, rgba(0, 0, 0, 0.01) 100%);
           }
 
           .leftWrapper {
             max-width: 70%;
-            .detailWrapper {
+            .contentWrapper {
               font-weight: 500;
               font-size: 14px;
               line-height: 140%;
               display: flex;
               align-items: flex-end;
               letter-spacing: -0.002em;
-              .detail {
+              .content {
                 overflow: scroll;
                 height: 260px;
               }
-              .hidden_detail {
+              .hidden_content {
                 overflow: hidden;
                 text-overflow: ellipsis;
                 white-space: nowrap;

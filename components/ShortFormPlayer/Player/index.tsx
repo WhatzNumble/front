@@ -1,5 +1,7 @@
 import { useRef, useEffect } from 'react';
 import dynamic from 'next/dynamic';
+
+import { Video } from 'libs/types';
 import EmbedPlayer from './EmbedPlayer';
 import useIntersection from 'hooks/useInterSection';
 
@@ -25,18 +27,18 @@ export interface IVideo {
 }
 
 interface Props {
-  video: IVideo;
+  video: Video;
 }
 
-const Video: React.FC<Props> = ({ video }) => {
+const Player: React.FC<Props> = ({ video }) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const isOnScreen = useIntersection(ref, '-50% 0% -50% 0%');
-  const { isEmbed } = video;
+  const { embedLink } = video;
 
   return (
     <>
       <div className='Video' style={{ opacity: isOnScreen ? 1 : 0.7 }} ref={ref}>
-        {isEmbed ? (
+        {embedLink? (
           <EmbedPlayer video={video} active={isOnScreen} blockTouch />
         ) : (
           <DefaultPlayer active={isOnScreen} video={video} />
@@ -58,4 +60,4 @@ const Video: React.FC<Props> = ({ video }) => {
   );
 };
 
-export default Video;
+export default Player;
