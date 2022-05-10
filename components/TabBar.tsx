@@ -1,35 +1,74 @@
 import Link from 'next/link';
+import axios from 'axios';
+import { useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { AppState } from 'store';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { getCookieValue } from 'utils/cookie';
+import config from 'utils/config';
+import { useDispatch } from 'react-redux';
+import { LoginUser, userActions } from 'store/user';
 
 const TAB_SELECTED = '_selected';
 
 interface Props {
   height?: number;
-  transparent?: boolean
+  transparent?: boolean;
 }
 
 function TabBar({ height = 56, transparent = false }: Props) {
   const router = useRouter();
+  const dispatch = useDispatch();
   const { isLoggedIn } = useSelector((state: AppState) => state.user);
   const LINK_INFOS = [
     { path: '/', name: '홈', icon: '/home' },
     { path: '/my-video', name: '마이 비디오', icon: '/myvideo' },
     { path: '/like', name: '관심 영상', icon: '/bookmark' },
-    isLoggedIn ? { path: '/profile', name: '프로필', icon: '/profile' } : { path: '/login', name: '로그인', icon: '/profile' },
+    isLoggedIn
+      ? { path: '/profile', name: '프로필', icon: '/profile' }
+      : { path: '/login', name: '로그인', icon: '/profile' },
   ];
 
-  const getSuffix = (path: string)=>{
-    const {pathname} = router;
-    if(path === '/'){
+  const getSuffix = (path: string) => {
+    const { pathname } = router;
+    if (path === '/') {
       return pathname === path ? TAB_SELECTED : '';
     }
     let str = pathname.split('/').join('');
     let str2 = path.split('/').join('');
     return str.includes(str2) ? TAB_SELECTED : '';
-  } 
+  };
+
+  const loadUserData = useCallback(() => {
+    const token = getCookieValue(config.cookieAuthHeaderKey);
+    if (token) {
+      console.log(token);
+      axios
+        .get('/api/profile', {
+          headers: {
+            [config.authHeaderKey]: token,
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          const userData: LoginUser = {
+            email: res.data.email,
+            id: res.data.id,
+            nickName: res.data.nickName,
+            avatar: res.data.thumbnailUrl,
+          };
+          axios.defaults.headers.common[config.authHeaderKey] = token;
+          dispatch(userActions.login({ token: token, loginUser: userData, socialType: 'kakao' }));
+        });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      loadUserData();
+    }
+  }, [isLoggedIn, loadUserData]);
 
   return (
     <nav className='TabBar'>
@@ -38,7 +77,12 @@ function TabBar({ height = 56, transparent = false }: Props) {
           <li key={info.path}>
             <Link href={info.path}>
               <a>
-                <Image src={info.icon + getSuffix(info.path) + '.svg'} width={32} height={32} alt={`${info.path} icon`}/>
+                <Image
+                  src={info.icon + getSuffix(info.path) + '.svg'}
+                  width={32}
+                  height={32}
+                  alt={`${info.path} icon`}
+                />
               </a>
             </Link>
           </li>
@@ -50,9 +94,11 @@ function TabBar({ height = 56, transparent = false }: Props) {
           z-index: 9;
           position: fixed;
           bottom: 0;
-          ${transparent ? `
+          ${transparent
+            ? `
             background-color: rgba(0,0,0,0.4);
-          ` : `
+          `
+            : `
             background-color: black;
           `}
           width: 100%;

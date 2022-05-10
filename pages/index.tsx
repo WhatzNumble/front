@@ -31,14 +31,14 @@ const Home: NextPage<Props> = ({ token }) => {
     }
   }, []);
 
-  useEffect(() => {
-    if (token && !isLoggedIn) {
-      console.log('login');
-      const response = axios.get('/api/profile');
-      dispatch(userActions.login({ token: token, socialType: 'kakao' }));
-      console.log(response);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (token && !isLoggedIn) {
+  //     console.log('login');
+  //     const response = axios.get('/api/profile');
+  //     dispatch(userActions.login({ token: token, socialType: 'kakao' }));
+  //     console.log(response);
+  //   }
+  // }, []);
 
   return (
     <Layout title='홈'>
