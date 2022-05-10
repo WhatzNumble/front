@@ -3,21 +3,18 @@ import axios from 'axios';
 import cookies from 'next-cookies';
 import type { NextPage } from 'next';
 import Router from 'next/router';
-import { useDispatch } from 'react-redux';
 import { GetServerSideProps } from 'next';
 import { useEffect } from 'react';
-import useUserState from 'hooks/useUserState';
 
-import { userActions } from 'store/user';
 import config from 'utils/config';
+import ShortFormPlayer from 'components/ShortFormPlayer';
+import mockVideos from 'components/ShortFormPlayer/mockVideos'
 
 interface Props {
   token: string | null;
 }
 
 const Home: NextPage<Props> = ({ token }) => {
-  const { isLoggedIn } = useUserState();
-  const dispatch = useDispatch();
   const detectFirstView = () => {
     const localStorageKey = 'onBoarded-Whatz';
     const isOnboared = localStorage.getItem(localStorageKey);
@@ -31,18 +28,9 @@ const Home: NextPage<Props> = ({ token }) => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (token && !isLoggedIn) {
-  //     console.log('login');
-  //     const response = axios.get('/api/profile');
-  //     dispatch(userActions.login({ token: token, socialType: 'kakao' }));
-  //     console.log(response);
-  //   }
-  // }, []);
-
   return (
-    <Layout title='홈'>
-      <div>홈</div>
+    <Layout tabBarTransparent>
+      <ShortFormPlayer preLoadedVideos={mockVideos} />
     </Layout>
   );
 };

@@ -9,7 +9,7 @@ function VideoCard({video}: Props){
     debugger;
     return (
         <div className="VideoCard">
-            <Image className="thumbnail" src="/empty_img.svg" layout="fill"/>
+            <Image className="thumbnail" src="/empty_img.svg"  alt='empty_image'layout="fill"/>
             {video.videoId}
             <style jsx>{`
                 .VideoCard {
