@@ -25,4 +25,9 @@ export interface Video {
   embedLink?: string | null;
 }
 
+export interface editableVideo {
+  video: Video;
+  isEditable?: boolean;
+}
+
 export type VideoBasic = Pick<Video, 'videoId' | 'videoThumbnail'>;
