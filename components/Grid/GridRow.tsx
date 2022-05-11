@@ -4,7 +4,7 @@ import {Constraint} from 'libs/types';
 import React from 'react';
 
 interface Props<Data> {
-    columnProps: GridColumnProps[]
+    columnProps: GridColumnProps<Data>[]
     data: Data
     onClickRow?: (event: React.MouseEvent<HTMLElement>, param: Data)=>void
 }
@@ -27,14 +27,19 @@ function GridRow<Data extends Constraint<string | number | null | undefined>>({c
     return (
         <div className='GridRow' onClick={onClick}>
             {columnProps.map((prop, i) => {
-                const {cellStyle, width='100px', element} = prop;
+                const {cellStyle, width='100px', element, labelFunction} = prop;
                 let value = element || data[prop.field];
 
-                return <div key={i} className='col' style={mergeStyle(cellStyle, width)}>{value}</div>
+                if(!element && labelFunction){
+                    value = labelFunction(data);
+                }
+
+                return <div key={i} className={`col ${element ? '' : 'vtc-center'}`} style={mergeStyle(cellStyle, width)}>{value}</div>
             })}
             <style jsx>{`
                 .GridRow {
                     display: flex;
+                    width: fit-content;
                     background-color: #f0f0f0;
                     transition: .2s;
                     &:not(:last-child) {
@@ -49,6 +54,10 @@ function GridRow<Data extends Constraint<string | number | null | undefined>>({c
                         &:not(:last-of-type) {
                             border-right: 1px solid white;
                         }
+                    }
+                    .vtc-center {
+                        display: flex;
+                        align-items: center;
                     }
                 }
             `}</style>

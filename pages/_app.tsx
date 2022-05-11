@@ -91,6 +91,12 @@ function MyApp({ Component, pageProps }: AppProps) {
             object-fit: cover;
           }
         }
+        
+        .image-contain {
+          img {
+            object-fit: contain;
+          }
+        }
       `}</style>
     </>
   );

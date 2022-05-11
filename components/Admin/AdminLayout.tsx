@@ -17,13 +17,21 @@ function AdminLayout({children}: Props){
             <Header height={HEADER_HEIGHT}/>
             <main className="AdminLayout">
                 <SideBar/>
-                {children}
+                <div className="wrapper">
+                    {children}
+                </div>
             </main>
             
             <style jsx>{`
                 .AdminLayout {
                     display: flex;
                     height: calc(100vh - ${HEADER_HEIGHT}px);
+                }
+
+                .wrapper {
+                    width: 100%;
+                    height: 100%;
+                    overflow: auto;
                 }
             `}</style>
         </div>

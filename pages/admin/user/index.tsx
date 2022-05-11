@@ -64,7 +64,6 @@ function User(){
     return (
         <AdminLayout>
             <div className="User">
-                유저 페이지
                 <Grid<UserType> datas={userList} onClickRow={onClickRow}>
                     <GridColumn width="160px" field="id" headerText="User ID"/>
                     <GridColumn width="160px" field="email" headerText="Email"/>
@@ -72,7 +71,6 @@ function User(){
                     <GridColumn width="170px" field="lastLogin" headerText="Last login"/>
                     <GridColumn width="120px" field="" headerText="Status" element={Buttons}/>
                 </Grid>
-
                 <style jsx>{`
                     .User {
                         padding: 10px;

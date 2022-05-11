@@ -14,15 +14,24 @@ function UserDetail(){
         {id: '1', email: 'test1@tes.com', nickname: '넘블1', lastLogin: '2022.03.01'},
     ];
     const videoList: VideoType[] = [
-        {videoId: 1, videoTitle: 'test 1', videoContent: '설명 설명 설명 설명 설명 ', videoThumbnail: 'link~~~', directDir: '', embedLink: '', videoViews: ''},
-        {videoId: 2, videoTitle: 'test 2', videoContent: '설명 설명 설명 설명 설명 ', videoThumbnail: 'link~~~', directDir: '', embedLink: '', videoViews: ''},
-        {videoId: 3, videoTitle: 'test 3', videoContent: '설명 설명 설명 설명 설명 ', videoThumbnail: 'link~~~', directDir: '', embedLink: '', videoViews: ''},
+        {videoId: 1, videoTitle: 'test 1', videoContent: '설명 설명 설명 설명 설명 ', videoThumbnail: 'link~~~', directDir: '', embedLink: 'aaa', videoViews: ''},
+        {videoId: 2, videoTitle: 'test 2', videoContent: '설명 설명 설명 설명 설명 ', videoThumbnail: 'link~~~', directDir: '', embedLink: 'sss', videoViews: ''},
+        {videoId: 3, videoTitle: 'test 3', videoContent: '설명 설명 설명 설명 설명 ', videoThumbnail: 'link~~~', directDir: 'ddd', embedLink: '', videoViews: ''},
     ];
 
     const onClickRow = (e: React.MouseEvent<HTMLElement>, param: VideoType)=>{
         if(e.target instanceof HTMLButtonElement){
             alert(`삭제 ${param.videoId}`);
         }
+    }
+
+    const labelFunction = (data: VideoType)=>{
+        return data.embedLink ? 'Embed' : 'Self';
+    }
+
+    const getUser = async ()=>{
+        const {id} = router.query;
+        // id로 유저정보 fetch
     }
 
     useEffect(()=>{
@@ -49,22 +58,19 @@ function UserDetail(){
     return (
         <AdminLayout>
             <div className="UserDetail">
-                <h2>유저 상세 페이지</h2>
-
-                <Grid<User> title="사용자 정보" datas={userList}>
-                    <GridColumn width="160px" field="id" headerText="User ID"/>
+                <Grid<User> title={`상세 정보`} datas={userList}>
+                    <GridColumn width="160px" field="id" headerText="아이디"/>
+                    <GridColumn width="160px" field="nickname" headerText="닉네임"/>
                     <GridColumn width="160px" field="email" headerText="Email"/>
-                    <GridColumn width="160px" field="nickname" headerText="Nickname"/>
-                    <GridColumn width="170px" field="lastLogin" headerText="Last login"/>
+                    <GridColumn width="170px" field="lastLogin" headerText="마지막 로그인"/>
                 </Grid>
 
                 <Grid<VideoType> title="업로드 영상" datas={videoList} onClickRow={onClickRow}>
+                    <GridColumn width="170px" field="" headerText="Type" labelFunction={labelFunction}/>
                     <GridColumn width="160px" field="videoId" headerText="Video ID"/>
                     <GridColumn width="160px" field="videoTitle" headerText="Title"/>
                     <GridColumn width="160px" field="videoContent" headerText="Description"/>
                     <GridColumn width="170px" field="videoThumbnail" headerText="Thumbnail url"/>
-                    <GridColumn width="170px" field="directDir" headerText="Video Link"/>
-                    <GridColumn width="170px" field="embedLink" headerText="Embed Link"/>
                     <GridColumn width="120px" field="" headerText="" element={Button}/>
                 </Grid>
 

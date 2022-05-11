@@ -13,7 +13,7 @@ interface Props<Data> {
 }
 
 function Grid<Data extends Constraint<string | number | null | undefined>>({children, datas, onClickRow, gridStyle, title}: Props<Data>){
-    const columnProps: GridColumnProps[] = children.map(col => col.props);
+    const columnProps: GridColumnProps<Data>[] = children.map(col => col.props);
 
     return (
         <div className='Grid'>
