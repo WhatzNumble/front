@@ -44,13 +44,14 @@ function User(){
                 width: 100px;
                 padding : 6px 0;
                 color: white;
+                border-radius: 5px;
                 transition: .2s;
                 &:hover {
                     transform: translateY(-2px);
                     box-shadow: 0 0 6px -0px black;
                 }
                 &.detail {
-                    background-color: #4646ff;
+                    background-color: #383838;
                     margin-bottom: 3px;
                 }
                 &.del {
@@ -61,7 +62,7 @@ function User(){
     </>;
 
     return (
-        <AdminLayout title="유저">
+        <AdminLayout>
             <div className="User">
                 유저 페이지
                 <Grid<UserType> datas={userList} onClickRow={onClickRow}>

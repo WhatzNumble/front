@@ -30,8 +30,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       </TransitionGroup>
 
       <style jsx global>{`
-        $color-main: #d8ff69;
-        $color-gray: #efefef;
+        :root {
+          --color-main: #d8ff69;
+          --color-gray: #efefef;
+        }
 
         html,
         body {
@@ -65,10 +67,10 @@ function MyApp({ Component, pageProps }: AppProps) {
             font-weight: 500;
           }
           &.theme-main {
-            background-color: $color-main;
+            background-color: var(--color-main);
           }
           &.theme-gray {
-            background-color: $color-gray;
+            background-color: var(--color-gray);
           }
         }
 

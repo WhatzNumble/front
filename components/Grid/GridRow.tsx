@@ -9,7 +9,7 @@ interface Props<Data> {
     onClickRow?: (event: React.MouseEvent<HTMLElement>, param: Data)=>void
 }
 
-function GridRow<Data extends Constraint<string>>({columnProps, data, onClickRow}: Props<Data>){
+function GridRow<Data extends Constraint<string | number | null | undefined>>({columnProps, data, onClickRow}: Props<Data>){
     const onClick = (e: React.MouseEvent<HTMLElement>)=>{
         if(onClickRow){
             onClickRow(e, data);
@@ -37,6 +37,9 @@ function GridRow<Data extends Constraint<string>>({columnProps, data, onClickRow
                     display: flex;
                     background-color: #f0f0f0;
                     transition: .2s;
+                    &:not(:last-child) {
+                        border-bottom: 1px solid rgb(199, 199, 199); 
+                    }
                     &:hover {
                         background-color: #e2e2e2;
                     }

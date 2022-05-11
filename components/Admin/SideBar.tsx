@@ -24,8 +24,6 @@ function SideBar(){
                 ))}
             </ul>
             <style jsx>{`
-                $color: rgb(115, 255, 0);
-
                 .SideBar {
                     background-color: rgb(75, 75, 75);
                     color: white;
@@ -40,13 +38,13 @@ function SideBar(){
                     padding: 10px;
                     font-weight: bold;
                     &:hover {
-                        color: $color;
+                        color: var(--color-main);
                     }
                 }
 
                 .match {
                     position: relative;
-                    color: $color;
+                    color: var(--color-main);
                     &:after {
                         position: absolute;
                         content: '◀';

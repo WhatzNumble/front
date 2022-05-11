@@ -21,7 +21,7 @@ function GridHeader({columnProps, onClickHeader}: Props){
                     display: flex;
                     font-weight: bold;
                     color: white;
-                    background-color: #a0a0a0 ;
+                    background-color: #868686 ;
                     transition: .2s;
 
                     .col {

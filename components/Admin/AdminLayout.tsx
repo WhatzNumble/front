@@ -2,20 +2,19 @@ import Head from "next/head";
 import Header from "./Header";
 import SideBar from "./SideBar";
 
+export const HEADER_HEIGHT = 80;
+
 interface Props {
     children: React.ReactNode
-    title?: string
 }
 
-function AdminLayout({children, title = ''}: Props){
-    const headerHeight = 80;
-
+function AdminLayout({children}: Props){
     return (
         <div>
             <Head>
-                <title>{title ? `${title} | Whatz` : 'Whatz'}</title>
+                <title>Whatz</title>
             </Head>
-            <Header height={headerHeight}/>
+            <Header height={HEADER_HEIGHT}/>
             <main className="AdminLayout">
                 <SideBar/>
                 {children}
@@ -24,7 +23,7 @@ function AdminLayout({children, title = ''}: Props){
             <style jsx>{`
                 .AdminLayout {
                     display: flex;
-                    height: calc(100vh - ${headerHeight}px);
+                    height: calc(100vh - ${HEADER_HEIGHT}px);
                 }
             `}</style>
         </div>
