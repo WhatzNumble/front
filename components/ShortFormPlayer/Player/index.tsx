@@ -16,7 +16,7 @@ interface Props {
 
 const Player: React.FC<Props> = ({ video, activeCallback }) => {
   const ref = useRef<HTMLDivElement | null>(null);
-  const isOnScreen = useIntersection(ref, '-50% 0% -50% 0%');
+  const isOnScreen = useIntersection(ref, '40% 0px');
   const { embedLink } = video;
 
   useEffect(()=>{

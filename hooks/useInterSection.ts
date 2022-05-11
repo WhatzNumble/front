@@ -1,6 +1,10 @@
 import { useState, useEffect, MutableRefObject } from 'react';
 
-const useIntersection = (element: MutableRefObject<any>, rootMargin: string) => {
+const useIntersection = (
+  element: MutableRefObject<any>,
+  rootMargin: string,
+  treshhold: number[] = [1]
+) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -8,13 +12,12 @@ const useIntersection = (element: MutableRefObject<any>, rootMargin: string) => 
       ([entry]) => {
         setIsVisible(entry.isIntersecting);
       },
-      { rootMargin }
+      { rootMargin, threshold: treshhold }
     );
 
     element && observer.observe(element.current);
 
-    // return () => observer.unobserve(element);
-  }, [rootMargin, element]);
+  }, [rootMargin, element, treshhold]);
 
   return isVisible;
 };
