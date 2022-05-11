@@ -37,20 +37,22 @@ function User(){
     }, []);
 
     const Buttons = <>
-        <button name="detail" className="detail">Dashboard</button>
-        <button name="del" className="del">Delete</button>
+        <button name="detail" className="detail">상세 정보</button>
+        <button name="del" className="del">삭제</button>
         <style jsx>{`
             button {
-                padding : 6px;
+                width: 100px;
+                padding : 6px 0;
                 color: white;
+                border-radius: 5px;
                 transition: .2s;
                 &:hover {
                     transform: translateY(-2px);
                     box-shadow: 0 0 6px -0px black;
                 }
                 &.detail {
-                    background-color: #4646ff;
-                    margin-right: 8px;
+                    background-color: #383838;
+                    margin-bottom: 3px;
                 }
                 &.del {
                     background-color: #ff3737;
@@ -60,17 +62,15 @@ function User(){
     </>;
 
     return (
-        <AdminLayout title="유저">
+        <AdminLayout>
             <div className="User">
-                유저 페이지
                 <Grid<UserType> datas={userList} onClickRow={onClickRow}>
                     <GridColumn width="160px" field="id" headerText="User ID"/>
                     <GridColumn width="160px" field="email" headerText="Email"/>
                     <GridColumn width="160px" field="nickname" headerText="Nickname"/>
-                    <GridColumn width="160px" field="lastLogin" headerText="Last login"/>
-                    <GridColumn width="160px" field="" headerText="Status" element={Buttons}/>
+                    <GridColumn width="170px" field="lastLogin" headerText="Last login"/>
+                    <GridColumn width="120px" field="" headerText="Status" element={Buttons}/>
                 </Grid>
-
                 <style jsx>{`
                     .User {
                         padding: 10px;

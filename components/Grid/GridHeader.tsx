@@ -1,11 +1,11 @@
 import {GridColumnProps} from './GridColumn';
 
-interface Props {
-    columnProps: GridColumnProps[]
+interface Props<Data> {
+    columnProps: GridColumnProps<Data>[]
     onClickHeader?: ()=>void
 }
 
-function GridHeader({columnProps, onClickHeader}: Props){
+function GridHeader<Data>({columnProps, onClickHeader}: Props<Data>){
     const onClick = ()=>{
         if(onClickHeader) onClickHeader();
     }
@@ -19,9 +19,10 @@ function GridHeader({columnProps, onClickHeader}: Props){
             <style jsx>{`
                 .GridHeader {
                     display: flex;
+                    width: fit-content;
                     font-weight: bold;
                     color: white;
-                    background-color: #a0a0a0 ;
+                    background-color: #868686 ;
                     transition: .2s;
 
                     .col {

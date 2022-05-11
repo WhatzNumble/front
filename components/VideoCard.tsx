@@ -7,9 +7,9 @@ interface Props {
 
 function VideoCard({video}: Props){
     return (
-        <div className="VideoCard">
-            <Image className="thumbnail" src="/empty_img.svg"  alt='empty_image'layout="fill"/>
+        <div className='VideoCard'>
             {video.videoId}
+            <Image className='thumbnail' src='/empty_img.svg'  alt='empty_image' layout='fill'/>
             <style jsx>{`
                 .VideoCard {
                     position: relative;
@@ -21,7 +21,10 @@ function VideoCard({video}: Props){
             `}</style>
             <style jsx global>{`
                 img.thumbnail {
-                    object-fit: contain;
+                    transition: .2s;
+                    &:hover {
+                        transform: scale(1.15);
+                    }
                 }
             `}</style>
         </div>
