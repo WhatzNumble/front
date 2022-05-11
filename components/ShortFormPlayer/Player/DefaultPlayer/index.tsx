@@ -11,13 +11,13 @@ const DefaultPlayer: React.FC<Props> = ({ active, video, isEditable }) => {
   const { directDir } = video;
   const [playing, setPlaying] = useState(false);
   const [mute, setMute] = useState(false);
-  const [duration, setDuration] = useState(0);
-  const [currentTime, setCurrentTime] = useState(0);
   const playerRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    handleVideo(active ? 'play' : 'stop');
-  }, [active]);
+    if (directDir) {
+      handleVideo(active ? 'play' : 'stop');
+    }
+  }, [directDir, active]);
 
   const handleVideo = (input: string) => {
     switch (input) {
@@ -42,15 +42,6 @@ const DefaultPlayer: React.FC<Props> = ({ active, video, isEditable }) => {
     handleVideo(playing ? 'pause' : 'play');
   };
 
-  // playerTime Sync
-  const onLoadMetaData = (e: React.SyntheticEvent<HTMLVideoElement>) => {
-    setDuration(e.currentTarget.duration);
-  };
-
-  const onTimeUpdate = (e: React.SyntheticEvent<HTMLVideoElement>) => {
-    setCurrentTime(e.currentTarget.currentTime);
-  };
-
   return (
     <>
       {directDir && (
@@ -65,7 +56,7 @@ const DefaultPlayer: React.FC<Props> = ({ active, video, isEditable }) => {
           onClick={handleVideoPress}
         />
       )}
-      <PlayerUI video={video} progress={(currentTime / duration) * 100} />
+      <PlayerUI video={video} isEditable={isEditable} />
       <style jsx>{`
         .DefaultPlayer {
           height: 100%;

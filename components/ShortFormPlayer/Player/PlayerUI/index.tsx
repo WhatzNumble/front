@@ -81,7 +81,6 @@ const PlayerUI: React.FC<Props> = ({ video, progress }) => {
             background: rgb(0, 0, 0);
             background: linear-gradient(0deg, rgba(0, 0, 0, 0.61) 0%, rgba(0, 0, 0, 0.01) 100%);
           }
-
           .leftWrapper {
             max-width: 70%;
             .contentWrapper {

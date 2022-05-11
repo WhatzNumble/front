@@ -72,6 +72,7 @@ const ShortFormPlayer: React.FC<Props> = ({
                 console.log('!!' + index);
               }}
               active={index === activeIndex}
+              isEditable={isEditable}
               video={video}
             />
           );

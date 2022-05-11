@@ -28,7 +28,7 @@ const mockVideos: Video[] = [
     videoCreationDate: '2022-05-06T12:07:35.052847',
     videoViews: 20,
     videoThumbnail: '/profile.png',
-    directDir: 'https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8',
+    directDir: 'https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8',
     embedLink: null,
   },
   {
