@@ -1,11 +1,10 @@
 import { useRef, useEffect, MutableRefObject, useCallback } from 'react';
 
-import { Video } from 'libs/types';
+import { editableVideo } from 'libs/types';
 import PlayerUI from '../PlayerUI';
 import Mask from './Mask';
 
-interface Props {
-  video: Video;
+interface Props extends editableVideo{
   active: boolean;
   blockTouch?: boolean;
 }

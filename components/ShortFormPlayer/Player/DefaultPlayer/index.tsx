@@ -1,14 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PlayerUI from '../PlayerUI';
 import ReactHlsPlayer from 'react-hls-player';
-import { Video } from 'libs/types';
+import { editableVideo } from 'libs/types';
 
-interface Props {
+interface Props extends editableVideo {
   active: boolean;
-  video: Video;
 }
 
-const DefaultPlayer: React.FC<Props> = ({ active, video }) => {
+const DefaultPlayer: React.FC<Props> = ({ active, video, isEditable }) => {
   const { directDir } = video;
   const [playing, setPlaying] = useState(false);
   const [mute, setMute] = useState(false);

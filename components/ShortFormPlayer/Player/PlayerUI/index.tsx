@@ -1,18 +1,17 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
-import { Video } from 'libs/types';
+import { editableVideo } from 'libs/types';
 import Avatar from './Avatar';
 import ProgressBar from '../DefaultPlayer/ProgressBar';
 
-interface Props {
-  video: Video;
+interface Props extends editableVideo {
   muted?: boolean;
   progress?: number;
 }
 
 const PlayerUI: React.FC<Props> = ({ video, progress }) => {
-  const { profile, videoTitle, videoViews, videoCreationDate, videoLike, videoContent} = video;
+  const { profile, videoTitle, videoViews, videoCreationDate, videoLike, videoContent } = video;
   const [isLike, setIsLike] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
 
