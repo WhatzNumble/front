@@ -22,9 +22,9 @@ const Player: React.FC<Props> = ({ playerID, video, activeCallback, isEditable, 
     <>
       <div className='Video' id={playerID} style={{ opacity: active ? 1 : 0.7 }} ref={ref}>
         {embedLink ? (
-          <EmbedPlayer video={video} active={active} blockTouch />
+          <EmbedPlayer video={video} isEditable={isEditable} active={active} blockTouch />
         ) : (
-          <DefaultPlayer active={active} video={video} />
+          <DefaultPlayer active={active} video={video} isEditable={isEditable} />
         )}
       </div>
       <style jsx>{`
