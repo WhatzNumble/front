@@ -39,13 +39,6 @@ const Player: React.FC<Props> = ({ playerID, video, activeCallback, isEditable, 
           overflow: hidden;
         }
       `}</style>
-      <style jsx global>
-        {`
-          * {
-            color: white;
-          }
-        `}
-      </style>
     </>
   );
 };

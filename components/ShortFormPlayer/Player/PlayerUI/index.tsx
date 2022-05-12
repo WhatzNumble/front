@@ -3,9 +3,11 @@ import Image from 'next/image';
 
 import { editableVideo } from 'libs/types';
 import { dateToDateFormatString } from 'utils/dateParser';
+import PopBox from 'components/PopBox';
 
 import Avatar from './Avatar';
 import Content from './Content';
+import EditPopup from './EditPopup';
 import ProgressBar from './ProgressBar';
 
 interface Props extends editableVideo {
@@ -14,16 +16,28 @@ interface Props extends editableVideo {
 }
 
 const PlayerUI: React.FC<Props> = ({ video, isEditable, progress }) => {
-  const { profile, videoTitle, videoViews, videoCreationDate, videoLike, videoContent } = video;
+  const {
+    profile,
+    videoTitle,
+    videoViews,
+    videoCreationDate,
+    videoLike,
+    videoContent,
+    videoId,
+    embedLink,
+  } = video;
   const [isLike, setIsLike] = useState(false);
+  const [showPop, setShowPop] = useState(false);
+
+  const toggleVideoEditPop = () => {
+    setShowPop((prev) => !prev);
+  };
 
   const handleLike = () => {
     setIsLike((prev) => !prev);
   };
 
-  const onClickMore = () => {
-    console.log(onClickMore);
-  };
+  const onClickMore = () => {};
 
   return (
     <>
@@ -43,7 +57,7 @@ const PlayerUI: React.FC<Props> = ({ video, isEditable, progress }) => {
         <div className='buttonWrapper'>
           {isEditable && (
             <div className='button'>
-              <button onClick={onClickMore}>
+              <button onClick={() => toggleVideoEditPop()}>
                 <Image src={'/more_button.svg'} width={32} height={32} alt='bookmark' />
               </button>
             </div>
@@ -60,6 +74,10 @@ const PlayerUI: React.FC<Props> = ({ video, isEditable, progress }) => {
                 {videoLike}
               </div>
             </button>
+
+            <PopBox show={showPop} onClosePopBox={toggleVideoEditPop}>
+              <EditPopup videoId={videoId} isEmbed={!!embedLink} />
+            </PopBox>
           </div>
         </div>
         {!!progress && <ProgressBar progress={progress} />}
@@ -77,6 +95,7 @@ const PlayerUI: React.FC<Props> = ({ video, isEditable, progress }) => {
             align-items: flex-end;
             background: rgb(0, 0, 0);
             background: linear-gradient(0deg, rgba(0, 0, 0, 0.61) 0%, rgba(0, 0, 0, 0.01) 100%);
+            color: #fff;
           }
           .leftWrapper {
             max-width: 88%;
