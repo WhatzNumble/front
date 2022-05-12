@@ -19,7 +19,7 @@ const detailMockString: string = `
 
 const mockVideos: Video[] = [
   {
-    videoId: 123123,
+    videoId: 1,
     nickname: 'user1',
     profile: '/profile.png',
     videoLike: 5,
@@ -32,7 +32,7 @@ const mockVideos: Video[] = [
     embedLink: null,
   },
   {
-    videoId: 123123,
+    videoId: 2,
     nickname: 'user1',
     profile: '/profile.png',
     videoLike: 5,
@@ -45,7 +45,7 @@ const mockVideos: Video[] = [
     embedLink: null,
   },
   {
-    videoId: 123123,
+    videoId: 3,
     nickname: 'user1',
     profile: '/profile.png',
     videoLike: 5,
@@ -58,7 +58,7 @@ const mockVideos: Video[] = [
     embedLink: null,
   },
   {
-    videoId: 123123,
+    videoId: 4,
     nickname: 'user1',
     profile: '/profile.png',
     videoLike: 5,
@@ -71,7 +71,7 @@ const mockVideos: Video[] = [
     embedLink: null,
   },
   {
-    videoId: 123123,
+    videoId: 5,
     nickname: 'user1',
     profile: '/profile.png',
     videoLike: 5,
@@ -84,7 +84,7 @@ const mockVideos: Video[] = [
     embedLink: null,
   },
   {
-    videoId: 123123,
+    videoId: 6,
     nickname: 'user1',
     profile: '/profile.png',
     videoLike: 5,
@@ -97,7 +97,7 @@ const mockVideos: Video[] = [
     embedLink: null,
   },
   {
-    videoId: 123123,
+    videoId: 7,
     nickname: 'user1',
     profile: '/profile.png',
     videoLike: 5,
