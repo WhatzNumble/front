@@ -1,37 +1,30 @@
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import dynamic from 'next/dynamic';
 
-import { Video } from 'libs/types';
+import { editableVideo } from 'libs/types';
 import EmbedPlayer from './EmbedPlayer';
-import useIntersection from 'hooks/useInterSection';
 
 const DefaultPlayer = dynamic(() => import('./DefaultPlayer'), {
   ssr: false,
 });
 
-interface Props {
-  video: Video;
+interface Props extends editableVideo {
+  playerID: string;
   activeCallback: () => void;
+  active: boolean;
 }
 
-const Player: React.FC<Props> = ({ video, activeCallback }) => {
+const Player: React.FC<Props> = ({ playerID, video, activeCallback, isEditable, active }) => {
   const ref = useRef<HTMLDivElement | null>(null);
-  const isOnScreen = useIntersection(ref, '-50% 0% -50% 0%');
   const { embedLink } = video;
-
-  useEffect(()=>{
-    if(isOnScreen){
-      activeCallback();
-    }
-  },[isOnScreen, activeCallback])
 
   return (
     <>
-      <div className='Video' style={{ opacity: isOnScreen ? 1 : 0.7 }} ref={ref}>
+      <div className='Video' id={playerID} style={{ opacity: active ? 1 : 0.7 }} ref={ref}>
         {embedLink ? (
-          <EmbedPlayer video={video} active={isOnScreen} blockTouch />
+          <EmbedPlayer video={video} isEditable={isEditable} active={active} blockTouch />
         ) : (
-          <DefaultPlayer active={isOnScreen} video={video} />
+          <DefaultPlayer active={active} video={video} isEditable={isEditable} />
         )}
       </div>
       <style jsx>{`

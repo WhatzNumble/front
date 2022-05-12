@@ -1,58 +1,71 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
-import { Video } from 'libs/types';
-import Avatar from './Avatar';
-import ProgressBar from '../DefaultPlayer/ProgressBar';
+import { editableVideo } from 'libs/types';
+import { dateToDateFormatString } from 'utils/dateParser';
+import PopBox from 'components/PopBox';
 
-interface Props {
-  video: Video;
+import Avatar from './Avatar';
+import Content from './Content';
+import EditPopup from './EditPopup';
+import ProgressBar from './ProgressBar';
+
+interface Props extends editableVideo {
   muted?: boolean;
   progress?: number;
 }
 
-const PlayerUI: React.FC<Props> = ({ video, progress }) => {
-  const { profile, videoTitle, videoViews, videoCreationDate, videoLike, videoContent} = video;
+const PlayerUI: React.FC<Props> = ({ video, isEditable, progress }) => {
+  const {
+    profile,
+    videoTitle,
+    videoViews,
+    videoCreationDate,
+    videoLike,
+    videoContent,
+    videoId,
+    embedLink,
+  } = video;
   const [isLike, setIsLike] = useState(false);
-  const [showDetail, setShowDetail] = useState(false);
+  const [showPop, setShowPop] = useState(false);
+
+  const toggleVideoEditPop = () => {
+    setShowPop((prev) => !prev);
+  };
 
   const handleLike = () => {
     setIsLike((prev) => !prev);
   };
 
-  const handleDetail = () => {
-    setShowDetail((prev) => !prev);
-  };
+  const onClickMore = () => {};
 
   return (
     <>
       <div className='PlayerUI'>
         <div className='leftWrapper'>
-          <div className='contentWrapper'>
-            <div className={showDetail ? 'content' : 'hidden_content'}>{videoContent}</div>
-          </div>
+          <Content content={videoContent} />
           <div className='infoWrapper'>
             <Avatar link='test' avatarImage={profile || '/profile.png'} />
             <div className='info'>
               <div className='title'>{videoTitle}</div>
               <div className='viewDate'>
-                {`조회수 ${videoViews}`}
-                &#183;
-                {videoCreationDate}
+                {`조회수 ${videoViews}`}&#183;{dateToDateFormatString(videoCreationDate)}
               </div>
             </div>
           </div>
         </div>
         <div className='buttonWrapper'>
-          <div className='button'>
-            <button onClick={() => handleDetail()}>
-              <Image src={'/more_button.svg'} width={32} height={32} alt='bookmark' />
-            </button>
-          </div>
+          {isEditable && (
+            <div className='button'>
+              <button onClick={() => toggleVideoEditPop()}>
+                <Image src={'/more_button.svg'} width={32} height={32} alt='bookmark' />
+              </button>
+            </div>
+          )}
           <div className='button'>
             <button onClick={() => handleLike()}>
               <Image
-                src={isLike ? '/bookmark_selected.svg' : '/bookmark.svg'}
+                src={isLike ? '/icon_bookmarked.svg' : '/icon_bookmark.svg'}
                 width={32}
                 height={32}
                 alt='bookmark'
@@ -61,15 +74,16 @@ const PlayerUI: React.FC<Props> = ({ video, progress }) => {
                 {videoLike}
               </div>
             </button>
+
+            <PopBox show={showPop} onClosePopBox={toggleVideoEditPop}>
+              <EditPopup videoId={videoId} isEmbed={!!embedLink} />
+            </PopBox>
           </div>
         </div>
         {!!progress && <ProgressBar progress={progress} />}
       </div>
       <style jsx>
         {`
-          * {
-            color: white;
-          }
           .PlayerUI {
             z-index: 10;
             position: absolute;
@@ -81,10 +95,10 @@ const PlayerUI: React.FC<Props> = ({ video, progress }) => {
             align-items: flex-end;
             background: rgb(0, 0, 0);
             background: linear-gradient(0deg, rgba(0, 0, 0, 0.61) 0%, rgba(0, 0, 0, 0.01) 100%);
+            color: #fff;
           }
-
           .leftWrapper {
-            max-width: 70%;
+            max-width: 88%;
             .contentWrapper {
               font-weight: 500;
               font-size: 14px;
@@ -122,6 +136,7 @@ const PlayerUI: React.FC<Props> = ({ video, progress }) => {
             }
           }
           .buttonWrapper {
+            width: 40px;
             button {
               all: unset;
             }

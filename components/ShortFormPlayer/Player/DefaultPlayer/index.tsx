@@ -1,24 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
 import PlayerUI from '../PlayerUI';
 import ReactHlsPlayer from 'react-hls-player';
-import { Video } from 'libs/types';
+import { editableVideo } from 'libs/types';
 
-interface Props {
+interface Props extends editableVideo {
   active: boolean;
-  video: Video;
 }
 
-const DefaultPlayer: React.FC<Props> = ({ active, video }) => {
+const DefaultPlayer: React.FC<Props> = ({ active, video, isEditable }) => {
   const { directDir } = video;
   const [playing, setPlaying] = useState(false);
   const [mute, setMute] = useState(false);
-  const [duration, setDuration] = useState(0);
-  const [currentTime, setCurrentTime] = useState(0);
   const playerRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    handleVideo(active ? 'play' : 'stop');
-  }, [active]);
+    if (directDir) {
+      handleVideo(active ? 'play' : 'stop');
+    }
+  }, [directDir, active]);
 
   const handleVideo = (input: string) => {
     switch (input) {
@@ -43,15 +42,6 @@ const DefaultPlayer: React.FC<Props> = ({ active, video }) => {
     handleVideo(playing ? 'pause' : 'play');
   };
 
-  // playerTime Sync
-  const onLoadMetaData = (e: React.SyntheticEvent<HTMLVideoElement>) => {
-    setDuration(e.currentTarget.duration);
-  };
-
-  const onTimeUpdate = (e: React.SyntheticEvent<HTMLVideoElement>) => {
-    setCurrentTime(e.currentTarget.currentTime);
-  };
-
   return (
     <>
       {directDir && (
@@ -66,7 +56,7 @@ const DefaultPlayer: React.FC<Props> = ({ active, video }) => {
           onClick={handleVideoPress}
         />
       )}
-      <PlayerUI video={video} progress={(currentTime / duration) * 100} />
+      <PlayerUI video={video} isEditable={isEditable} />
       <style jsx>{`
         .DefaultPlayer {
           height: 100%;
