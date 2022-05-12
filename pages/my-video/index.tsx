@@ -4,21 +4,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { VideoBasic } from 'libs/types';
+import { Video } from 'libs/types';
 import VideoCard from "components/VideoCard";
 import PopBox from "components/PopBox";
 import cookies from 'next-cookies';
 import config from "utils/config";
 import useToastMessage from "hooks/useToastMessage";
+import mockVideos from "components/ShortFormPlayer/mockVideos";
 
 const HEIGHT = 85;
 
 interface Props {
-    videos: VideoBasic[]
+    videos: Video[]
     errorMsg: string
 }
 
 function MyVideo({videos, errorMsg}: Props){
+    const router = useRouter();
     const {pushToast} = useToastMessage();
     const [showUpload, setShowUploads] = useState(false);
 
@@ -28,6 +30,21 @@ function MyVideo({videos, errorMsg}: Props){
 
     const onClickClose = ()=>{
         setShowUploads(false);
+    }
+
+    const onCardClick = (id: number)=>{
+        const clone = videos.map(vd => ({...vd}));
+        const selectedIndex = clone.findIndex(vd => id === vd.videoId);
+        const extract = clone.splice(selectedIndex, 1);
+        if(extract.length){
+            clone.unshift(extract[0]);
+        }
+        router.push({
+            pathname: `${router.pathname}/play`,
+            query: {
+                playList: JSON.stringify(clone)
+            }
+        }, `${router.pathname}/play`);
     }
 
     useEffect(()=>{
@@ -47,7 +64,11 @@ function MyVideo({videos, errorMsg}: Props){
                         <div className="cards">
                             <div className="space"></div>
                             {videos.map(vd => (
-                                <VideoCard key={vd.videoId} video={vd}/>
+                                <VideoCard 
+                                    key={vd.videoId} 
+                                    video={vd} 
+                                    onCardClick={onCardClick}
+                                />
                             ))}
                         </div>
                     </div> :
@@ -223,7 +244,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx)=>{
     return {
         props: {
             errorMsg,
-            videos: result.videos,
+            // videos: result.videos,
             // videos: [
             //     {videoId: 1, videoThumbnail: 'test 1'},
             //     {videoId: 2, videoThumbnail: 'test 2'},
@@ -237,6 +258,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx)=>{
             //     {videoId: 10, videoThumbnail: 'test 10'},
             //     {videoId: 11, videoThumbnail: 'test 11'},
             // ],
+            videos: mockVideos,
         }
     }
 }

@@ -8,7 +8,7 @@ function Play(){
     const videos = JSON.parse(playList as string);
 
     return (
-        <Layout title="마이비디오 - 영상재생" tabBarTransparent>
+        <Layout title="좋아요 - 영상재생" tabBarTransparent>
             <ShortFormPlayer preLoadedVideos={videos}/>
         </Layout>
     );

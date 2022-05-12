@@ -1,20 +1,39 @@
 import Layout from "components/Layout";
+import ShortFormPlayer from "components/ShortFormPlayer";
+import mockVideos from "components/ShortFormPlayer/mockVideos";
 import VideoCard from "components/VideoCard";
 import useToastMessage from "hooks/useToastMessage";
-import { VideoBasic } from "libs/types";
+import { Video } from "libs/types";
 import { GetServerSideProps } from "next";
 import cookies from "next-cookies";
 import Image from "next/image";
-import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import config from "utils/config";
 
 interface Props {
-    videos: VideoBasic[]
+    videos: Video[]
     errorMsg: string
 }
 
 function Like({videos, errorMsg}: Props){
+    const router = useRouter();
     const {pushToast} = useToastMessage();
+
+    const onCardClick = (id: number)=>{
+        const clone = videos.map(vd => ({...vd}));
+        const selectedIndex = clone.findIndex(vd => id === vd.videoId);
+        const extract = clone.splice(selectedIndex, 1);
+        if(extract.length){
+            clone.unshift(extract[0]);
+        }
+        router.push({
+            pathname: `${router.pathname}/play`,
+            query: {
+                playList: JSON.stringify(clone)
+            }
+        }, `${router.pathname}/play`);
+    }
 
     useEffect(()=>{
         if(errorMsg){
@@ -28,7 +47,11 @@ function Like({videos, errorMsg}: Props){
                 {videos.length ? 
                     <div className="cards">
                         {videos.map(vd => (
-                            <VideoCard key={vd.videoId} video={vd}/>
+                            <VideoCard 
+                                key={vd.videoId} 
+                                video={vd} 
+                                onCardClick={onCardClick}
+                            />
                         ))}
                     </div> :
                     <div className="empty-box">
@@ -105,7 +128,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx)=>{
     return {
         props: {
             errorMsg,
-            videos: result.videos,
+            // videos: result.videos,
             // videos: [
             //     {videoId: 1, videoThumbnail: 'test 1'},
             //     {videoId: 2, videoThumbnail: 'test 2'},
@@ -119,6 +142,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx)=>{
             //     {videoId: 10, videoThumbnail: 'test 10'},
             //     {videoId: 11, videoThumbnail: 'test 11'},
             // ],
+            videos: mockVideos
         }
     }
 }
