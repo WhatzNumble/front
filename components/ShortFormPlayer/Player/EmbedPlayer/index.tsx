@@ -4,15 +4,23 @@ import { editableVideo } from 'libs/types';
 import PlayerUI from '../PlayerUI';
 import Mask from './Mask';
 
-interface Props extends editableVideo{
+interface Props extends editableVideo {
   active: boolean;
   blockTouch?: boolean;
 }
 
+const extractIdFromURL = (url: string) => {
+  var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+  var match = url.match(regExp);
+  return match && match[7].length == 11 ? match[7] : false;
+};
+
 const EmbedPlayer: React.FC<Props> = ({ video, active, blockTouch, isEditable }) => {
   const { videoTitle, embedLink } = video;
   const iframeVideoRef = useRef<HTMLIFrameElement | null>(null);
-  const embedSrc = `https://www.youtube.com/embed/?playlist=${embedLink}&rel=0&modestbranding=1&enablejsapi=1&controls=0&autoplay=1&loop=1&showinfo=0&autohide=1`;
+  const embedSrc = `https://www.youtube.com/embed/?playlist=${extractIdFromURL(
+    embedLink || ''
+  )}&rel=0&modestbranding=1&enablejsapi=1&controls=0&autoplay=1&loop=1&showinfo=0&autohide=1`;
 
   const isRenderedIframePlayer = (ref: MutableRefObject<HTMLIFrameElement | null>) => {
     const iframe = ref.current;
