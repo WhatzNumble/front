@@ -7,22 +7,28 @@ interface Props {
 
 const ProfileAvatar: React.FC<Props> = ({ avatarSrc, isEdit = false }) => {
   return (
-    <div className='avatar'>
-      <Image src={avatarSrc || '/logo.svg'} width={180} height={180} alt='user-avatar' />
-      {isEdit && (
-        <>
-          <label className='editButton' htmlFor='profileUpload'>
-            <Image src='/btn_edit.svg' layout='fill' alt='edit-button' />
-          </label>
-          <input className='input' name='profileUpload' accept='image/*' type='hidden' />
-          <input className='input' name='thumbnailName' value={avatarSrc} type='hidden' />
-        </>
-      )}
+    <>
+      <div className='avatarWrapper'>
+        <div className='avatar'>
+          <Image src={avatarSrc || '/logo.svg'} width={180} height={180} alt='user-avatar' />
+        </div>
+        {isEdit && (
+          <>
+            <label className='editButton' htmlFor='profileUpload'>
+              <Image src='/btn_edit.svg' layout='fill' alt='edit-button' />
+            </label>
+            <input className='input' name='profileUpload' accept='image/*' type='hidden' />
+            <input className='input' name='thumbnailName' value={avatarSrc} type='hidden' />
+          </>
+        )}
+      </div>
       <style jsx>
         {`
-          .avatar {
+          .avatarWrapper {
             position: relative;
             margin: 0 auto;
+          }
+          .avatar {
             border-radius: 50%;
             width: 180px;
             height: 180px;
@@ -39,7 +45,7 @@ const ProfileAvatar: React.FC<Props> = ({ avatarSrc, isEdit = false }) => {
           }
         `}
       </style>
-    </div>
+    </>
   );
 };
 
