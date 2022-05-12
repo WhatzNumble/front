@@ -3,54 +3,85 @@ import { NextPage } from 'next';
 import Router, { useRouter } from 'next/router';
 import { AppState } from 'store';
 import { useSelector } from 'react-redux';
-import { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { uiActions } from 'store/ui';
 
 import useUserTypeRedirect from 'hooks/useUserTypeRedirect';
+import { fileLoader } from 'utils/file';
 import Button from '../Button';
 import ProfileAvatar from '../ProfileAvatar';
 import ProfileInfo from '../ProfileInfo';
 import { profileWrapper } from '..';
 import { HEADER_HEIGHT } from 'components/Layout';
+import useToastMessage from 'hooks/useToastMessage';
+import axios from 'axios';
 
 const ProfileEditPage: NextPage = () => {
-  const dispatch = useDispatch();
   const { user } = useSelector((state: AppState) => state.user);
-  const [avatarSrc, setAvatarSrc] = useState<string>(user.avatar);
+  const [profilePreview, setProfilePreview] = useState(user.avatar);
+  const { pushToast } = useToastMessage();
   const formRef = useRef<HTMLFormElement>(null);
+  const [inputs, setInputs] = useState({
+    profile: user.avatar,
+    nickName: user.nickName,
+  });
 
   const { editType } = useRouter().query;
   const isSignUp = editType === 'signup';
 
+  const onNickNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.currentTarget;
+    setInputs({
+      ...inputs,
+      nickName: value,
+    });
+  };
   // useUserTypeRedirect('/', 'guest'); //guest 일 경우 홈으로 redirect
+  const onProfileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const target = e.currentTarget;
+    const { name, files } = target;
+    console.log(name, files);
+    if (files && files.length === 1 && name === 'profileAvatar') {
+      const filesName = files[0].name;
+      const fileContent = await fileLoader(files[0]);
+      console.log(fileContent);
+      setProfilePreview(fileContent as string);
+      setInputs({
+        ...inputs,
+        profile: filesName,
+      });
+    }
+  };
 
   const successUpdateProfile = () => {
-    //dispatch(userActions.loadUser(response));
-    Router.push(isSignUp ? '/' : '/profile');
-    dispatch(
-      uiActions.pushToast({
-        message: isSignUp ? '프로필이 생성되었습니다' : '프로필이 수정되었습니다',
-      })
-    );
+    Router.replace(isSignUp ? '/' : '/profile');
+    pushToast(isSignUp ? '프로필이 생성되었습니다' : '프로필이 수정되었습니다');
   };
 
   const failUpdateProfile = () => {
+    pushToast('업데이트중 문제가 발생했습니다.');
     Router.push('/');
-    dispatch(
-      uiActions.pushToast({
-        message: '프로필 수정 실패 ',
-      })
-    );
   };
 
-  const handleNext = () => {
-    //SUBMIT REQUEST
+  const updateProfileRequest = async () => {
+    try {
+      const body = new FormData(formRef.current!);
+      console.log(body.get('nickName'));
+      console.log(body.get('profileAvatar'));
 
-    //ONSUCCESS
-    successUpdateProfile();
+      const res = axios.post('/member/update', {
+        body,
+      });
+      console.log(res);
+      successUpdateProfile();
+    } catch (err) {
+      console.log(err);
+      failUpdateProfile();
+    }
+  };
 
-    //ON FALSE
+  const handleNext = async () => {
+    await updateProfileRequest();
   };
 
   return (
@@ -60,8 +91,8 @@ const ProfileEditPage: NextPage = () => {
       headerRight={<Button onClick={() => handleNext()} width='62px' text='완료' />}
     >
       <form className='profileWrapper' ref={formRef}>
-        <ProfileAvatar isEdit  avatarSrc={avatarSrc} />
-        <ProfileInfo isEdit name={user.nickName} />
+        <ProfileAvatar isEdit onProfileChange={onProfileChange} avatarSrc={profilePreview} />
+        <ProfileInfo isEdit onNickNameChange={onNickNameChange} name={inputs.nickName} />
       </form>
       <style jsx>{profileWrapper}</style>
       <style jsx>
