@@ -6,7 +6,7 @@ import { dateToDateFormatString } from 'utils/dateParser';
 
 import Avatar from './Avatar';
 import Content from './Content';
-import ProgressBar from '../DefaultPlayer/ProgressBar';
+import ProgressBar from './ProgressBar';
 
 interface Props extends editableVideo {
   muted?: boolean;
