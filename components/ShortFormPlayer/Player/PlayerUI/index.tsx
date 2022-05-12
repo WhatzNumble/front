@@ -3,6 +3,7 @@ import Image from 'next/image';
 
 import { editableVideo } from 'libs/types';
 import Avatar from './Avatar';
+import Content from './Content';
 import ProgressBar from '../DefaultPlayer/ProgressBar';
 
 interface Props extends editableVideo {
@@ -10,26 +11,28 @@ interface Props extends editableVideo {
   progress?: number;
 }
 
-const PlayerUI: React.FC<Props> = ({ video, progress }) => {
+const PlayerUI: React.FC<Props> = ({ video, isEditable, progress }) => {
   const { profile, videoTitle, videoViews, videoCreationDate, videoLike, videoContent } = video;
   const [isLike, setIsLike] = useState(false);
-  const [showDetail, setShowDetail] = useState(false);
 
   const handleLike = () => {
     setIsLike((prev) => !prev);
   };
 
-  const handleDetail = () => {
-    setShowDetail((prev) => !prev);
+  const onClickMore = () => {
+    console.log(onClickMore);
+
   };
 
   return (
     <>
       <div className='PlayerUI'>
         <div className='leftWrapper'>
-          <div className='contentWrapper'>
+          <Content content={videoContent} />
+          {/* <div className='contentWrapper'>
             <div className={showDetail ? 'content' : 'hidden_content'}>{videoContent}</div>
-          </div>
+            {!showDetail && <p onClick={() => handleDetail()}>더보기</p>}
+          </div> */}
           <div className='infoWrapper'>
             <Avatar link='test' avatarImage={profile || '/profile.png'} />
             <div className='info'>
@@ -43,15 +46,17 @@ const PlayerUI: React.FC<Props> = ({ video, progress }) => {
           </div>
         </div>
         <div className='buttonWrapper'>
-          <div className='button'>
-            <button onClick={() => handleDetail()}>
-              <Image src={'/more_button.svg'} width={32} height={32} alt='bookmark' />
-            </button>
-          </div>
+          {isEditable && (
+            <div className='button'>
+              <button onClick={onClickMore}>
+                <Image src={'/more_button.svg'} width={32} height={32} alt='bookmark' />
+              </button>
+            </div>
+          )}
           <div className='button'>
             <button onClick={() => handleLike()}>
               <Image
-                src={isLike ? '/bookmark_selected.svg' : '/bookmark.svg'}
+                src={isLike ? '/icon_bookmarked.svg' : '/icon_bookmark.svg'}
                 width={32}
                 height={32}
                 alt='bookmark'
@@ -66,9 +71,6 @@ const PlayerUI: React.FC<Props> = ({ video, progress }) => {
       </div>
       <style jsx>
         {`
-          * {
-            color: white;
-          }
           .PlayerUI {
             z-index: 10;
             position: absolute;
