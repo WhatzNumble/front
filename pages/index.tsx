@@ -30,7 +30,7 @@ const Home: NextPage<Props> = ({ token }) => {
 
   return (
     <Layout tabBarTransparent>
-      <ShortFormPlayer preLoadedVideos={mockVideos} />
+      <ShortFormPlayer preLoadedVideos={mockVideos} isEditable={true} />
     </Layout>
   );
 };
