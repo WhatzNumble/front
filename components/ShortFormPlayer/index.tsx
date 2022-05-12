@@ -8,16 +8,20 @@ import mockVideos from './mockVideos';
 interface Props {
   isEditable?: boolean;
   query?: string;
+  fixedList?: boolean;
   preLoadedVideos: Video[];
   requestIndex?: number;
 }
 
 const ShortFormPlayer: React.FC<Props> = ({
-  query,
+  query, 
+  fixedList = false,
   preLoadedVideos,
   requestIndex = 4,
   isEditable = false,
+
 }) => {
+  const [blockRequest, setBlockRequest] = useState(fixedList);
   const [videos, setVideos] = useState<Video[]>([...preLoadedVideos]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [lastIndex, setLastIndex] = useState(videos.length - 1);
@@ -26,7 +30,7 @@ const ShortFormPlayer: React.FC<Props> = ({
 
   useEffect(() => {
     (async function () {
-      const res = await axios.get('/api/home');
+      const res = await axios.get('/api/home'); // 해당 라우트는
       console.log(res);
     })();
   }, []);
@@ -54,13 +58,13 @@ const ShortFormPlayer: React.FC<Props> = ({
   useEffect(() => {
     console.log(activeIndex);
     if (lastIndex - requestIndex === activeIndex) {
-      console.log('callAPI');
+      console.log(`callAPI page: ${page} videolength: ${videos.length}`);
       //if api respnose success
       setVideos((prev) => [...prev, ...mockVideos]);
       setLastIndex((prev) => prev + mockVideos.length);
       setPage((prev) => prev + 1);
     }
-  }, [videos, activeIndex, lastIndex, requestIndex]);
+  }, [query, videos, activeIndex, lastIndex, requestIndex]);
 
   return (
     <>
