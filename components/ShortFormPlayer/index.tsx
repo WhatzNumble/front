@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Video } from 'libs/types';
 import Player from './Player';
 import mockVideos from './mockVideos';
+import PlayStatusIcon from './PlayStatusIcon';
 
 interface Props {
   isEditable?: boolean;
@@ -14,16 +15,16 @@ interface Props {
 }
 
 const ShortFormPlayer: React.FC<Props> = ({
-  query, 
+  query,
   fixedList = false,
   preLoadedVideos,
   requestIndex = 4,
   isEditable = false,
-
 }) => {
   const [blockRequest, setBlockRequest] = useState(fixedList);
   const [videos, setVideos] = useState<Video[]>([...preLoadedVideos]);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [playVideo, setPlayVideo] = useState(-1);
+  const [inViewIndex, setInVewIndex] = useState(0);
   const [lastIndex, setLastIndex] = useState(videos.length - 1);
   const [page, setPage] = useState(0);
   const videoListRef = useRef<HTMLDivElement>(null);
@@ -36,12 +37,20 @@ const ShortFormPlayer: React.FC<Props> = ({
   }, []);
 
   useEffect(() => {
+    setPlayVideo(inViewIndex);
+  }, [inViewIndex]);
+
+  const onClickPlayer = () => {
+    playVideo > -1 ? setPlayVideo(-1) : setPlayVideo(inViewIndex);
+  };
+
+  useEffect(() => {
     const observer = new IntersectionObserver(
       (entry) => {
         entry.forEach((entry) => {
           if (entry.isIntersecting) {
             const targetID = parseInt(entry.target.id.replace(/[^0-9.]/g, ''));
-            setActiveIndex(targetID);
+            setInVewIndex(targetID);
           }
         });
       },
@@ -56,35 +65,31 @@ const ShortFormPlayer: React.FC<Props> = ({
   }, [videos, videoListRef]);
 
   useEffect(() => {
-    console.log(activeIndex);
-    if (lastIndex - requestIndex === activeIndex) {
+    if (lastIndex - requestIndex === inViewIndex) {
       console.log(`callAPI page: ${page} videolength: ${videos.length}`);
       //if api respnose success
       setVideos((prev) => [...prev, ...mockVideos]);
       setLastIndex((prev) => prev + mockVideos.length);
       setPage((prev) => prev + 1);
     }
-  }, [query, videos, activeIndex, lastIndex, requestIndex]);
+  }, [query, videos, inViewIndex, lastIndex, requestIndex, page]);
 
   return (
     <>
-      <div className='VideoListWrapper' ref={videoListRef}>
+      <div className='VideoListWrapper' ref={videoListRef} onClick={onClickPlayer}>
         {videos?.map((video, index) => {
           return (
             <Player
               key={index}
               playerID={`player_${index}`}
-              activeCallback={() => {
-                setActiveIndex(index);
-                console.log('!!' + index);
-              }}
-              active={index === activeIndex}
+              active={index === playVideo}
               isEditable={isEditable}
               video={video}
             />
           );
         })}
       </div>
+      <PlayStatusIcon playing={playVideo !== -1} />
       <style jsx>
         {`
           .VideoListWrapper {

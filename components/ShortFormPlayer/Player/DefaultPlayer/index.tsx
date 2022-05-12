@@ -15,7 +15,7 @@ const DefaultPlayer: React.FC<Props> = ({ active, video, isEditable }) => {
 
   useEffect(() => {
     if (directDir) {
-      handleVideo(active ? 'play' : 'stop');
+      handleVideo(active ? 'play' : 'pause');
     }
   }, [directDir, active]);
 
