@@ -52,7 +52,7 @@ const userSlice = createSlice({
       const { token, loginUser } = action.payload;
       //todo token으로 서버에  user data 요청
       //response 상태에 따라 회원가입 페이지, or 홈페이지로 이동해야함
-      Router.push('/');
+      // Router.push('/');
       return {
         ...state,
         isLoggedIn: true,

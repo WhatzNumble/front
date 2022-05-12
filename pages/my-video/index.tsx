@@ -11,6 +11,7 @@ import cookies from 'next-cookies';
 import ConfirmBox from "components/ConfirmBox";
 import { useDispatch } from "react-redux";
 import { uiActions } from "store/ui";
+import config from "utils/config";
 
 const HEIGHT = 85;
 
@@ -194,6 +195,7 @@ function UploadLink({self, embed}: {self: React.ReactNode, embed: React.ReactNod
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx)=>{
+    const {apiBaseURL} = config;
     const allCookies = cookies(ctx);
     let result;
     let errorMsg = '';
@@ -203,7 +205,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx)=>{
             throw new Error();
         }
 
-        const res = await fetch('http://localhost:8080/api/video?page=1&size=3', {
+        const res = await fetch(`${apiBaseURL}/api/video?page=1&size=3`, {
             headers: {
                 'x-auth-token': token
             }

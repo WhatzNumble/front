@@ -1,22 +1,23 @@
 import ConfirmBox from "components/ConfirmBox";
 import Layout from "components/Layout";
 import Loading from "components/Loading";
+import useToastMessage from "hooks/useToastMessage";
 import useUserState from "hooks/useUserState";
-import cookies from "next-cookies";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import {uiActions} from 'store/ui';
 import config from "utils/config";
 
 function Upload(){
+    const {apiBaseURL} = config;
     const user = useUserState();
-    const dispatch = useDispatch();
+    const {pushToast} = useToastMessage();    
     const router = useRouter();
-    const formRef = useRef<HTMLFormElement>(null);
-    const {type} = router.query;
+    const {type, edit, videoId} = router.query;
     const isEmbed = type === 'embed';
+    const isEdit = edit === 'true';
+    const formRef = useRef<HTMLFormElement>(null);
     const [loading, setLoading] = useState(false);
     const [preview, setPreview] = useState('');
     const [confirm, setConfirm] = useState({
@@ -69,7 +70,7 @@ function Upload(){
             }catch(ex){
                 setConfirm({
                     show: true,
-                    msg: '업로드중 문제가 발생하였습니다.' 
+                    msg: '작업중 문제가 발생하였습니다.' 
                 });
             }
         }else{
@@ -83,7 +84,7 @@ function Upload(){
     const validateFile = async (file: File)=>{
         let msg = '';
         const SIZE = 100; // MB
-        const TIME = 15;  // 분
+        const TIME = 1;  // 분
 
         if(formatByte(file.size) >= SIZE){
             msg = `${SIZE}MB 이상은
@@ -143,10 +144,15 @@ function Upload(){
                 return;
             }
         }
+        uploadVideo();
+    }
 
+    const uploadVideo = async ()=>{
+        const resultMsg = isEdit ? '영상이 수정되었습니다.' : '영상 업로드가 완료되었습니다.';
+        const api = `${apiBaseURL}/api/video/${isEdit ? 'modify' : 'add'}/${isEmbed ? 'embed': 'direct'}`; 
         try{
             setLoading(true);
-            const res = await fetch(`http://localhost:8080/api/video/add/${isEmbed ? 'embed': 'direct'}`, {
+            const res = await fetch(api, {
                 method: 'POST',
                 headers: {
                     [`${config.authHeaderKey}`]: user.token
@@ -154,10 +160,12 @@ function Upload(){
                 body: new FormData(formRef.current!),
             });
             if(res.ok){
+                pushToast(resultMsg);
+                router.push('/my-video');
+            }else{
                 throw new Error();
             }
         }catch(ex){
-            const err = ex as Error;
             setConfirm({
                 show: true,
                 msg: '업로드중 문제가 발생하였습니다.',
@@ -165,9 +173,6 @@ function Upload(){
         }finally{
             setLoading(false);
         }
-        
-        dispatch(uiActions.pushToast({message: '영상 업로드가 완료되었습니다.'}));
-        router.push('/my-video');
     }
 
     const onConfirmCallback = ()=>{
@@ -204,6 +209,45 @@ function Upload(){
         return valid;
     }
 
+    const getVideo = async (id: number)=>{
+        try{
+            setLoading(true);
+            const res = await fetch(`${apiBaseURL}/api/video/${id}`, {
+                headers: {
+                    [`${config.authHeaderKey}`]: user.token
+                },
+            });
+            if(res.ok){
+                const result = await res.json();
+                if(result){
+                    setInputs({
+                        link: result.embedLink,
+                        title: result.videoTitle,
+                        content: result.videoContent, 
+                        fileName: '',   // 직접영상 수정은 새로운 파일 올려야함
+                        videoThumbnail: result.video,
+                        thumbnailName: result.video,
+                        isFinish: false,
+                    });
+                }else{
+                    throw new Error();
+                }
+            }else{
+                throw new Error();
+            }
+        }catch(ex){
+            pushToast('조회중 문제가 발생하였습니다.');
+        }finally{
+            setLoading(false);
+        }
+    }
+
+    useEffect(()=>{
+        if(isEdit && videoId){
+            getVideo(Number(videoId));
+        }
+    }, []);
+
     useEffect(()=>{
         setInputs({
             ...inputs,
@@ -213,10 +257,10 @@ function Upload(){
 
     return (
         <Layout 
-            title="영상 업로드" 
-            headerTitle={`${isEmbed ? '임베드' : '직접'} 영상 업로드하기`}
+            title={`영상 ${isEdit ? '수정' : '업로드'}`} 
+            headerTitle={`${isEmbed ? '임베드' : '직접'} 영상 ${isEdit ? '수정' : '업로드'}하기`}
             showBack={true}
-            headerRight={<button className="theme-main" disabled={!inputs.isFinish} onClick={onClickComplete}>완료</button>}
+            headerRight={<button className="theme-main" disabled={!inputs.isFinish} onClick={onClickComplete}>{isEdit ? '수정' : '완료'}</button>}
         >
             <form className="Upload" ref={formRef}>
                 <Panel title="썸네일 업로드">
@@ -246,16 +290,16 @@ function Upload(){
                     />
                 </Panel>
                 {isEmbed ? 
-                    <Panel title="연결 링크">
+                    <Panel title="임베드 링크">
                         <div className="box">
                             <input 
                                 className="input"
-                                placeholder="링크추가" 
+                                placeholder="Youtube 링크를 입력해주세요." 
                                 name="link" 
                                 value={inputs.link} 
                                 onChange={onChange}
                             />
-                            <Image src='/btn_link.svg' alt="링크추가" width={44} height={44}/>
+                            {/* <Image src='/btn_link.svg' alt="링크추가" width={44} height={44}/> */}
                         </div>
                     </Panel> :
                     <Panel title="영상 업로드">
