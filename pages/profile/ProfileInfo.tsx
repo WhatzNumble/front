@@ -1,23 +1,16 @@
-import { useState } from 'react';
-
 interface Props {
   isEdit?: boolean;
   email?: string;
+  onNickNameChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   name: string;
 }
 
-const ProfileInfo: React.FC<Props> = ({ name, isEdit = false, email }) => {
-  const [nickName, setNickName] = useState<string>(name);
-
-  const handleNickName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNickName(e.target.value);
-  };
-
+const ProfileInfo: React.FC<Props> = ({ name, isEdit = false, email, onNickNameChange }) => {
   return (
     <div className='profileInfo'>
-      {isEdit ? (
+      {isEdit && onNickNameChange ? (
         <>
-          <input className='nickName' onChange={handleNickName} value={nickName} />
+          <input name='nickName' className='nickName' onChange={onNickNameChange} value={name} />
           <p className='info'>
             사용하고자 하는 닉네임을 입력해주세요 <br />
             Whatz에 표시되는 이름입니다
@@ -25,7 +18,7 @@ const ProfileInfo: React.FC<Props> = ({ name, isEdit = false, email }) => {
         </>
       ) : (
         <>
-          <div className='nickName'>{nickName}</div>
+          <div className='nickName'>{name}</div>
           <p className='email'>{email}</p>
         </>
       )}
@@ -41,9 +34,8 @@ const ProfileInfo: React.FC<Props> = ({ name, isEdit = false, email }) => {
             p {
               color: #8f8f8f;
             }
+
             .nickName {
-              border: 0;
-              border-bottom: 2px solid #8f8f8f;
               background-color: transparent;
               width: 315px;
               font-family: 'Apple SD Gothic Neo';
@@ -56,6 +48,10 @@ const ProfileInfo: React.FC<Props> = ({ name, isEdit = false, email }) => {
               letter-spacing: -0.3px;
               color: #fff;
               /* wirefram */
+            }
+            input {
+              border: 0;
+              border-bottom: 2px solid #8f8f8f;
               &:focus {
                 outline: none;
               }

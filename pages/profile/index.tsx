@@ -5,12 +5,13 @@ import Link from 'next/link';
 import Router from 'next/router';
 import css from 'styled-jsx/css';
 
+import useUserTypeRedirect from 'hooks/useUserTypeRedirect';
+import useToastMessage from 'hooks/useToastMessage';
 import Layout from 'components/Layout';
 import { userActions } from 'store/user';
-import useUserTypeRedirect from 'hooks/useUserTypeRedirect';
 import useUserState from 'hooks/useUserState';
-import Button from './Button';
 
+import Button from './Button';
 import ProfileAvatar from './ProfileAvatar';
 import ProfileInfo from './ProfileInfo';
 import ConfirmBox from 'components/ConfirmBox';
@@ -28,26 +29,26 @@ export const profileWrapper = css`
 
 const ProfilePage = () => {
   // useUserTypeRedirect('/', 'guest');
+  const { pushToast } = useToastMessage();
   const dispatch = useDispatch();
   const [showConfirm, setConfirm] = useState(false);
-  const { user , token } = useUserState();
+  const { user, token } = useUserState();
 
-  const logoutRequest = async () => {
-    await axios
-      .post('/member/logout', {
-        //post 인데 명세서에 요청 데이터가 없어 일단 비워둠
-      })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+  const userLogoutRequest = async () => {
+    try {
+      const res = await axios.post('/member/logout', {});
+      dispatch(userActions.logout());
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const onClickProfileEdit = () => {
+    Router.push('/profile/edit');
   };
 
   const onClickLogout = () => {
-    logoutRequest();
-    dispatch(userActions.logout());
+    userLogoutRequest();
   };
 
   const openConfirm = () => {
@@ -63,12 +64,23 @@ const ProfilePage = () => {
     //user 탈퇴 request
   };
 
+  const userDeleteRequest = async () => {
+    try {
+      const res = await axios.post('/member/delete', {});
+      pushToast('탈퇴하였습니다');
+      dispatch(userActions.logout());
+      Router.push('/');
+    } catch (err) {
+      pushToast('ServerError: 탈퇴에 실패했습니다. 로그아웃 합니다.');
+      console.error(err);
+    }
+  };
+
   const confirmUserLeave = (confirm: boolean) => {
     //user 탈퇴 request
     if (confirm) {
-      console.log('userLeabe');
-      dispatch(userActions.logout());
-      Router.push('/');
+      userDeleteRequest();
+      console.log('userLeave');
     } else {
       closeConfirm();
     }
@@ -80,12 +92,7 @@ const ProfilePage = () => {
         <ProfileAvatar avatarSrc={user.avatar} />
         <ProfileInfo name={user.nickName} email={user.email} />
         <div className='buttonWrapper'>
-          <Button
-            onClick={() => {
-              Router.push('/profile/edit');
-            }}
-            text='프로필 편집'
-          />
+          <Button onClick={onClickProfileEdit} text='프로필 편집' />
           <Button onClick={onClickLogout} text='로그아웃' theme='dark' />
           <Button onClick={onClickUserLeave} text='탈퇴하기' theme='dark' />
         </div>

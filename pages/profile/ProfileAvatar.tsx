@@ -1,25 +1,39 @@
 import Image from 'next/image';
+import { fileLoader } from 'utils/file';
 
 interface Props {
   avatarSrc?: string;
   isEdit?: boolean;
+  onProfileChange?: (e: React.ChangeEvent<HTMLInputElement>) => Promise<void>;
 }
 
-const ProfileAvatar: React.FC<Props> = ({ avatarSrc, isEdit = false }) => {
+const ProfileAvatar: React.FC<Props> = ({ avatarSrc, isEdit = false, onProfileChange }) => {
   return (
     <>
       <div className='avatarWrapper'>
-        <div className='avatar'>
-          <Image src={avatarSrc || '/logo.svg'} width={180} height={180} alt='user-avatar' />
-        </div>
-        {isEdit && (
+        {isEdit && onProfileChange ? (
           <>
-            <label className='editButton' htmlFor='profileUpload'>
-              <Image src='/btn_edit.svg' layout='fill' alt='edit-button' />
-            </label>
-            <input className='input' name='profileUpload' accept='image/*' type='hidden' />
-            <input className='input' name='thumbnailName' value={avatarSrc} type='hidden' />
+            <div className='avatar'>
+              <Image src={avatarSrc || '/logo.svg'} width={180} height={180} alt='user-avatar' />
+              <label className='editButton' htmlFor='profileAvatar'>
+                <Image src='/btn_edit.svg' layout='fill' alt='edit-button' />
+              </label>
+              <input
+                id='profileAvatar'
+                name='profileAvatar'
+                type='file'
+                className='input'
+                onChange={onProfileChange}
+                accept='image/*'
+                hidden={true}
+              />
+            </div>
+            {/* <input className='input' name='profile' value={avatarSrc} type='hidden' /> */}
           </>
+        ) : (
+          <div className='avatar'>
+            <Image src={avatarSrc || '/logo.svg'} width={180} height={180} alt='user-avatar' />
+          </div>
         )}
       </div>
       <style jsx>
