@@ -2,6 +2,8 @@ import { useState } from 'react';
 import Image from 'next/image';
 
 import { editableVideo } from 'libs/types';
+import { dateToDateFormatString } from 'utils/dateParser';
+
 import Avatar from './Avatar';
 import Content from './Content';
 import ProgressBar from '../DefaultPlayer/ProgressBar';
@@ -21,7 +23,6 @@ const PlayerUI: React.FC<Props> = ({ video, isEditable, progress }) => {
 
   const onClickMore = () => {
     console.log(onClickMore);
-
   };
 
   return (
@@ -29,18 +30,12 @@ const PlayerUI: React.FC<Props> = ({ video, isEditable, progress }) => {
       <div className='PlayerUI'>
         <div className='leftWrapper'>
           <Content content={videoContent} />
-          {/* <div className='contentWrapper'>
-            <div className={showDetail ? 'content' : 'hidden_content'}>{videoContent}</div>
-            {!showDetail && <p onClick={() => handleDetail()}>더보기</p>}
-          </div> */}
           <div className='infoWrapper'>
             <Avatar link='test' avatarImage={profile || '/profile.png'} />
             <div className='info'>
               <div className='title'>{videoTitle}</div>
               <div className='viewDate'>
-                {`조회수 ${videoViews}`}
-                &#183;
-                {videoCreationDate}
+                {`조회수 ${videoViews}`}&#183;{dateToDateFormatString(videoCreationDate)}
               </div>
             </div>
           </div>
@@ -84,7 +79,7 @@ const PlayerUI: React.FC<Props> = ({ video, isEditable, progress }) => {
             background: linear-gradient(0deg, rgba(0, 0, 0, 0.61) 0%, rgba(0, 0, 0, 0.01) 100%);
           }
           .leftWrapper {
-            max-width: 70%;
+            max-width: 88%;
             .contentWrapper {
               font-weight: 500;
               font-size: 14px;
@@ -122,6 +117,7 @@ const PlayerUI: React.FC<Props> = ({ video, isEditable, progress }) => {
             }
           }
           .buttonWrapper {
+            width: 40px;
             button {
               all: unset;
             }
