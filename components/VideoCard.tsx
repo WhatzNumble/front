@@ -3,11 +3,16 @@ import Image from 'next/image';
 
 interface Props {
     video: VideoBasic
+    onCardClick?: (id: number)=> void
 }
 
-function VideoCard({video}: Props){
+function VideoCard({video, onCardClick}: Props){
+    const onClick = ()=>{
+        if(onCardClick) onCardClick(video.videoId);
+    }
+
     return (
-        <div className='VideoCard'>
+        <div className='VideoCard' onClick={onClick}>
             {video.videoId}
             <Image className='thumbnail' src='/empty_img.svg'  alt='empty_image' layout='fill'/>
             <style jsx>{`

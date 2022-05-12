@@ -8,10 +8,8 @@ import { VideoBasic } from 'libs/types';
 import VideoCard from "components/VideoCard";
 import PopBox from "components/PopBox";
 import cookies from 'next-cookies';
-import ConfirmBox from "components/ConfirmBox";
-import { useDispatch } from "react-redux";
-import { uiActions } from "store/ui";
 import config from "utils/config";
+import useToastMessage from "hooks/useToastMessage";
 
 const HEIGHT = 85;
 
@@ -21,9 +19,8 @@ interface Props {
 }
 
 function MyVideo({videos, errorMsg}: Props){
-    const disptch = useDispatch();
+    const {pushToast} = useToastMessage();
     const [showUpload, setShowUploads] = useState(false);
-    const router = useRouter();
 
     const onClickUpload = ()=>{
         setShowUploads(true);
@@ -35,7 +32,7 @@ function MyVideo({videos, errorMsg}: Props){
 
     useEffect(()=>{
         if(errorMsg){
-            disptch(uiActions.pushToast({message: errorMsg}));
+            pushToast(errorMsg);
         }
     }, []);
 
