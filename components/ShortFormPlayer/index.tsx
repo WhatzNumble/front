@@ -98,9 +98,14 @@ const ShortFormPlayer: React.FC<Props> = ({
             left: 0;
             width: 100%;
             height: 100%;
+            -ms-overflow-style: none; 
+            scrollbar-width: none;
             overflow: scroll;
             scroll-snap-type: y mandatory;
             background-color: #000;
+          }
+          .VideoListWrapper::-webkit-scrollbar {
+            display: none;
           }
         `}
       </style>
