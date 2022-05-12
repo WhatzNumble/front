@@ -21,6 +21,7 @@ const ShortFormPlayer: React.FC<Props> = ({
   const [videos, setVideos] = useState<Video[]>([...preLoadedVideos]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [lastIndex, setLastIndex] = useState(videos.length - 1);
+  const [page, setPage] = useState(0);
   const videoListRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -54,8 +55,10 @@ const ShortFormPlayer: React.FC<Props> = ({
     console.log(activeIndex);
     if (lastIndex - requestIndex === activeIndex) {
       console.log('callAPI');
+      //if api respnose success
       setVideos((prev) => [...prev, ...mockVideos]);
       setLastIndex((prev) => prev + mockVideos.length);
+      setPage((prev) => prev + 1);
     }
   }, [videos, activeIndex, lastIndex, requestIndex]);
 
