@@ -4,6 +4,7 @@ import useToastMessage from "hooks/useToastMessage";
 import { VideoBasic } from "libs/types";
 import { GetServerSideProps } from "next";
 import cookies from "next-cookies";
+import Image from "next/image";
 import { useEffect } from "react";
 import config from "utils/config";
 
@@ -30,7 +31,10 @@ function Like({videos, errorMsg}: Props){
                             <VideoCard key={vd.videoId} video={vd}/>
                         ))}
                     </div> :
-                    <div className="empty-txt">조회된 영상이 없습니다.</div>
+                    <div className="empty-box">
+                        <Image src='/bookmark.svg' width={40} height={40}/>
+                        <h3 className="text">조회된 영상이 없습니다.</h3>
+                    </div>
                 }
                 <style jsx>{`
                     .Like {
@@ -48,12 +52,20 @@ function Like({videos, errorMsg}: Props){
                         padding: 0 16px 0 16px;
                     }
 
-                    .empty-txt {
+                    .empty-box {
                         position: absolute;
-                        top: 50%;;
-                        left: 50%;;
-                        transform: translate(-50%, -50%);
+                        top: 40%;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
                         color: #B8B8B8;
+                        .text {
+                            font-size: 15px;
+                            font-weight: normal;
+                            margin-top: 20px;
+                        }
                     }
                 `}</style>
             </div>
