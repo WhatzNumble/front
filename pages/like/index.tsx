@@ -55,7 +55,7 @@ function Like({videos, errorMsg}: Props){
                         ))}
                     </div> :
                     <div className="empty-box">
-                        <Image src='/bookmark.svg' width={40} height={40}/>
+                        <Image src='/icon/common/bookmark.svg' width={40} height={40} alt ='no videos'/>
                         <h3 className="text">조회된 영상이 없습니다.</h3>
                     </div>
                 }

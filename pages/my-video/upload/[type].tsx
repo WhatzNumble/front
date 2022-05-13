@@ -269,7 +269,7 @@ function Upload(){
                             {preview ? 
                                 <Image src={preview} alt="썸네일" layout='fill'/> :
                                 <div className="add">
-                                    <Image src="/btn_add.svg" alt="썸네일 업로드" width={20} height={20}/>
+                                    <Image src="/icon/common/btn_add.svg" alt="썸네일 업로드" width={20} height={20}/>
                                 </div>
                             }
                         </div>
@@ -299,7 +299,7 @@ function Upload(){
                                 value={inputs.link} 
                                 onChange={onChange}
                             />
-                            {/* <Image src='/btn_link.svg' alt="링크추가" width={44} height={44}/> */}
+                            {/* <Image src='/icon/common/btn_link.svg' alt="링크추가" width={44} height={44}/> */}
                         </div>
                     </Panel> :
                     <Panel title="영상 업로드">
@@ -319,7 +319,7 @@ function Upload(){
                                 disabled
                             />
                             <label htmlFor="videoUpload">
-                                <Image src='/btn_add2.svg' alt="영상 업로드" width={44} height={44}/>
+                                <Image src='/icon/common/btn_add2.svg' alt="영상 업로드" width={44} height={44}/>
                             </label>
                         </div>
                     </Panel>

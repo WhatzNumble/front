@@ -25,7 +25,7 @@ function Header({title, left, right, height = 40, showBack = false, onBackClick}
             <h1 className="title">{title}</h1>
             {showBack && 
                 <button className="left" data-header-button onClick={onClick}>
-                    <Image src='/ic_back.svg' width={24} height={24} alt='back'/>
+                    <Image src='/icon/common/ic_back.svg' width={24} height={24} alt='back'/>
                 </button>
             }
             <div className="right" data-header-button>{right}</div>

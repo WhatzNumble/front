@@ -37,7 +37,7 @@ function ContentsDetail(){
                 비디오 아이디 : {router.query.id}
                 <div className="preview">
                     <div className="img">
-                        <Image src={'/empty_img.svg'} alt="empty" layout="fill"/>
+                        <Image src={'/icon/common/empty_img.svg'} alt="empty" layout="fill"/>
                     </div>
                     <div className="desc">
                         <h3>영상 설명</h3>
