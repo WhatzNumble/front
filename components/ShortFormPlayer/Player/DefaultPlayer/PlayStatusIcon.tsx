@@ -1,16 +1,21 @@
 import Image from 'next/image';
-import { useEffect } from 'react';
 
 interface Props {
+  loading: boolean;
   playing: boolean;
 }
 
-const PlayStatusIcon: React.FC<Props> = ({ playing }) => {
-  useEffect(() => {}, [playing]);
+const PlayStatusIcon: React.FC<Props> = ({ loading, playing }) => {
   const icon = playing ? '/icon/player/play_state.svg' : '/icon/player/pause_state.svg';
   return (
-    <div className='playStatus' key={icon}>
-      <Image src={icon} width={84} height={84} alt='play state icon' />
+    <div className='playStatus'>
+      {loading ? (
+        <Image src='/loading.gif' width={40} height={40} alt='loading video' />
+      ) : (
+        <div className='animate' key={icon}>
+          <Image src={icon} width={84} height={84} alt='play state icon' />
+        </div>
+      )}
       <style jsx>
         {`
           @keyframes fadeout {
@@ -27,7 +32,9 @@ const PlayStatusIcon: React.FC<Props> = ({ playing }) => {
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 100;
-            animation: fadeout 1s forwards;
+            .animate {
+              animation: fadeout 1s forwards;
+            }
           }
         `}
       </style>
