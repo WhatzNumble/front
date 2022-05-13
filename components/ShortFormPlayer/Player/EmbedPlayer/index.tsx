@@ -5,7 +5,7 @@ import PlayerUI from '../PlayerUI';
 import Mask from './Mask';
 
 interface Props extends editableVideo {
-  active: boolean;
+  inViewPort: boolean;
   blockTouch?: boolean;
 }
 
@@ -15,7 +15,7 @@ const extractIdFromURL = (url: string) => {
   return match && match[7].length == 11 ? match[7] : false;
 };
 
-const EmbedPlayer: React.FC<Props> = ({ video, active, blockTouch, isEditable }) => {
+const EmbedPlayer: React.FC<Props> = ({ video, inViewPort, blockTouch, isEditable }) => {
   const { videoTitle, embedLink } = video;
   const iframeVideoRef = useRef<HTMLIFrameElement | null>(null);
   const embedSrc = `https://www.youtube.com/embed/?playlist=${extractIdFromURL(
@@ -46,8 +46,8 @@ const EmbedPlayer: React.FC<Props> = ({ video, active, blockTouch, isEditable })
   }, []);
 
   useEffect(() => {
-    sendCommand(active ? 'playVideo' : 'stopVideo');
-  }, [active]);
+    sendCommand(inViewPort? 'playVideo' : 'stopVideo');
+  }, [inViewPort, sendCommand]);
 
   return (
     <>

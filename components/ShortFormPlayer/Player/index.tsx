@@ -10,25 +10,20 @@ const DefaultPlayer = dynamic(() => import('./DefaultPlayer'), {
 
 interface Props extends editableVideo {
   playerID: string;
-  active: boolean;
+  inViewPort: boolean;
 }
 
-const Player: React.FC<Props> = ({ playerID, video, isEditable, active }) => {
+const Player: React.FC<Props> = ({ playerID, video, isEditable, inViewPort }) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const { embedLink } = video;
 
   return (
     <>
-      <div
-        className='Video'
-        id={playerID}
-        style={{ opacity: active ? 1 : 0.7 }}
-        ref={ref}
-      >
+      <div className='Video' id={playerID} style={{ opacity: inViewPort ? 1 : 0.7 }} ref={ref}>
         {embedLink ? (
-          <EmbedPlayer video={video} isEditable={isEditable} active={active} blockTouch />
+          <EmbedPlayer video={video} inViewPort={inViewPort} isEditable={isEditable} blockTouch />
         ) : (
-          <DefaultPlayer active={active} video={video} isEditable={isEditable} />
+          <DefaultPlayer video={video} inViewPort={inViewPort} isEditable={isEditable} />
         )}
       </div>
       <style jsx>{`
