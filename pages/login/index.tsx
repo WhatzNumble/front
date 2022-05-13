@@ -18,7 +18,7 @@ const LoginPage: NextPage = () => {
     <Layout hasTabBar={false} title='로그인'>
       <div className='loginPage'>
         <div className='info'>
-          <Image src='/logo.svg' width={46} height={46} alt='whatz-icon' />
+          <Image src='/icon/logo/logo.svg' width={46} height={46} alt='whatz-icon' />
           <div className='infoText'>
             <p>세상의 모든 팁 A to Z</p>
             <p>Whatz A to Z</p>

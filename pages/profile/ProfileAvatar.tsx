@@ -14,9 +14,9 @@ const ProfileAvatar: React.FC<Props> = ({ avatarSrc, isEdit = false, onProfileCh
         {isEdit && onProfileChange ? (
           <>
             <div className='avatar'>
-              <Image src={avatarSrc || '/logo.svg'} width={180} height={180} alt='user-avatar' />
+              <Image src={avatarSrc || '/icon/logo/logo.svg'} width={180} height={180} alt='user-avatar' />
               <label className='editButton' htmlFor='profileAvatar'>
-                <Image src='/btn_edit.svg' layout='fill' alt='edit-button' />
+                <Image src='/icon/common/btn_edit.svg' layout='fill' alt='edit-button' />
               </label>
               <input
                 id='profileAvatar'
@@ -32,7 +32,7 @@ const ProfileAvatar: React.FC<Props> = ({ avatarSrc, isEdit = false, onProfileCh
           </>
         ) : (
           <div className='avatar'>
-            <Image src={avatarSrc || '/logo.svg'} width={180} height={180} alt='user-avatar' />
+            <Image src={avatarSrc || '/icon/logo/logo.svg'} width={180} height={180} alt='user-avatar' />
           </div>
         )}
       </div>

@@ -4,26 +4,29 @@ import { userActions } from 'store/user';
 import axios from 'axios';
 import cookies from 'next-cookies';
 import { GetServerSideProps, NextPage } from 'next';
-
-import config from 'utils/config';
+import Layout from 'components/Layout';
+import Image from 'next/image';
 import Router from 'next/router';
 
 const OauthRedirectPage: NextPage = () => {
-  const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   console.log(token);
-  //   if (typeof token === 'string') {
-  //     const response = axios.get('/get/user');
-  //     dispatch(userActions.login({ token: token, socialType: 'kakao' }));
-  //     console.log(response);
-  //   }
-  // }, [token, dispatch]);
   useEffect(() => {
     Router.push('/');
   });
 
-  return <div>Loading...</div>;
+  return (
+    <Layout>
+      <div className='loading'>
+        <Image src='/loading.gif' width={40} height={40} alt='loading' />
+      </div>
+      <style jsx>
+        {`
+          .loading {
+            margin: auto;
+          }
+        `}
+      </style>
+    </Layout>
+  );
 };
 
 export default OauthRedirectPage;
