@@ -65,7 +65,7 @@ const PlayerUI: React.FC<Props> = ({ video, isEditable, progress }) => {
           <div className='button'>
             <button onClick={() => handleLike()}>
               <Image
-                src={isLike ? '/icon_bookmarked.svg' : '/icon_bookmark.svg'}
+                src={isLike ? '/icon/player/bookmarked.svg' : '/icon/player/bookmark.svg'}
                 width={32}
                 height={32}
                 alt='bookmark'
