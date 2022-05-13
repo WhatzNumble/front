@@ -14,7 +14,7 @@ function VideoCard({video, onCardClick}: Props){
     return (
         <div className='VideoCard' onClick={onClick}>
             {video.videoId}
-            <Image className='thumbnail' src='/empty_img.svg'  alt='empty_image' layout='fill'/>
+            <Image className='thumbnail' src='/icon/common/empty_img.svg'  alt='empty_image' layout='fill'/>
             <style jsx>{`
                 .VideoCard {
                     position: relative;

@@ -45,7 +45,7 @@ const PlayerUI: React.FC<Props> = ({ video, isEditable, progress }) => {
         <div className='leftWrapper'>
           <Content content={videoContent} />
           <div className='infoWrapper'>
-            <Avatar link='test' avatarImage={profile || '/profile.png'} />
+            <Avatar link='test' avatarImage={profile || '/mock/profile.png'} />
             <div className='info'>
               <div className='title'>{videoTitle}</div>
               <div className='viewDate'>
@@ -58,7 +58,7 @@ const PlayerUI: React.FC<Props> = ({ video, isEditable, progress }) => {
           {isEditable && (
             <div className='button'>
               <button onClick={() => toggleVideoEditPop()}>
-                <Image src={'/more_button.svg'} width={32} height={32} alt='bookmark' />
+                <Image src={'/icon/player/more_button.svg'} width={32} height={32} alt='bookmark' />
               </button>
             </div>
           )}
