@@ -21,7 +21,7 @@ function Play(){
 
     return (
         <Layout title="마이비디오 - 영상재생" tabBarTransparent>
-            <ShortFormPlayer preLoadedVideos={videos} isEditable={true}/>
+            <ShortFormPlayer preLoadedVideos={videos}/>
         </Layout>
     );
 }
