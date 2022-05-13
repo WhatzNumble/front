@@ -16,7 +16,7 @@ const OnBoardingPage: NextPage = () => {
   return (
     <Layout hasTabBar={false}>
       <div className='logoContainer'>
-        <Image src='/logo_with_title.svg' width={180} height={40.15} alt='whatz-logo' />
+        <Image src='/icon/logo/logo_with_title.svg' width={180} height={40.15} alt='whatz-logo' />
       </div>
       <style jsx>
         {`
