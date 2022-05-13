@@ -223,7 +223,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx)=>{
             throw new Error();
         }
 
-        const res = await fetch(`${apiBaseURL}/api/video?page=1&size=3`, {
+        const res = await fetch(`${apiBaseURL}/video?page=1&size=3`, {
             headers: {
                 'x-auth-token': token
             }

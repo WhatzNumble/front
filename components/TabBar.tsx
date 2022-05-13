@@ -45,7 +45,7 @@ function TabBar({ height = 56, transparent = false }: Props) {
     if (token) {
       console.log(token);
       axios
-        .get('/api/profile', {
+        .get('/profile', {
           headers: {
             [config.authHeaderKey]: token,
           },
