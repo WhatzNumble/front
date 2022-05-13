@@ -22,12 +22,16 @@ const ShortFormPlayer: React.FC<Props> = ({
   isEditable = false,
 }) => {
   const [blockRequest, setBlockRequest] = useState(fixedList);
-  const [videos, setVideos] = useState<Video[]>([...preLoadedVideos]);
+  const [videos, setVideos] = useState<Video[]>([]);
   const [playVideo, setPlayVideo] = useState(-1);
   const [inViewIndex, setInVewIndex] = useState(0);
   const [lastIndex, setLastIndex] = useState(videos.length - 1);
   const [page, setPage] = useState(0);
   const videoListRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setVideos([...preLoadedVideos]);
+  }, [preLoadedVideos]);
 
   useEffect(() => {
     (async function () {
@@ -77,7 +81,7 @@ const ShortFormPlayer: React.FC<Props> = ({
   return (
     <>
       <div className='VideoListWrapper' ref={videoListRef} onClick={onClickPlayer}>
-        {videos?.map((video, index) => {
+        {videos.map((video, index) => {
           return (
             <Player
               key={index}
@@ -98,7 +102,7 @@ const ShortFormPlayer: React.FC<Props> = ({
             left: 0;
             width: 100%;
             height: 100%;
-            -ms-overflow-style: none; 
+            -ms-overflow-style: none;
             scrollbar-width: none;
             overflow: scroll;
             scroll-snap-type: y mandatory;
