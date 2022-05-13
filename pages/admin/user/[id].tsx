@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { User, Video, Constraint} from "libs/types";
 import Grid, { GridColumn } from "components/Grid";
+import Button from "components/Admin/Button";
 
 interface VideoType extends Pick<Video, 'videoId' | 'videoTitle' | 'videoContent' | 'videoThumbnail' | 'directDir' | 'embedLink'>{
     [key: string]: string | number | null | undefined
@@ -37,8 +38,8 @@ function UserDetail(){
     useEffect(()=>{
     }, []);
 
-    const Button = <>
-        <button className="del">삭제</button>
+    const Buttons = <>
+        <Button text="삭제" type="red"/>
         <style jsx>{`
             .del {
                 width: 100px;
@@ -56,7 +57,7 @@ function UserDetail(){
     </>
 
     return (
-        <AdminLayout>
+        <AdminLayout path={['유저', '상세정보']}>
             <div className="UserDetail">
                 <Grid<User> title={`상세 정보`} datas={userList}>
                     <GridColumn width="160px" field="id" headerText="아이디"/>
@@ -71,7 +72,7 @@ function UserDetail(){
                     <GridColumn width="160px" field="videoTitle" headerText="Title"/>
                     <GridColumn width="160px" field="videoContent" headerText="Description"/>
                     <GridColumn width="170px" field="videoThumbnail" headerText="Thumbnail url"/>
-                    <GridColumn width="120px" field="" headerText="" element={Button}/>
+                    <GridColumn width="120px" field="" headerText="" element={Buttons}/>
                 </Grid>
 
                 <style jsx>{`

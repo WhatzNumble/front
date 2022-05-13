@@ -52,7 +52,7 @@ function Contents(){
 
     const onItemClick = (name: string, id: number)=>{
         if(name === 'del'){
-            alert('삭제');
+            alert('삭제 ' + id);
         }else{
             router.push(`${router.pathname}/${id}`);
         }
@@ -63,7 +63,7 @@ function Contents(){
     }, []);
 
     return (
-        <AdminLayout>
+        <AdminLayout path={['콘텐츠']}>
             <div className="Contents">
                 <div className="items">
                     {videos.map(vd => (
