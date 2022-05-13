@@ -1,23 +1,35 @@
 import { useEffect } from 'react';
-import App from 'next/app';
-import type { AppContext, AppProps } from 'next/app';
+import type { AppProps } from 'next/app';
+import { useRouter } from 'next/router';
+
 import { wrapper, AppState } from 'store';
 import { useSelector } from 'react-redux';
 import { TransitionGroup } from 'react-transition-group';
-import cookies from 'next-cookies';
 import axios from 'axios';
 
+import * as ga from 'libs/ga';
 import config from 'utils/config';
 import Toast from 'components/Toast';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { toasts } = useSelector((state: AppState) => state.ui);
+  const router = useRouter();
 
   useEffect(() => {
     axios.defaults.withCredentials = true;
     axios.defaults.baseURL = config.apiBaseURL;
     axios.defaults.timeout = 10000;
   }, []);
+
+  useEffect(() => {
+    const handleRouteChange = (url: string) => {
+      ga.pageview(url);
+    };
+    router.events.on('routeChangeComplete', handleRouteChange);
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
 
   return (
     <>
@@ -91,7 +103,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             object-fit: cover;
           }
         }
-        
+
         .image-contain {
           img {
             object-fit: contain;
