@@ -7,7 +7,7 @@ interface Props {
 
 const PlayStatusIcon: React.FC<Props> = ({ playing }) => {
   useEffect(() => {}, [playing]);
-  const icon = playing ? '/icon/player/btn_play.svg' : '/icon/player/btn_pause.svg';
+  const icon = playing ? '/icon/player/play_state.svg' : '/icon/player/pause_state.svg';
   return (
     <div className='playStatus' key={icon}>
       <Image src={icon} width={84} height={84} alt='play state icon' />
