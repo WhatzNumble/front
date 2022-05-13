@@ -71,7 +71,7 @@ function Like({videos, errorMsg}: Props){
                     .cards {
                         display: grid;
                         grid-template-columns: repeat(3, 1fr);
-                        gap: 4px;
+                        gap: 8px;
                         padding: 0 16px 0 16px;
                     }
 
