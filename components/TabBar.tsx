@@ -96,7 +96,7 @@ function TabBar({ height = 56, transparent = false }: Props) {
           bottom: 0;
           ${transparent
             ? `
-            background-color: rgba(0,0,0,0.4);
+            background-color: rgba(0,0,0,0);
           `
             : `
             background-color: black;

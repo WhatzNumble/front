@@ -112,7 +112,7 @@ function MyVideo({videos, errorMsg}: Props){
                     .cards {
                         display: grid;
                         grid-template-columns: repeat(3, 1fr);
-                        gap: 4px;
+                        gap: 8px;
                         padding: 0 16px 0 16px;
                         .space {
                             height: ${HEIGHT}px;
@@ -139,7 +139,7 @@ function MyVideo({videos, errorMsg}: Props){
                             color: $dark;
                         }
                         button[class*='button-'] {
-                            padding: 8px 0;
+                            padding: 6px 0;
                             text-align: left;
                             width: 100%;
                         }

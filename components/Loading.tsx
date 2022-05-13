@@ -28,8 +28,8 @@ function Loading({show}: Props){
                             position: absolute;
                             top: 50%;
                             left: 50%;
-                            width: 35px;
-                            height: 35px;
+                            width: 45px;
+                            height: 45px;
                             transform: translate(-50%, -50%);
                         }
 
