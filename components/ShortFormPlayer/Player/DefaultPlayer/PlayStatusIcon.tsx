@@ -27,11 +27,11 @@ const PlayStatusIcon: React.FC<Props> = ({ loading, playing }) => {
             }
           }
           .playStatus {
+            pointer-events: none;
             position: absolute;
             bottom: calc(50% - 56px);
             left: 50%;
             transform: translate(-50%, -50%);
-            z-index: 100;
             .animate {
               animation: fadeout 1s forwards;
             }
