@@ -20,16 +20,16 @@ function Contents(){
 
             // 테스트용
             setVideo([
-                {videoId: 1, videoThumbnail: '1', videoTitle: '비디오 제목 1', nickname: 'user_1'},
-                {videoId: 2, videoThumbnail: '2', videoTitle: '비디오 제목 2', nickname: 'user_2'},
-                {videoId: 3, videoThumbnail: '3', videoTitle: '비디오 제목 3', nickname: 'user_3'},
-                {videoId: 4, videoThumbnail: '4', videoTitle: '비디오 제목 4', nickname: 'user_4'},
-                {videoId: 5, videoThumbnail: '5', videoTitle: '비디오 제목 5', nickname: 'user_5'},
-                {videoId: 6, videoThumbnail: '6', videoTitle: '비디오 제목 6', nickname: 'user_6'},
-                {videoId: 7, videoThumbnail: '7', videoTitle: '비디오 제목 7', nickname: 'user_7'},
-                {videoId: 8, videoThumbnail: '8', videoTitle: '비디오 제목 8', nickname: 'user_8'},
-                {videoId: 9, videoThumbnail: '9', videoTitle: '비디오 제목 9', nickname: 'user_9'},
-                {videoId: 10, videoThumbnail: '10', videoTitle: '비디오 제목 10', nickname: 'user_10'},
+                {videoId: 1, videoThumbnail: '/icon/common/empty_img.svg', videoTitle: '비디오 제목 1', nickname: 'user_1'},
+                {videoId: 2, videoThumbnail: '/icon/common/empty_img.svg', videoTitle: '비디오 제목 2', nickname: 'user_2'},
+                {videoId: 3, videoThumbnail: '/icon/common/empty_img.svg', videoTitle: '비디오 제목 3', nickname: 'user_3'},
+                {videoId: 4, videoThumbnail: '/icon/common/empty_img.svg', videoTitle: '비디오 제목 4', nickname: 'user_4'},
+                {videoId: 5, videoThumbnail: '/icon/common/empty_img.svg', videoTitle: '비디오 제목 5', nickname: 'user_5'},
+                {videoId: 6, videoThumbnail: '/icon/common/empty_img.svg', videoTitle: '비디오 제목 6', nickname: 'user_6'},
+                {videoId: 7, videoThumbnail: '/icon/common/empty_img.svg', videoTitle: '비디오 제목 7', nickname: 'user_7'},
+                {videoId: 8, videoThumbnail: '/icon/common/empty_img.svg', videoTitle: '비디오 제목 8', nickname: 'user_8'},
+                {videoId: 9, videoThumbnail: '/icon/common/empty_img.svg', videoTitle: '비디오 제목 9', nickname: 'user_9'},
+                {videoId: 10, videoThumbnail: '/icon/common/empty_img.svg', videoTitle: '비디오 제목 10', nickname: 'user_10'},
             ]);
 
             // const res = await fetch('');
