@@ -9,6 +9,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import config from "utils/config";
+import { getCookieValue } from "utils/cookie";
 
 let reqType: 'delete' | 'modify' | '' = '';
 
@@ -25,32 +26,30 @@ function ContentsDetail(){
     });
 
     const getVideo = async ()=>{
-        // 비디오 id로 fetch
-
         try{
             setLoading(true);
 
             // 테스트용
-            setVideo({
-                nickname: 'test',
-                profile: 'test',
-                videoId: 1,
-                videoLike: 12,
-                videoTitle: '비디오 제목!',
-                videoThumbnail: '/test_link',
-                videoContent: '내용 내용 내용 내용 내용 내용 ',
-                videoCreationDate: '2022.05.05',
-                videoViews: 339,
-                directDir: 'vd_link',
-            });
+            // setVideo({
+            //     nickname: 'test',
+            //     profile: 'test',
+            //     videoId: 1,
+            //     videoLike: 12,
+            //     videoTitle: '비디오 제목!',
+            //     videoThumbnail: '/test_link',
+            //     videoContent: '내용 내용 내용 내용 내용 내용 ',
+            //     videoCreationDate: '2022.05.05',
+            //     videoViews: 339,
+            //     directDir: 'vd_link',
+            // });
 
-            // const res = await fetch(`${apiBaseURL}/admin/main/${id}`);
-            // if(res.ok){
-            //     const result = await res.json();    
-            //     setVideo(result);
-            // }else{
-            //     throw new Error();
-            // }
+            const res = await fetch(`${apiBaseURL}/admin/main/${id}`);
+            if(res.ok){
+                const result = await res.json();    
+                setVideo(result);
+            }else{
+                throw new Error();
+            }
         }catch(ex){
             setConfirm({
                 show: true,
@@ -67,6 +66,9 @@ function ContentsDetail(){
             setLoading(true);
             const res = await fetch(`${apiBaseURL}/admin/main/modify/${id}`, {
                 method: 'POST',
+                headers: {
+                    'x-auth-token': getCookieValue('access-token')!
+                }
             });
             if(res.ok){
                 pushToast('수정되었습니다!');
@@ -85,6 +87,9 @@ function ContentsDetail(){
             setLoading(true);
             const res = await fetch(`${apiBaseURL}/admin/main/delete/${id}`, {
                 method: 'POST',
+                headers: {
+                    'x-auth-token': getCookieValue('access-token')!
+                }
             });
             if(res.ok){
                 pushToast('영상이 삭제되었습니다.');
