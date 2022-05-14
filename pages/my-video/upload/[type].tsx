@@ -132,7 +132,7 @@ function Upload(){
     const validateEmbedLink = (url: string)=>{
         let p = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
         let isMatch = url.match(p) ? true : false;
-        let isShorts = url.includes('www.youtube.com/shorts/'); 
+        let isShorts = url.includes('youtube.com/shorts/'); 
         return isMatch || isShorts;
     }
 
