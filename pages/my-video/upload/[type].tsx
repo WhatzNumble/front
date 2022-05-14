@@ -386,11 +386,11 @@ function Upload(){
                     .input {
                         height: 28px;
                         flex-grow: 1;
-                        background-color: black;
+                        background-color: var(--black);;
                         border: 0;
                         margin-right: 15px;
                         font-size: 20px;
-                        color: white;
+                        color: var(--white);;
                         &::placeholder {
                             color: #8F8F8F;
                         }
@@ -399,8 +399,8 @@ function Upload(){
                     .desc {
                         line-height: 140%;
                         font-size: 20px;
-                        color: white;
-                        background-color: black;
+                        color: var(--white);;
+                        background-color: var(--black);;
                         height: 200px;
                         border: 0;
                         &::placeholder {
@@ -430,7 +430,7 @@ function Panel({children, title}: {children: React.ReactNode, title: string}){
                 .title {
                     font-size: 16px;
                     font-weight: normal;
-                    color: white;
+                    color: var(--white);;
                     margin-bottom: 12px;
                 }
             `}</style>

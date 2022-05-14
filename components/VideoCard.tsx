@@ -24,7 +24,8 @@ function VideoCard({ video, onCardClick }: Props) {
         .VideoCard {
           position: relative;
           border-radius: 8px;
-          background-color: #c4c4c4;
+          background-color: var(--gray-4);
+          color: var(--gray-2);
           height: 198px;
           max-height: 198px;
         }

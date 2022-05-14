@@ -38,7 +38,7 @@ function Toast({message = '', duration = 2.8}: Props){
                             max-width: calc(100% - 10px);
                             padding: 10px 20px;
                             background-color: #2c2c2c9a;
-                            color: white;
+                            color: var(--white);;
                             font-size: 16px;
                             border-radius: 30px;
                         }

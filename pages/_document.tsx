@@ -6,6 +6,7 @@ class CustomDocument extends Document {
     return (
       <Html>
         <Head>
+          <link rel='icon' href='/favicon.svg' />
           <link
             href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css'
             rel='stylesheet'
