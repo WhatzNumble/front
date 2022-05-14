@@ -6,15 +6,16 @@ export const HEADER_HEIGHT = 80;
 
 interface Props {
     children: React.ReactNode
+    path?: string[]
 }
 
-function AdminLayout({children}: Props){
+function AdminLayout({children, path}: Props){
     return (
         <div>
             <Head>
                 <title>Whatz</title>
             </Head>
-            <Header height={HEADER_HEIGHT}/>
+            <Header height={HEADER_HEIGHT} path={path}/>
             <main className="AdminLayout">
                 <SideBar/>
                 <div className="wrapper">

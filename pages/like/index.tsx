@@ -107,7 +107,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx)=>{
             throw new Error();
         }
 
-        const res = await fetch(`${apiBaseURL}/api/like`, {
+        const res = await fetch(`${apiBaseURL}/favorite`, {
             headers: {
                 'x-auth-token': token
             }
@@ -128,21 +128,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx)=>{
     return {
         props: {
             errorMsg,
-            // videos: result.videos,
-            // videos: [
-            //     {videoId: 1, videoThumbnail: 'test 1'},
-            //     {videoId: 2, videoThumbnail: 'test 2'},
-            //     {videoId: 3, videoThumbnail: 'test 3'},
-            //     {videoId: 4, videoThumbnail: 'test 4'},
-            //     {videoId: 5, videoThumbnail: 'test 5'},
-            //     {videoId: 6, videoThumbnail: 'test 6'},
-            //     {videoId: 7, videoThumbnail: 'test 7'},
-            //     {videoId: 8, videoThumbnail: 'test 8'},
-            //     {videoId: 9, videoThumbnail: 'test 9'},
-            //     {videoId: 10, videoThumbnail: 'test 10'},
-            //     {videoId: 11, videoThumbnail: 'test 11'},
-            // ],
-            videos: mockVideos
+            videos: result.videos,
+            // videos: mockVideos
         }
     }
 }

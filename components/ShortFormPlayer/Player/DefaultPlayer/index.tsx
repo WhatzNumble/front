@@ -2,22 +2,24 @@ import React, { useEffect, useRef, useState } from 'react';
 import PlayerUI from '../PlayerUI';
 import ReactHlsPlayer from 'react-hls-player';
 import { editableVideo } from 'libs/types';
+import PlayStatusIcon from './PlayStatusIcon';
 
 interface Props extends editableVideo {
-  active: boolean;
+  inViewPort: boolean;
 }
 
-const DefaultPlayer: React.FC<Props> = ({ active, video, isEditable }) => {
+const DefaultPlayer: React.FC<Props> = ({ inViewPort, video, isEditable }) => {
   const { directDir } = video;
+  const [loading, setIsLoading] = useState(true);
   const [playing, setPlaying] = useState(false);
   const [mute, setMute] = useState(false);
   const playerRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     if (directDir) {
-      handleVideo(active ? 'play' : 'pause');
+      handleVideo(inViewPort? 'play' : 'stop');
     }
-  }, [directDir, active]);
+  }, [directDir, inViewPort]);
 
   const handleVideo = (input: string) => {
     switch (input) {
@@ -38,7 +40,12 @@ const DefaultPlayer: React.FC<Props> = ({ active, video, isEditable }) => {
     }
   };
 
-  const handleVideoPress = () => {
+  const onVideoLoadEnd = () => {
+    console.log('ttt');
+    setIsLoading(false);
+  };
+
+  const onClickVideo = () => {
     handleVideo(playing ? 'pause' : 'play');
   };
 
@@ -53,9 +60,11 @@ const DefaultPlayer: React.FC<Props> = ({ active, video, isEditable }) => {
           height='100%'
           loop
           src={directDir}
-          onClick={handleVideoPress}
+          onLoadedData={onVideoLoadEnd}
+          onClick={onClickVideo}
         />
       )}
+      <PlayStatusIcon playing={playing} loading={loading} />;
       <PlayerUI video={video} isEditable={isEditable} />
       <style jsx>{`
         .DefaultPlayer {

@@ -30,7 +30,7 @@ const EditPopup: React.FC<Props> = ({ videoId, isEmbed }) => {
   const deleteConfirmCallBack = (confirm: boolean) => {
     if (confirm) {
       axios
-        .post('/api/video/delete', {
+        .post('/video/delete', {
           body: {
             id: videoId,
           },

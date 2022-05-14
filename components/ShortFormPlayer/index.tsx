@@ -4,29 +4,25 @@ import axios from 'axios';
 import { Video } from 'libs/types';
 import Player from './Player';
 import mockVideos from './mockVideos';
-import PlayStatusIcon from './PlayStatusIcon';
 
 interface Props {
   isEditable?: boolean;
   query?: string;
-  fixedList?: boolean;
   preLoadedVideos: Video[];
   requestIndex?: number;
 }
 
 const ShortFormPlayer: React.FC<Props> = ({
   query,
-  fixedList = false,
   preLoadedVideos,
   requestIndex = 4,
   isEditable = false,
 }) => {
-  const [blockRequest, setBlockRequest] = useState(fixedList);
   const [videos, setVideos] = useState<Video[]>([]);
   const [playVideo, setPlayVideo] = useState(-1);
   const [inViewIndex, setInVewIndex] = useState(0);
   const [lastIndex, setLastIndex] = useState(videos.length - 1);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const videoListRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -35,7 +31,7 @@ const ShortFormPlayer: React.FC<Props> = ({
 
   useEffect(() => {
     (async function () {
-      const res = await axios.get('/api/home'); // 해당 라우트는
+      const res = await axios.get('/home'); // 해당 라우트는
       console.log(res);
     })();
   }, []);
@@ -69,7 +65,7 @@ const ShortFormPlayer: React.FC<Props> = ({
   }, [videos, videoListRef]);
 
   useEffect(() => {
-    if (lastIndex - requestIndex === inViewIndex) {
+    if (query && videos.length - requestIndex === inViewIndex) {
       console.log(`callAPI page: ${page} videolength: ${videos.length}`);
       //if api respnose success
       setVideos((prev) => [...prev, ...mockVideos]);
@@ -86,14 +82,13 @@ const ShortFormPlayer: React.FC<Props> = ({
             <Player
               key={index}
               playerID={`player_${index}`}
-              active={index === playVideo}
+              inViewPort={index === inViewIndex}
               isEditable={isEditable}
               video={video}
             />
           );
         })}
       </div>
-      <PlayStatusIcon playing={playVideo !== -1} />
       <style jsx>
         {`
           .VideoListWrapper {
