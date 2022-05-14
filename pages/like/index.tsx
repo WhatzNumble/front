@@ -107,7 +107,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx)=>{
             throw new Error();
         }
 
-        const res = await fetch(`${apiBaseURL}/api/like`, {
+        const res = await fetch(`${apiBaseURL}/like`, {
             headers: {
                 'x-auth-token': token
             }

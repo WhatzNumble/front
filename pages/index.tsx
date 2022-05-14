@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 
 import config from 'utils/config';
 import ShortFormPlayer from 'components/ShortFormPlayer';
-import mockVideos from 'components/ShortFormPlayer/mockVideos'
+import mockVideos from 'components/ShortFormPlayer/mockVideos';
 
 interface Props {
   token: string | null;
@@ -30,7 +30,7 @@ const Home: NextPage<Props> = ({ token }) => {
 
   return (
     <Layout tabBarTransparent>
-      <ShortFormPlayer preLoadedVideos={mockVideos} isEditable={true} />
+      <ShortFormPlayer preLoadedVideos={mockVideos} query='home' />
     </Layout>
   );
 };

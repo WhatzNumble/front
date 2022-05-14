@@ -149,7 +149,7 @@ function Upload(){
 
     const uploadVideo = async ()=>{
         const resultMsg = isEdit ? '영상이 수정되었습니다.' : '영상 업로드가 완료되었습니다.';
-        const api = `${apiBaseURL}/api/video/${isEdit ? 'modify' : 'add'}/${isEmbed ? 'embed': 'direct'}`; 
+        const api = `${apiBaseURL}/video/${isEdit ? 'modify' : 'add'}/${isEmbed ? 'embed': 'direct'}`; 
         try{
             setLoading(true);
             const res = await fetch(api, {
@@ -212,7 +212,7 @@ function Upload(){
     const getVideo = async (id: number)=>{
         try{
             setLoading(true);
-            const res = await fetch(`${apiBaseURL}/api/video/${id}`, {
+            const res = await fetch(`${apiBaseURL}/video/${id}`, {
                 headers: {
                     [`${config.authHeaderKey}`]: user.token
                 },
