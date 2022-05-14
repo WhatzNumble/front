@@ -84,7 +84,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           cursor: pointer;
           border: 0;
           &[class*='theme-'] {
-            color: var(--black);;
+            color: var(--black);
             border-radius: 50px;
             padding: 11px 16px;
             font-size: 16px;
