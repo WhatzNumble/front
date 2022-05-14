@@ -31,7 +31,7 @@ const ShortFormPlayer: React.FC<Props> = ({
 
   useEffect(() => {
     (async function () {
-      const res = await axios.get('/api/home'); // 해당 라우트는
+      const res = await axios.get('/home'); // 해당 라우트는
       console.log(res);
     })();
   }, []);
