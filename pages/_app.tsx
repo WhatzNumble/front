@@ -45,10 +45,14 @@ function MyApp({ Component, pageProps }: AppProps) {
         :root {
           --color-main: #d8ff69;
           --color-gray: #efefef;
-          --primary: #b5f400;
+          --primary: #70FF00;
           --primary-light: #e8ffa7;
           --primary-dark: #abe700;
           --black: #000000;
+          --gray-1: #B8B8B8;
+          --gray-2: #8F8F8F;
+          --gray-3: #4D4D4D;
+          --gray-4: #2C2C2C;
           --error: #ff0000;
           --positive: #00f0ff;
           --warning: #faff00;
@@ -80,7 +84,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           cursor: pointer;
           border: 0;
           &[class*='theme-'] {
-            color: black;
+            color: var(--black);;
             border-radius: 50px;
             padding: 11px 16px;
             font-size: 16px;
