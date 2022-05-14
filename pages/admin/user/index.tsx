@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Grid, {GridColumn} from 'components/Grid';
 import {User as UserType} from 'libs/types';
+import Button from "components/Admin/Button";
 
 function User(){
     const router = useRouter();
@@ -37,32 +38,12 @@ function User(){
     }, []);
 
     const Buttons = <>
-        <button name="detail" className="detail">상세 정보</button>
-        <button name="del" className="del">삭제</button>
-        <style jsx>{`
-            button {
-                width: 100px;
-                padding : 6px 0;
-                color: white;
-                border-radius: 5px;
-                transition: .2s;
-                &:hover {
-                    transform: translateY(-2px);
-                    box-shadow: 0 0 6px -0px black;
-                }
-                &.detail {
-                    background-color: #383838;
-                    margin-bottom: 3px;
-                }
-                &.del {
-                    background-color: #ff3737;
-                }
-            }
-        `}</style>
+        <Button name="detail" text="상세 정보"/>
+        <Button name="del" text="삭제" type="red"/>
     </>;
 
     return (
-        <AdminLayout>
+        <AdminLayout path={['유저']}>
             <div className="User">
                 <Grid<UserType> datas={userList} onClickRow={onClickRow}>
                     <GridColumn width="160px" field="id" headerText="User ID"/>

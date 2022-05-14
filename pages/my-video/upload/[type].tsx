@@ -130,8 +130,10 @@ function Upload(){
     }
 
     const validateEmbedLink = (url: string)=>{
-        var p = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
-        return url.match(p) ? true : false;
+        let p = /^(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
+        let isMatch = url.match(p) ? true : false;
+        let isShorts = url.includes('www.youtube.com/shorts/'); 
+        return isMatch || isShorts;
     }
 
     const onClickComplete = async ()=>{
