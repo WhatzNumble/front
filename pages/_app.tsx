@@ -87,7 +87,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             font-weight: 500;
           }
           &.theme-main {
-            background-color: var(--color-main);
+            background-color: var(--primary);
           }
           &.theme-gray {
             background-color: var(--color-gray);

@@ -116,7 +116,7 @@ function Login({onLogin}: Props){
                     padding: 10px 0;
                     font-weight: bold;
                     background-color: black;
-                    color: white;
+                    color: var(--white);;
                     transition: .2s;
                     &:hover {
                         background-color: #5e5e5e;

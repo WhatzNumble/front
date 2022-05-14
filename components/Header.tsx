@@ -43,7 +43,7 @@ function Header({title, left, right, height = 40, showBack = false, onBackClick}
                 .title {
                     font-weight: normal;
                     font-size: 16px;
-                    color: white;
+                    color: var(--white);;
                 }
 
                 .left {

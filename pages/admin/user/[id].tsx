@@ -43,7 +43,7 @@ function UserDetail(){
             .del {
                 width: 100px;
                 padding : 6px 0;
-                color: white;
+                color: var(--white);;
                 border-radius: 5px;
                 transition: .2s;
                 background-color: #ff3737;

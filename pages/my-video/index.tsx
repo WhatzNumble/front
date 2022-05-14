@@ -135,7 +135,7 @@ function MyVideo({videos, errorMsg}: Props){
                         button {
                             font-weight: bold;
                             font-size: 18px;
-                            background-color: white;
+                            background-color: var(--white);;
                             color: $dark;
                         }
                         button[class*='button-'] {
@@ -184,7 +184,7 @@ function MyVideo({videos, errorMsg}: Props){
                             border-radius: 50px;
                             margin: 4px 0;
                             &.embed {
-                                color: white;
+                                color: var(--white);;
                                 background-color: black;
                                 border: 1px solid #8F8F8F;
                             }

@@ -36,7 +36,7 @@ function PopBox({show, children, onClosePopBox}: Props){
                                 position: fixed;
                                 top: 100%;
                                 border-radius: 32px 32px 0 0;
-                                background-color: white;
+                                background-color: var(--white);;
                                 width: 100%;
                                 min-height: 50px;
                                 transition: .3s;

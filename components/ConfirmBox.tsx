@@ -55,7 +55,7 @@ function ConfirmBox({message, callback, show, okText = '예', noText = '아니�
                                 width : 310px;
                                 min-height: 160px;
                                 transform: translate(-50%, -50%);
-                                background-color: white;
+                                background-color: var(--white);;
                                 border-radius: 32px;
                                 box-shadow: 0 0 6px -3px black;
                             }

@@ -44,7 +44,7 @@ function VideoItem({video, onButtonClick}: VideoItemProps){
                         margin: 0 3px;
                         padding: 5px 15px;
                         border-radius: 5px;
-                        color: white;
+                        color: var(--white);;
                         font-weight: bold;
                         transition: .2s;
                         &.mod {

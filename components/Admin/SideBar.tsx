@@ -26,7 +26,7 @@ function SideBar(){
             <style jsx>{`
                 .SideBar {
                     background-color: rgb(75, 75, 75);
-                    color: white;
+                    color: var(--white);;
                 }
 
                 .nav-box {
@@ -38,13 +38,13 @@ function SideBar(){
                     padding: 10px;
                     font-weight: bold;
                     &:hover {
-                        color: var(--color-main);
+                        color: var(--primary);
                     }
                 }
 
                 .match {
                     position: relative;
-                    color: var(--color-main);
+                    color: var(--primary);
                     &:after {
                         position: absolute;
                         content: '◀';
