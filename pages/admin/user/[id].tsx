@@ -7,6 +7,7 @@ import Button from "components/Admin/Button";
 import Loading from "components/Loading";
 import useToastMessage from "hooks/useToastMessage";
 import config from "utils/config";
+import { getCookieValue } from "utils/cookie";
 
 interface VideoType extends Pick<Video, 'videoId' | 'videoTitle' | 'videoContent' | 'videoThumbnail' | 'directDir' | 'embedLink'>{
     [key: string]: string | number | null | undefined
@@ -24,11 +25,6 @@ function UserDetail(){
         lastLogin: '',
     });
     const [videos, setVideos] = useState<VideoType[]>([]);
-    // const videos: VideoType[] = [
-    //     {videoId: 1, videoTitle: 'test 1', videoContent: '설명 설명 설명 설명 설명 ', videoThumbnail: 'link~~~', directDir: '', embedLink: 'aaa', videoViews: ''},
-    //     {videoId: 2, videoTitle: 'test 2', videoContent: '설명 설명 설명 설명 설명 ', videoThumbnail: 'link~~~', directDir: '', embedLink: 'sss', videoViews: ''},
-    //     {videoId: 3, videoTitle: 'test 3', videoContent: '설명 설명 설명 설명 설명 ', videoThumbnail: 'link~~~', directDir: 'ddd', embedLink: '', videoViews: ''},
-    // ];
 
     const onClickRow = (e: React.MouseEvent<HTMLElement>, param: VideoType)=>{
         if(e.target instanceof HTMLButtonElement){
@@ -44,7 +40,11 @@ function UserDetail(){
         const {id} = router.query;
         setLoading(true);
         try{
-            const res = await fetch(`${apiBaseURL}/admin/user/${id}`);
+            const res = await fetch(`${apiBaseURL}/admin/user/${id}`, {
+                headers: {
+                   'x-auth-token': getCookieValue('access-token')!
+                }
+            });
             if(res.ok){
                 const result = await res.json();
                 setUser({
