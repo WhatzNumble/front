@@ -2,15 +2,21 @@ import AdminLayout from "components/Admin/AdminLayout";
 import Button from "components/Admin/Button";
 import ConfirmBox from "components/ConfirmBox";
 import Grid, { GridColumn } from "components/Grid";
+import Loading from "components/Loading";
 import useToastMessage from "hooks/useToastMessage";
 import { Video } from "libs/types";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import config from "utils/config";
 
 function ContentsDetail(){
+    let reqType: 'delete' | 'modify' | '' = '';
+    const {apiBaseURL} = config;
     const router = useRouter();
+    const {id} = router.query;
     const {pushToast} = useToastMessage();
+    const [loading, setLoading] = useState(false);
     const [video, setVideo] = useState<Video>();
     const [confirm, setConfirm] = useState({
         show: false,
@@ -18,22 +24,77 @@ function ContentsDetail(){
     });
 
     const getVideo = async ()=>{
-        const {id} = router.query;
         // 비디오 id로 fetch
 
-        // 테스트용
-        setVideo({
-            nickname: 'test',
-            profile: 'test',
-            videoId: 1,
-            videoLike: 12,
-            videoTitle: '비디오 제목!',
-            videoThumbnail: '/test_link',
-            videoContent: '내용 내용 내용 내용 내용 내용 ',
-            videoCreationDate: '2022.05.05',
-            videoViews: 339,
-            directDir: 'vd_link',
-        });
+        try{
+            setLoading(true);
+
+            // 테스트용
+            setVideo({
+                nickname: 'test',
+                profile: 'test',
+                videoId: 1,
+                videoLike: 12,
+                videoTitle: '비디오 제목!',
+                videoThumbnail: '/test_link',
+                videoContent: '내용 내용 내용 내용 내용 내용 ',
+                videoCreationDate: '2022.05.05',
+                videoViews: 339,
+                directDir: 'vd_link',
+            });
+
+            // const res = await fetch(`${apiBaseURL}/admin/main/${id}`);
+            // if(res.ok){
+            //     const result = await res.json();    
+            //     setVideo(result);
+            // }else{
+            //     throw new Error();
+            // }
+        }catch(ex){
+            setConfirm({
+                show: true,
+                msg: '조회중 문제가 발생하였습니다.'
+            });
+            return [];
+        }finally{
+            setLoading(false);
+        }
+    }
+
+    const modifyVideo = async ()=>{
+        try{
+            setLoading(true);
+            const res = await fetch(`${apiBaseURL}/admin/main/modify/${id}`, {
+                method: 'POST',
+            });
+            if(res.ok){
+                pushToast('수정되었습니다!');
+            }else{
+                throw new Error();
+            }
+        }catch(ex){
+            pushToast('처리중 문제가 발생하였습니다.');
+        }finally{
+            setLoading(false);
+        }
+    }
+    
+    const deleteVideo = async ()=>{
+        try{
+            setLoading(true);
+            const res = await fetch(`${apiBaseURL}/admin/main/delete/${id}`, {
+                method: 'POST',
+            });
+            if(res.ok){
+                pushToast('영상이 삭제되었습니다.');
+            }else{
+                throw new Error();
+            }
+        }catch(ex){
+            pushToast('처리중 문제가 발생하였습니다.');
+        }finally{
+            setLoading(false);
+        }
     }
 
     const onClickButton = (e: React.MouseEvent)=>{
@@ -41,8 +102,10 @@ function ContentsDetail(){
             let msg = '';
             if(e.target.name === 'del'){
                 msg = '영상을 삭제 하시겠습니까?';
+                reqType = 'delete';
             }else{
                 msg = '영상을 수정 하시겠습니까?';
+                reqType = 'modify';
             }
             setConfirm({
                 show: true,
@@ -53,7 +116,11 @@ function ContentsDetail(){
     
     const confirmCallback = (ok: boolean)=>{
         if(ok){
-            pushToast('예');   
+            if(reqType === 'delete'){
+                deleteVideo();
+            }else if(reqType === 'modify'){
+                modifyVideo();
+            }   
         }
         setConfirm({show: false, msg: ''});
     }
@@ -97,6 +164,7 @@ function ContentsDetail(){
                     <div>{video?.embedLink || video?.directDir}</div>
                 </section>
                 <ConfirmBox show={confirm.show} message={confirm.msg} callback={confirmCallback}/>
+                <Loading show={loading}/>
                 <style jsx>{`
                     .ContentsDetail {
                         padding: 20px;

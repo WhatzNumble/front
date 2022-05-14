@@ -5,10 +5,12 @@ import React, { useEffect, useState } from "react";
 import {Video} from "libs/types";
 import VideoItem from "components/Admin/VideoItem";
 import { useRouter } from "next/router";
+import config from "utils/config";
 
 type VideoType = Pick<Video, 'videoId' | 'videoThumbnail' | 'videoTitle' | 'nickname'>
 
 function Contents(){
+    const {apiBaseURL} = config;
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [confirm, setConfirm] = useState({show: false, msg: ''});
@@ -32,7 +34,7 @@ function Contents(){
                 {videoId: 10, videoThumbnail: '/icon/common/empty_img.svg', videoTitle: '비디오 제목 10', nickname: 'user_10'},
             ]);
 
-            // const res = await fetch('');
+            // const res = await fetch(`${apiBaseURL}/admin/main`);
             // if(res.ok){
             //     const result = await res.json();    
             //     setVideo(result);
