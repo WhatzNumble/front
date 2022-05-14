@@ -12,9 +12,9 @@ const LoginPage: NextPage = () => {
   const redirectPath = '/oauth/redirect';
   const isProd = process.env.NODE_ENV === 'production';
 
-  const redirectURI = `${config.hostURL}${redirectPath}`; //
+  const redirectURI = `${config.hostURL}${redirectPath}`;
   const backendRequest = isProd
-    ? `${config.hostURL}/oauth2/authorization/kakao?redirect_uri=${redirectURI}`
+    ? `/oauth2/authorization/kakao?redirect_uri=${redirectURI}`
     : `${config.apiBaseURL}/oauth2/authorization/kakao?redirect_uri=${redirectURI}`;
   useUserTypeRedirect('/', 'user');
 
