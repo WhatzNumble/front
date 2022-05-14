@@ -95,6 +95,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           }
           &.theme-gray {
             background-color: var(--color-gray);
+            color: var(--gray-3);
           }
         }
 
