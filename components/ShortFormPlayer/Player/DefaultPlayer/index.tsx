@@ -41,7 +41,6 @@ const DefaultPlayer: React.FC<Props> = ({ inViewPort, video, isEditable }) => {
   };
 
   const onVideoLoadEnd = () => {
-    console.log('ttt');
     setIsLoading(false);
   };
 
