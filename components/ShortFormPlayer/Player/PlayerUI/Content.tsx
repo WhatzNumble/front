@@ -43,6 +43,7 @@ const Content: React.FC<Props> = ({ content }) => {
               text-overflow: ellipsis;
             }
             .contentMore {
+              color: var(--white);
               background: inherit;
               border: none;
               box-shadow: none;
