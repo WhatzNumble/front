@@ -37,7 +37,7 @@ function Header({title, left, right, height = 40, showBack = false, onBackClick}
                     width: 100%;
                     height: ${height}px;
                     font-size: 13px;
-                    background-color: black;
+                    background-color: var(--black);;
                 }
 
                 .title {

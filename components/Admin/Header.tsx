@@ -14,7 +14,7 @@ function Header({ height }: Props) {
           display: flex;
           align-items: center;
           padding: 0 20px;
-          background-color: black;
+          background-color: var(--black);;
         }
       `}</style>
     </header>

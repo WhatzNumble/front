@@ -185,7 +185,7 @@ function MyVideo({videos, errorMsg}: Props){
                             margin: 4px 0;
                             &.embed {
                                 color: var(--white);;
-                                background-color: black;
+                                background-color: var(--black);;
                                 border: 1px solid #8F8F8F;
                             }
                         }

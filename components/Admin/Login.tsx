@@ -115,7 +115,7 @@ function Login({onLogin}: Props){
                     border-radius: $radius;
                     padding: 10px 0;
                     font-weight: bold;
-                    background-color: black;
+                    background-color: var(--black);;
                     color: var(--white);;
                     transition: .2s;
                     &:hover {

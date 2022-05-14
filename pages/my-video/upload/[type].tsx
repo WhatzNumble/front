@@ -384,7 +384,7 @@ function Upload(){
                     .input {
                         height: 28px;
                         flex-grow: 1;
-                        background-color: black;
+                        background-color: var(--black);;
                         border: 0;
                         margin-right: 15px;
                         font-size: 20px;
@@ -398,7 +398,7 @@ function Upload(){
                         line-height: 140%;
                         font-size: 20px;
                         color: var(--white);;
-                        background-color: black;
+                        background-color: var(--black);;
                         height: 200px;
                         border: 0;
                         &::placeholder {
