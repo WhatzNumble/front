@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { getCookieValue } from 'utils/cookie';
 import config from 'utils/config';
 import { useDispatch } from 'react-redux';
+import useToastMessage from 'hooks/useToastMessage';
 import { LoginUser, userActions } from 'store/user';
 
 const TAB_SELECTED = '_selected';
@@ -18,6 +19,7 @@ interface Props {
 }
 
 function TabBar({ height = 56, transparent = false }: Props) {
+  const { pushToast } = useToastMessage();
   const router = useRouter();
   const dispatch = useDispatch();
   const { isLoggedIn } = useSelector((state: AppState) => state.user);
@@ -51,15 +53,20 @@ function TabBar({ height = 56, transparent = false }: Props) {
           },
         })
         .then((res) => {
-          console.log(res.data);
-          const userData: LoginUser = {
-            email: res.data.email,
-            id: res.data.id,
-            nickName: res.data.nickName,
-            avatar: res.data.thumbnailUrl,
-          };
-          axios.defaults.headers.common[config.authHeaderKey] = token;
-          dispatch(userActions.login({ token: token, loginUser: userData, socialType: 'kakao' }));
+          if (res.data.email) {
+            const userData: LoginUser = {
+              email: res.data.email,
+              id: res.data.id,
+              nickName: res.data.nickName,
+              avatar: res.data.thumbnailUrl,
+            };
+            axios.defaults.headers.common[config.authHeaderKey] = token;
+            dispatch(userActions.login({ token: token, loginUser: userData, socialType: 'kakao' }));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          pushToast('로그인 실패');
         });
     }
   }, []);
