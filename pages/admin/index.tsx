@@ -1,4 +1,5 @@
 import Login from "components/Admin/Login";
+import ConfirmBox from "components/ConfirmBox";
 import Loading from "components/Loading";
 import useToastMessage from "hooks/useToastMessage";
 import { useRouter } from "next/router";
@@ -10,6 +11,10 @@ function Admin(){
     const {pushToast} = useToastMessage();
     const {apiBaseURL} = config;
     const [loading, setLoading] = useState(false);
+    const [confirm, setConfirm] = useState({
+        show: false,
+        msg: ''
+    });
 
     const onLogin = async ({id, pw}: {id: string, pw: string})=>{
         try{
@@ -22,16 +27,23 @@ function Admin(){
                 })
             });
             if(res.ok){
-                
+                router.push('/admin/user');
             }else{
                 throw new Error();
             }
         }catch(ex){
-            pushToast('문제가 발생하였습니다.');    
+            setConfirm({
+                show: true,
+                msg: '로그인중 문제가 발생하였습니다.'
+            });
         }finally{
             setLoading(false);
         }
-        router.push('/admin/user');
+        // router.push('/admin/user');
+    }
+
+    const confirmCallback = ()=>{
+        setConfirm({...confirm, show: false});
     }
 
     useEffect(()=>{
@@ -43,6 +55,7 @@ function Admin(){
             <h1 className="title">Whatz</h1>
             <Login onLogin={onLogin}/>
             <Loading show={loading}/>
+            <ConfirmBox show={confirm.show} message={confirm.msg} callback={confirmCallback} isAlert/>
             <style jsx>{`
                 .Admin {
                     display: flex;
