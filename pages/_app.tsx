@@ -45,6 +45,14 @@ function MyApp({ Component, pageProps }: AppProps) {
         :root {
           --color-main: #d8ff69;
           --color-gray: #efefef;
+          --primary: #b5f400;
+          --primary-light: #e8ffa7;
+          --primary-dark: #abe700;
+          --black: #000000;
+          --error: #ff0000;
+          --positive: #00f0ff;
+          --warning: #faff00;
+          --white: #ffffff;
         }
 
         html,
