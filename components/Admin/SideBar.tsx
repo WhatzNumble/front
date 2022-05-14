@@ -24,27 +24,33 @@ function SideBar(){
                 ))}
             </ul>
             <style jsx>{`
+                $color: rgb(126, 255, 133);
+
                 .SideBar {
-                    background-color: rgb(75, 75, 75);
-                    color: var(--white);;
+                    background-color: rgb(59, 59, 59);
+                    color: white;
                 }
 
                 .nav-box {
                     padding-top: 10px;
+                    li {
+                        margin-bottom: 10px;
+                    }
                 }
 
                 .link {
                     width: 150px;
                     padding: 10px;
                     font-weight: bold;
+                    font-size: 19px;
                     &:hover {
-                        color: var(--primary);
+                        color: $color;
                     }
                 }
 
                 .match {
                     position: relative;
-                    color: var(--primary);
+                    color: $color;
                     &:after {
                         position: absolute;
                         content: '◀';

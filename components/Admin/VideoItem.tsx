@@ -1,5 +1,6 @@
 import {Video} from "libs/types";
 import VideoCard from "components/VideoCard";
+import Button from "./Button";
 
 type VideoType = Pick<Video, 'videoId' | 'videoThumbnail' | 'videoTitle' | 'nickname'>
 
@@ -9,6 +10,11 @@ interface VideoItemProps {
 }
 
 function VideoItem({video, onButtonClick}: VideoItemProps){
+    const buttonStyle = {
+        width: '50px',
+        margin: '0 2px',
+    }
+
     const onClickButtons = (e: React.MouseEvent<HTMLDivElement>)=>{
         if(e.target instanceof HTMLButtonElement){
             const {name} = e.target;
@@ -23,8 +29,8 @@ function VideoItem({video, onButtonClick}: VideoItemProps){
                 <h4 className="title">{video.videoTitle}</h4>
                 <div className="name">{video.nickname}</div>
                 <div className="buttons" onClick={onClickButtons}>
-                    <button className="mod" name="mod">수정</button>
-                    <button className="del" name="del">삭제</button>
+                    <Button name="mod" style={buttonStyle} text="수정"/>
+                    <Button name="del" style={buttonStyle} text="삭제" type="red"/>
                 </div>
             </div>
             <style jsx>{`
@@ -38,26 +44,16 @@ function VideoItem({video, onButtonClick}: VideoItemProps){
                     align-items: center;
                 }
 
+                .title {
+                    margin: 5px 0 0 0;
+                }
+
+                .name {
+                    margin-bottom: 10px;
+                }
+
                 .buttons {
-                    margin-top: 10px;
-                    button {
-                        margin: 0 3px;
-                        padding: 5px 15px;
-                        border-radius: 5px;
-                        color: var(--white);;
-                        font-weight: bold;
-                        transition: .2s;
-                        &.mod {
-                            background-color: rgb(65, 65, 65);
-                        }
-                        &.del {
-                            background-color: rgb(254, 86, 86);
-                        }
-                        &:hover {
-                            box-shadow: 0 8px 15px -5px black;
-                            transform: translateY(-2px);
-                        }
-                    }
+                    display: flex;
                 }
             `}</style>
         </div>

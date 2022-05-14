@@ -6,7 +6,7 @@ import {Constraint} from 'libs/types';
 
 interface Props<Data> {
     children: JSX.Element[]
-    datas: Data[]
+    datas: Data | Data[]
     onClickRow?: (event: React.MouseEvent<HTMLElement>, param: Data)=> void
     gridStyle?: CSS.Properties
     title?: string
@@ -14,12 +14,13 @@ interface Props<Data> {
 
 function Grid<Data extends Constraint<string | number | null | undefined>>({children, datas, onClickRow, gridStyle, title}: Props<Data>){
     const columnProps: GridColumnProps<Data>[] = children.map(col => col.props);
+    const dataList = Array.isArray(datas) ? datas : [datas];
 
     return (
         <div className='Grid'>
             {title && <h2 className='title'>{title}</h2>}
             <GridHeader columnProps={columnProps}/>
-            {datas.map((data, i) => (
+            {dataList.map((data, i) => (
                 <GridRow<Data> key={i} columnProps={columnProps} data={data} onClickRow={onClickRow}/>
             ))}
             <style jsx>{`
