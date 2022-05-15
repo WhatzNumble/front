@@ -20,7 +20,7 @@ const EmbedPlayer: React.FC<Props> = ({ video, inViewPort, blockTouch, isEditabl
   const iframeVideoRef = useRef<HTMLIFrameElement | null>(null);
   const embedSrc = `https://www.youtube.com/embed/?playlist=${extractIdFromURL(
     embedLink || ''
-  )}&rel=0&modestbranding=1&enablejsapi=1&controls=0&autoplay=1&loop=1&showinfo=0&autohide=1`;
+  )}&rel=0&modestbranding=1&enablejsapi=1&controls=0&autoplay=1&loop=1&showinfo=0&autohide=1&mute=1`;
 
   const isRenderedIframePlayer = (ref: MutableRefObject<HTMLIFrameElement | null>) => {
     const iframe = ref.current;

@@ -50,9 +50,9 @@ const EditPopup: React.FC<Props> = ({ videoId, isEmbed }) => {
   };
   return (
     <div className='editPopup'>
-      <h2 className='text'>영상 업로드 하기</h2>
-      <button onClick={onClickEdit}>수정하기</button>
-      <button onClick={onClickDelete}>삭제하기</button>
+      <h2 className='header'>영상 수정 팝업</h2>
+      <div onClick={onClickEdit}>영상 수정하기</div>
+      <div onClick={onClickDelete}>영상 삭제하기</div>
       <ConfirmBox
         show={showConfirmDelete}
         callback={deleteConfirmCallBack}
@@ -63,16 +63,25 @@ const EditPopup: React.FC<Props> = ({ videoId, isEmbed }) => {
       <style jsx>
         {`
           .editPopup {
-            color: var(--black);;
-            .text {
-              font-size: 14px;
+            color: var(--black);
+            .header {
+              color: var(--gray-4);
+              font-size: 12px;
               margin-bottom: 10px;
             }
-            button {
-              color: var(--black);;
-              font-weight: bold;
-              font-size: 18px;
-              background-color: var(--white);;
+            div {
+              padding-top: 10px;
+              color: var(--black);
+              font-family: 'Spoqa Han Sans Neo';
+              font-style: normal;
+              font-weight: 400;
+              font-size: 16px;
+              line-height: 140%;
+              /* or 22px */
+
+              display: flex;
+              align-items: center;
+              letter-spacing: -0.002em;
             }
             button[class*='button-'] {
               padding: 8px 0;
