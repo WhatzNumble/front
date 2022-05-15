@@ -5,7 +5,7 @@ import PlayStatusIcon from '../PlayStatusIcon';
 import PlayerUI from '../PlayerUI';
 import Mask from './Mask';
 
-interface Props extends IPlayer{
+interface Props extends IPlayer {
   blockTouch?: boolean;
 }
 
@@ -15,7 +15,7 @@ const extractIdFromURL = (url: string) => {
   return match && match[7].length == 11 ? match[7] : false;
 };
 
-const EmbedPlayer: React.FC<Props> = ({ video, blockTouch, isEditable, isPlaying }) => {
+const EmbedPlayer: React.FC<Props> = ({ video, blockTouch, isEditable, isPlaying, inViewPort }) => {
   const { videoTitle, embedLink } = video;
   const iframeVideoRef = useRef<HTMLIFrameElement | null>(null);
   const embedSrc = `https://www.youtube.com/embed/?playlist=${extractIdFromURL(
@@ -46,8 +46,13 @@ const EmbedPlayer: React.FC<Props> = ({ video, blockTouch, isEditable, isPlaying
   }, []);
 
   useEffect(() => {
-    sendCommand(isPlaying? 'playVideo' : 'stopVideo');
-  }, [isPlaying, sendCommand]);
+    console.log(inViewPort);
+    if (inViewPort) {
+      sendCommand(isPlaying ? 'playVideo' : 'pauseVideo');
+    } else {
+      sendCommand('stopVideo');
+    }
+  }, [inViewPort, isPlaying, sendCommand]);
 
   return (
     <>
@@ -61,7 +66,7 @@ const EmbedPlayer: React.FC<Props> = ({ video, blockTouch, isEditable, isPlaying
         allowFullScreen
         title={videoTitle}
       />
-      <PlayStatusIcon playing={isPlaying}  />;
+      <PlayStatusIcon playing={isPlaying} />;
       <PlayerUI video={video} isEditable={isEditable} />
       {blockTouch && <Mask />}
     </>
