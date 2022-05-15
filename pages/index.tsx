@@ -9,12 +9,14 @@ import { useEffect } from 'react';
 import config from 'utils/config';
 import ShortFormPlayer from 'components/ShortFormPlayer';
 import mockVideos from 'components/ShortFormPlayer/mockVideos';
+import { Video } from 'libs/types';
 
 interface Props {
-  token: string | null;
+  videos: Video[];
+  likeList: string[];
 }
 
-const Home: NextPage<Props> = ({ token }) => {
+const Home: NextPage<Props> = ({ videos, likeList }) => {
   const detectFirstView = () => {
     const localStorageKey = 'onBoarded-Whatz';
     const isOnboared = localStorage.getItem(localStorageKey);
@@ -30,24 +32,35 @@ const Home: NextPage<Props> = ({ token }) => {
 
   return (
     <Layout tabBarTransparent>
-      <ShortFormPlayer preLoadedVideos={mockVideos} query='/home' />
+      <ShortFormPlayer preLoadedVideos={videos || mockVideos} query='/home' />
     </Layout>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const allCookies = cookies(context);
-
   const accessTokenByCookie = allCookies[config.cookieAuthHeaderKey];
   if (accessTokenByCookie) {
     axios.defaults.headers.common[config.authHeaderKey] = accessTokenByCookie;
   }
-
-  return {
-    props: {
-      token: accessTokenByCookie || null,
-    },
-  };
+  try {
+    const res = await axios.get('/api/home');
+    console.log(res.data.videos);
+    return {
+      props: {
+        videos: res.data.videos,
+        likeList: res.data.likeList,
+      },
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      props: {
+        videos: null,
+        likeList: null,
+      },
+    };
+  }
 };
 
 export default Home;
