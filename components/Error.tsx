@@ -27,7 +27,7 @@ function Error({errorMsg, redirect = "/"}: Props){
                     }
 
                     .title {
-                        color: white;
+                        color: var(--white);;
                         font-size: 20px;
                     }
 

@@ -8,12 +8,16 @@ const DefaultPlayer = dynamic(() => import('./DefaultPlayer'), {
   ssr: false,
 });
 
-interface Props extends editableVideo {
-  playerID: string;
+export interface IPlayer extends editableVideo {
   inViewPort: boolean;
+  isPlaying: boolean;
 }
 
-const Player: React.FC<Props> = ({ playerID, video, isEditable, inViewPort }) => {
+interface Props extends IPlayer {
+  playerID: string;
+}
+
+const Player: React.FC<Props> = ({ playerID, video, isEditable, inViewPort, isPlaying }) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const { embedLink } = video;
 
@@ -21,9 +25,20 @@ const Player: React.FC<Props> = ({ playerID, video, isEditable, inViewPort }) =>
     <>
       <div className='Video' id={playerID} style={{ opacity: inViewPort ? 1 : 0.7 }} ref={ref}>
         {embedLink ? (
-          <EmbedPlayer video={video} inViewPort={inViewPort} isEditable={isEditable} blockTouch />
+          <EmbedPlayer
+            video={video}
+            inViewPort={inViewPort}
+            isEditable={isEditable}
+            isPlaying={isPlaying}
+            blockTouch
+          />
         ) : (
-          <DefaultPlayer video={video} inViewPort={inViewPort} isEditable={isEditable} />
+          <DefaultPlayer
+            video={video}
+            inViewPort={inViewPort}
+            isEditable={isEditable}
+            isPlaying={isPlaying}
+          />
         )}
       </div>
       <style jsx>{`
@@ -33,7 +48,7 @@ const Player: React.FC<Props> = ({ playerID, video, isEditable, inViewPort }) =>
           scroll-margin-bottom: 56px;
           width: 100%;
           height: calc(100% - 56px);
-          background: black;
+          background: var(--black);
           border-radius: 32px;
           overflow: hidden;
         }

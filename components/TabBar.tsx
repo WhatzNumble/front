@@ -53,7 +53,8 @@ function TabBar({ height = 56, transparent = false }: Props) {
           },
         })
         .then((res) => {
-          if (res.data.email) {
+          console.log(res.data);
+          if (res.data.status === 200) {
             const userData: LoginUser = {
               email: res.data.email,
               id: res.data.id,
@@ -65,14 +66,16 @@ function TabBar({ height = 56, transparent = false }: Props) {
           }
         })
         .catch((err) => {
+          console.log('login error');
           console.log(err);
+          dispatch(userActions.logout());
           pushToast('로그인 실패');
         });
     }
   }, []);
 
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!isLoggedIn && getCookieValue(config.cookieAuthHeaderKey)) {
       loadUserData();
     }
   }, [isLoggedIn, loadUserData]);
@@ -106,7 +109,7 @@ function TabBar({ height = 56, transparent = false }: Props) {
             background-color: rgba(0,0,0,0);
           `
             : `
-            background-color: black;
+            background-color: var(--black);;
           `}
           width: 100%;
         }

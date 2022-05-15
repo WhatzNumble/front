@@ -10,7 +10,7 @@ const Content: React.FC<Props> = ({ content }) => {
     setShowContent((prev) => !prev);
   };
   return (
-    <div className='contentWrapper'>
+    <div className='contentWrapper' >
       {showContent ? (
         <div className='showContent' onClick={toggleContent}>
           {content}
@@ -26,12 +26,14 @@ const Content: React.FC<Props> = ({ content }) => {
       <style jsx>
         {`
           .contentWrapper {
+            width: 100%;
             display: flex;
             font-weight: 500;
             font-size: 14px;
             line-height: 140%;
             letter-spacing: -0.002em;
             .showContent {
+              width: 100%;
               height: auto;
               overflow: scroll;
               height: 260px;
@@ -43,6 +45,7 @@ const Content: React.FC<Props> = ({ content }) => {
               text-overflow: ellipsis;
             }
             .contentMore {
+              color: var(--white);
               background: inherit;
               border: none;
               box-shadow: none;

@@ -1,7 +1,8 @@
+import LoadingLottie from 'components/LoadingLottie/LoadingLottie';
 import Image from 'next/image';
 
 interface Props {
-  loading: boolean;
+  loading?: boolean;
   playing: boolean;
 }
 
@@ -10,7 +11,7 @@ const PlayStatusIcon: React.FC<Props> = ({ loading, playing }) => {
   return (
     <div className='playStatus'>
       {loading ? (
-        <Image src='/loading.gif' width={40} height={40} alt='loading video' />
+        <LoadingLottie width='40px' height='40px' />
       ) : (
         <div className='animate' key={icon}>
           <Image src={icon} width={84} height={84} alt='play state icon' />
@@ -29,7 +30,7 @@ const PlayStatusIcon: React.FC<Props> = ({ loading, playing }) => {
           .playStatus {
             pointer-events: none;
             position: absolute;
-            bottom: calc(50% - 56px);
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             .animate {

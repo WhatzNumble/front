@@ -1,11 +1,11 @@
 import { useRef, useEffect, MutableRefObject, useCallback } from 'react';
 
-import { editableVideo } from 'libs/types';
+import { IPlayer } from '..';
+import PlayStatusIcon from '../PlayStatusIcon';
 import PlayerUI from '../PlayerUI';
 import Mask from './Mask';
 
-interface Props extends editableVideo {
-  inViewPort: boolean;
+interface Props extends IPlayer {
   blockTouch?: boolean;
 }
 
@@ -15,12 +15,12 @@ const extractIdFromURL = (url: string) => {
   return match && match[7].length == 11 ? match[7] : false;
 };
 
-const EmbedPlayer: React.FC<Props> = ({ video, inViewPort, blockTouch, isEditable }) => {
+const EmbedPlayer: React.FC<Props> = ({ video, blockTouch, isEditable, isPlaying, inViewPort }) => {
   const { videoTitle, embedLink } = video;
   const iframeVideoRef = useRef<HTMLIFrameElement | null>(null);
   const embedSrc = `https://www.youtube.com/embed/?playlist=${extractIdFromURL(
     embedLink || ''
-  )}&rel=0&modestbranding=1&enablejsapi=1&controls=0&autoplay=1&loop=1&showinfo=0&autohide=1`;
+  )}&rel=0&modestbranding=1&enablejsapi=1&controls=0&loop=1&showinfo=0&autohide=1`;
 
   const isRenderedIframePlayer = (ref: MutableRefObject<HTMLIFrameElement | null>) => {
     const iframe = ref.current;
@@ -46,8 +46,13 @@ const EmbedPlayer: React.FC<Props> = ({ video, inViewPort, blockTouch, isEditabl
   }, []);
 
   useEffect(() => {
-    sendCommand(inViewPort? 'playVideo' : 'stopVideo');
-  }, [inViewPort, sendCommand]);
+    console.log(inViewPort);
+    if (inViewPort) {
+      sendCommand(isPlaying ? 'playVideo' : 'pauseVideo');
+    } else {
+      sendCommand('stopVideo');
+    }
+  }, [inViewPort, isPlaying, sendCommand]);
 
   return (
     <>
@@ -61,6 +66,7 @@ const EmbedPlayer: React.FC<Props> = ({ video, inViewPort, blockTouch, isEditabl
         allowFullScreen
         title={videoTitle}
       />
+      <PlayStatusIcon playing={isPlaying} />;
       <PlayerUI video={video} isEditable={isEditable} />
       {blockTouch && <Mask />}
     </>

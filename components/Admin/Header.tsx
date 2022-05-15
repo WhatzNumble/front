@@ -37,7 +37,7 @@ function Header({ height, path }: Props) {
           align-items: center;
           justify-content: space-between;
           padding: 0 20px;
-          background-color: black;
+          background-color: var(--black);;
         }
         
         .info {
