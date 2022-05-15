@@ -50,7 +50,7 @@ const EditPopup: React.FC<Props> = ({ videoId, isEmbed }) => {
   };
   return (
     <div className='editPopup'>
-      <h2 className='header'>영상 수정 팝업</h2>
+      <div className='header'>영상 수정 팝업</div>
       <div onClick={onClickEdit}>영상 수정하기</div>
       <div onClick={onClickDelete}>영상 삭제하기</div>
       <ConfirmBox
