@@ -42,19 +42,10 @@ const PlayerUI: React.FC<Props> = ({ video, isEditable, progress }) => {
   return (
     <>
       <div className='PlayerUI'>
-        <div className='leftWrapper'>
-          <Content content={videoContent} />
-          <div className='infoWrapper'>
-            <Avatar link='test' avatarImage={profile || '/mock/profile.png'} />
-            <div className='info'>
-              <div className='title'>{videoTitle}</div>
-              <div className='viewDate'>
-                {`조회수 ${videoViews}`}&#183;{dateToDateFormatString(videoCreationDate)}
-              </div>
-            </div>
+        <div className='row top'>
+          <div className='contentWrapper'>
+            <Content content={videoContent} />
           </div>
-        </div>
-        <div className='buttonWrapper'>
           {isEditable && (
             <div className='button'>
               <button onClick={() => toggleVideoEditPop()}>
@@ -62,6 +53,17 @@ const PlayerUI: React.FC<Props> = ({ video, isEditable, progress }) => {
               </button>
             </div>
           )}
+        </div>
+        <div className='row'>
+          <Avatar link='test' avatarImage={profile || '/mock/profile.png'} />
+          <div className='infoWrapper'>
+            <div className='info'>
+              <div className='title'>{videoTitle}</div>
+              <div className='viewDate'>
+                {`조회수 ${videoViews}`}&#183;{dateToDateFormatString(videoCreationDate)}
+              </div>
+            </div>
+          </div>
           <div className='button'>
             <button onClick={() => handleLike()}>
               <Image
@@ -86,58 +88,65 @@ const PlayerUI: React.FC<Props> = ({ video, isEditable, progress }) => {
         {`
           .PlayerUI {
             z-index: 10;
+            padding: 0 20px;
             position: absolute;
             bottom: 0px;
-            padding: 0 24px 24px 24px;
             width: 100%;
             display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            background: rgb(0, 0, 0);
+            flex-direction: column;
             background: linear-gradient(0deg, rgba(0, 0, 0, 0.61) 0%, rgba(0, 0, 0, 0.01) 100%);
-            color: #fff;
+            color: var(--white);
           }
-          .leftWrapper {
-            max-width: 88%;
-            .contentWrapper {
-              font-weight: 500;
+          .row {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 0 12px;
+          }
+          .top {
+            align-items: flex-end;
+
+          }
+
+          .infoWrapper {
+            flex: 1;
+            .info {
+              font-weight: 400;
               font-size: 14px;
               line-height: 140%;
-              display: flex;
-              align-items: flex-end;
               letter-spacing: -0.002em;
-              .content {
-                overflow: scroll;
-                height: 260px;
+              .title {
+                font-weight: 500;
+                font-size: 16px;
               }
-              .hidden_content {
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-              }
-            }
-            .infoWrapper {
-              margin-top: 20px;
-              display: flex;
-              .info {
-                margin-left: 12px;
-                font-weight: 400;
-                font-size: 14px;
-                line-height: 140%;
-                letter-spacing: -0.002em;
-                .title {
-                  font-weight: 500;
-                  font-size: 16px;
-                }
-                .viewDate {
-                  opacity: 0.7;
-                }
+              .viewDate {
+                opacity: 0.7;
               }
             }
           }
-          .buttonWrapper {
-            width: 40px;
+
+          .contentWrapper {
+            flex:1;
+            width: 80%;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 140%;
+            display: flex;
+            align-items: flex-end;
+            letter-spacing: -0.002em;
+            .content {
+              overflow: scroll;
+              height: 260px;
+            }
+            .hidden_content {
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+          }
+          .button {
             button {
+              width: 40px;
               all: unset;
             }
             .count {
