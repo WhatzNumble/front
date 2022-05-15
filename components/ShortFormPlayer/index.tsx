@@ -83,6 +83,7 @@ const ShortFormPlayer: React.FC<Props> = ({
               key={index}
               playerID={`player_${index}`}
               inViewPort={index === inViewIndex}
+              isPlaying={index===playVideo}
               isEditable={isEditable}
               video={video}
             />

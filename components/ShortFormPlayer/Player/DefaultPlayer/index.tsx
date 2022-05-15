@@ -1,14 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { IPlayer } from '..';
 import PlayerUI from '../PlayerUI';
 import ReactHlsPlayer from 'react-hls-player';
-import { editableVideo } from 'libs/types';
-import PlayStatusIcon from './PlayStatusIcon';
+import PlayStatusIcon from '../PlayStatusIcon';
 
-interface Props extends editableVideo {
-  inViewPort: boolean;
-}
-
-const DefaultPlayer: React.FC<Props> = ({ inViewPort, video, isEditable }) => {
+const DefaultPlayer: React.FC<IPlayer> = ({ isPlaying, video, isEditable }) => {
   const { directDir } = video;
   const [loading, setIsLoading] = useState(true);
   const [playing, setPlaying] = useState(false);
@@ -17,9 +13,9 @@ const DefaultPlayer: React.FC<Props> = ({ inViewPort, video, isEditable }) => {
 
   useEffect(() => {
     if (directDir) {
-      handleVideo(inViewPort? 'play' : 'stop');
+      handleVideo(isPlaying ? 'play' : 'stop');
     }
-  }, [directDir, inViewPort]);
+  }, [directDir, isPlaying]);
 
   const handleVideo = (input: string) => {
     switch (input) {
