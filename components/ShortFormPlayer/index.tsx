@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import axios from 'axios';
 
+import useToastMessage from 'hooks/useToastMessage';
 import { Video } from 'libs/types';
 import Player from './Player';
 import mockVideos from './mockVideos';
@@ -23,18 +24,12 @@ const ShortFormPlayer: React.FC<Props> = ({
   const [inViewIndex, setInVewIndex] = useState(0);
   const [lastIndex, setLastIndex] = useState(videos.length - 1);
   const [page, setPage] = useState(1);
+  const { pushToast } = useToastMessage();
   const videoListRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setVideos([...preLoadedVideos]);
   }, [preLoadedVideos]);
-
-  useEffect(() => {
-    (async function () {
-      const res = await axios.get('/home'); // 해당 라우트는
-      console.log(res);
-    })();
-  }, []);
 
   useEffect(() => {
     setPlayVideo(inViewIndex);
@@ -64,13 +59,32 @@ const ShortFormPlayer: React.FC<Props> = ({
     };
   }, [videos, videoListRef]);
 
+  const getVideo = async (query: string, page: number, size: number) => {
+    try {
+      const res = await axios.get(query, { params: { page: page, size: size } });
+      if (res.data.videos && res.data.videos.length) {
+        const { videos } = res.data;
+        setVideos((prev) => [...prev, ...videos]);
+        setLastIndex((prev) => prev + videos.length);
+        setPage((prev) => prev + 1);
+      }
+    } catch (error) {
+      console.log(error);
+      pushToast('video api error');
+    }
+  };
+
+  const getMockVideo = async () => {
+    setVideos((prev) => [...prev, ...mockVideos]);
+    setLastIndex((prev) => prev + mockVideos.length);
+    setPage((prev) => prev + 1);
+  };
+
   useEffect(() => {
     if (query && videos.length - requestIndex === inViewIndex) {
       console.log(`callAPI page: ${page} videolength: ${videos.length}`);
-      //if api respnose success
-      setVideos((prev) => [...prev, ...mockVideos]);
-      setLastIndex((prev) => prev + mockVideos.length);
-      setPage((prev) => prev + 1);
+      getMockVideo();
+      // getVideo(query, page, 5);
     }
   }, [query, videos, inViewIndex, lastIndex, requestIndex, page]);
 
@@ -83,6 +97,7 @@ const ShortFormPlayer: React.FC<Props> = ({
               key={index}
               playerID={`player_${index}`}
               inViewPort={index === inViewIndex}
+              isPlaying={index === playVideo}
               isEditable={isEditable}
               video={video}
             />
