@@ -63,16 +63,16 @@ const EditPopup: React.FC<Props> = ({ videoId, isEmbed }) => {
       <style jsx>
         {`
           .editPopup {
-            color: black;
+            color: var(--black);;
             .text {
               font-size: 14px;
               margin-bottom: 10px;
             }
             button {
-              color: black;
+              color: var(--black);;
               font-weight: bold;
               font-size: 18px;
-              background-color: white;
+              background-color: var(--white);;
             }
             button[class*='button-'] {
               padding: 8px 0;

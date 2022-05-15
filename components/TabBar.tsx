@@ -109,7 +109,7 @@ function TabBar({ height = 56, transparent = false }: Props) {
             background-color: rgba(0,0,0,0);
           `
             : `
-            background-color: black;
+            background-color: var(--black);;
           `}
           width: 100%;
         }

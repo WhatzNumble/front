@@ -19,7 +19,7 @@ const ProgressBar: React.FC<Props> = ({ progress }) => {
         .done {
           width: 0px;
           height: 5px;
-          background-color: white;
+          background-color: var(--white);;
         }
       `}</style>
     </>

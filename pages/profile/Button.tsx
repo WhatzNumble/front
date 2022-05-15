@@ -15,7 +15,7 @@ const Button: React.FC<Props> = ({
   buttonColor,
   textColor = '#000',
 }) => {
-  const backgroundColor = buttonColor ? buttonColor : theme === 'light' ? '#D8FF69' : '#000';
+  const backgroundColor = buttonColor ? buttonColor : theme === 'light' ? 'var(--primary)' : 'var(--black)';
   return (
     <div className='wrapper'>
       <button className='button' onClick={onClick}>

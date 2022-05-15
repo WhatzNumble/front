@@ -19,33 +19,43 @@ const LoginPage: NextPage = () => {
   useUserTypeRedirect('/', 'user');
 
   return (
-    <Layout hasTabBar={false} title='로그인'>
+    <Layout hasTabBar={false} title='로그인' isGradient>
       <div className='loginPage'>
-        <div className='info'>
-          <Image src='/icon/logo/logo.svg' width={46} height={46} alt='whatz-icon' />
-          <div className='infoText'>
-            <p>세상의 모든 팁 A to Z</p>
-            <p>Whatz A to Z</p>
+        <div className='logoWrapper'>
+          <div className='section'>
+            <Image src='/icon/logo/logo_with_title.svg' width={90} height={20} alt='whatz-icon' />
           </div>
-        </div>
-        <div className='loginButton'>
-          <LoginButton hrefLink={backendRequest} label='카카오톡 로그인하기' />
+          <div className='section'>
+            <div className='infoText'>
+              <p>세상의 모든 팁 A to Z</p>
+              <p>Whatz A to Z</p>
+            </div>
+          </div>
+          <LoginButton
+            logoSrc='/icon/common/kakao.svg'
+            hrefLink={backendRequest}
+            backgroundColor='#FEE500'
+            text='카카오톡 로그인하기'
+          />
         </div>
       </div>
       <style jsx>{`
         .loginPage {
           margin: auto;
-          .info {
+          .logoWrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
+            .section {
+              margin-bottom: 56px;
+            }
           }
         }
         .infoText {
           display: flex;
           flex-direction: column;
           align-items: center;
-          margin-top: 20px;
+          color: var(--white);
           p {
             font-family: 'Apple SD Gothic Neo';
             font-style: normal;
@@ -55,11 +65,7 @@ const LoginPage: NextPage = () => {
             line-height: 36px;
             margin: 0;
             letter-spacing: -0.02em;
-            color: #8c8c8c;
           }
-        }
-        .loginButton {
-          margin-top: 34px;
         }
       `}</style>
     </Layout>
