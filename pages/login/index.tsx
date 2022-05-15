@@ -27,8 +27,8 @@ const LoginPage: NextPage = () => {
           </div>
           <div className='section'>
             <div className='infoText'>
-              <p>세상의 모든 팁 A to Z</p>
-              <p>Whatz A to Z</p>
+              <p>세상의 모든 팁</p>
+              <p>A to Z</p>
             </div>
           </div>
           <LoginButton
