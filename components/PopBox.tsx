@@ -49,7 +49,7 @@ function PopBox({show, children, onClosePopBox}: Props){
                             .close {
                                 display: flex;
                                 justify-content: center;
-                                margin: 30px 0 30px 0;
+                                margin: 24px 0 18px 0;
                                 button {
                                     padding: 13px 28px;
                                 }
