@@ -1,6 +1,4 @@
 import { NextPage } from 'next';
-import { useSelector } from 'react-redux';
-import { AppState } from 'store';
 import Image from 'next/image';
 
 import Layout from 'components/Layout';
