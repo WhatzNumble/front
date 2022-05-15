@@ -33,7 +33,7 @@ const Player: React.FC<Props> = ({ playerID, video, isEditable, inViewPort }) =>
           scroll-margin-bottom: 56px;
           width: 100%;
           height: calc(100% - 56px);
-          background: black;
+          background: var(--black);
           border-radius: 32px;
           overflow: hidden;
         }
