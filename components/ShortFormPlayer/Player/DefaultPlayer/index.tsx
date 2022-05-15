@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+
+import config from 'utils/config';
 import { IPlayer } from '..';
 import PlayerUI from '../PlayerUI';
 import ReactHlsPlayer from 'react-hls-player';
@@ -10,11 +12,6 @@ const DefaultPlayer: React.FC<IPlayer> = ({ isPlaying, inViewPort, video, isEdit
   const [playing, setPlaying] = useState(false);
   const [mute, setMute] = useState(false);
   const playerRef = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (directDir) {
-    }
-  }, [directDir, isPlaying]);
 
   useEffect(() => {
     if (directDir) {
@@ -63,7 +60,7 @@ const DefaultPlayer: React.FC<IPlayer> = ({ isPlaying, inViewPort, video, isEdit
           width='100%'
           height='100%'
           loop
-          src={directDir}
+          src={config.videoSrcBaseURL + directDir}
           onLoadedData={onVideoLoadEnd}
           onClick={onClickVideo}
         />

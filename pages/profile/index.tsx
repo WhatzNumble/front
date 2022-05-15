@@ -28,7 +28,7 @@ export const profileWrapper = css`
 `;
 
 const ProfilePage = () => {
-  // useUserTypeRedirect('/', 'guest');
+  useUserTypeRedirect('/', 'guest');
   const { pushToast } = useToastMessage();
   const dispatch = useDispatch();
   const [showConfirm, setConfirm] = useState(false);
