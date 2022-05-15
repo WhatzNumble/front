@@ -45,7 +45,6 @@ function TabBar({ height = 56, transparent = false }: Props) {
   const loadUserData = useCallback(() => {
     const token = getCookieValue(config.cookieAuthHeaderKey);
     if (token) {
-      console.log(token);
       axios
         .get('/profile', {
           headers: {
@@ -53,7 +52,6 @@ function TabBar({ height = 56, transparent = false }: Props) {
           },
         })
         .then((res) => {
-          console.log(res.data);
           if (res.data.email) {
             const userData: LoginUser = {
               email: res.data.email,
@@ -66,8 +64,6 @@ function TabBar({ height = 56, transparent = false }: Props) {
           }
         })
         .catch((err) => {
-          console.log('login error');
-          console.log(err);
           dispatch(userActions.logout());
           pushToast('로그인 실패');
         });

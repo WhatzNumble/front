@@ -80,7 +80,6 @@ const ProfilePage = () => {
     //user 탈퇴 request
     if (confirm) {
       userDeleteRequest();
-      console.log('userLeave');
     } else {
       closeConfirm();
     }

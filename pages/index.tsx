@@ -45,7 +45,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
   try {
     const res = await axios.get('/api/home');
-    console.log(res.data.videos);
     return {
       props: {
         videos: res.data.videos,
