@@ -36,7 +36,7 @@ const ProfilePage = () => {
 
   const userLogoutRequest = async () => {
     try {
-      const res = await axios.post('/member/logout', {});
+      const res = await axios.post('/api/member/logout', {});
       dispatch(userActions.logout());
     } catch (err) {
       console.error(err);
@@ -66,7 +66,7 @@ const ProfilePage = () => {
 
   const userDeleteRequest = async () => {
     try {
-      const res = await axios.post('/member/delete', {});
+      const res = await axios.post('/api/member/delete', {});
       pushToast('탈퇴하였습니다');
       dispatch(userActions.logout());
       Router.push('/');
