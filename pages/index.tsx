@@ -44,7 +44,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     axios.defaults.headers.common[config.authHeaderKey] = accessTokenByCookie;
   }
   try {
-    const res = await axios.get('/api/home');
+    const res = await axios.get('/home');
     return {
       props: {
         videos: res.data.videos,
