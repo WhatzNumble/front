@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { IPlayer } from '..';
 import PlayerUI from '../PlayerUI';
 import ReactHlsPlayer from 'react-hls-player';
