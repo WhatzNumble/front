@@ -54,7 +54,7 @@ function TabBar({ height = 56, transparent = false }: Props) {
         })
         .then((res) => {
           console.log(res.data);
-          if (res.data.status === 200) {
+          if (res.data.email) {
             const userData: LoginUser = {
               email: res.data.email,
               id: res.data.id,
