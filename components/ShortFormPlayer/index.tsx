@@ -83,8 +83,8 @@ const ShortFormPlayer: React.FC<Props> = ({
   useEffect(() => {
     if (query && videos.length - requestIndex === inViewIndex) {
       console.log(`callAPI page: ${page} videolength: ${videos.length}`);
-      // getMockVideo();
-      getVideo(query, page, 5);
+      getMockVideo();
+      // getVideo(query, page, 5);
     }
   }, [query, videos, inViewIndex, lastIndex, requestIndex, page]);
 

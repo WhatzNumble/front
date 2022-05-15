@@ -19,19 +19,6 @@ const detailMockString: string = `
 
 const mockVideos: Video[] = [
   {
-    videoId: 7,
-    nickname: 'user1',
-    profile: '/mock/profile.png',
-    videoLike: 5,
-    videoTitle: 'videoTitle1',
-    videoContent: detailMockString,
-    videoCreationDate: '2022-05-06T12:07:35.052847',
-    videoViews: 20,
-    videoThumbnail: '/mock/profile.png',
-    directDir: null,
-    embedLink: 'https://www.youtube.com/watch?v=_whaAD__3vI',
-  },
-  {
     videoId: 1,
     nickname: 'user1',
     profile: '/mock/profile.png',
@@ -108,6 +95,19 @@ const mockVideos: Video[] = [
     videoThumbnail: '/mock/profile.png',
     directDir: '/bipbop-advanced/bipbop_16x9_variant.m3u8',
     embedLink: null,
+  },
+  {
+    videoId: 7,
+    nickname: 'user1',
+    profile: '/mock/profile.png',
+    videoLike: 5,
+    videoTitle: 'videoTitle1',
+    videoContent: detailMockString,
+    videoCreationDate: '2022-05-06T12:07:35.052847',
+    videoViews: 20,
+    videoThumbnail: '/mock/profile.png',
+    directDir: null,
+    embedLink: 'https://www.youtube.com/watch?v=_whaAD__3vI',
   },
 ];
 
