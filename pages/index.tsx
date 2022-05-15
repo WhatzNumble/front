@@ -52,7 +52,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   } catch (err) {
-    console.log(err);
     return {
       props: {
         videos: null,
