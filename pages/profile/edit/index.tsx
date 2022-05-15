@@ -69,7 +69,7 @@ const ProfileEditPage: NextPage = () => {
       console.log(body.get('nickName'));
       console.log(body.get('profileAvatar'));
 
-      const res = axios.post('/api/member/update', {
+      const res = axios.post('/member/update', {
         body,
       });
       console.log(res);
