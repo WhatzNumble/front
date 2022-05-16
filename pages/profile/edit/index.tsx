@@ -4,15 +4,13 @@ import Router, { useRouter } from 'next/router';
 import { AppState } from 'store';
 import { useSelector } from 'react-redux';
 import React, { useState, useRef } from 'react';
-import { useDispatch } from 'react-redux';
 
 import useUserTypeRedirect from 'hooks/useUserTypeRedirect';
 import { fileLoader } from 'utils/file';
-import Button from '../Button';
+import Button from 'components/Button';
 import ProfileAvatar from '../ProfileAvatar';
 import ProfileInfo from '../ProfileInfo';
 import { profileWrapper } from '..';
-import { HEADER_HEIGHT } from 'components/Layout';
 import useToastMessage from 'hooks/useToastMessage';
 import axios from 'axios';
 

@@ -10,10 +10,10 @@ import Layout from 'components/Layout';
 import { userActions } from 'store/user';
 import useUserState from 'hooks/useUserState';
 
-import Button from './Button';
+import Button from 'components/Button';
+import ConfirmBox from 'components/ConfirmBox';
 import ProfileAvatar from './ProfileAvatar';
 import ProfileInfo from './ProfileInfo';
-import ConfirmBox from 'components/ConfirmBox';
 
 export const profileWrapper = css`
   .profileWrapper {
@@ -21,7 +21,7 @@ export const profileWrapper = css`
     flex-direction: column;
     align-items: center;
     align-content: center;
-    margin-top: 30%;
+    margin: auto 0px;
     padding: 0px 32px;
   }
 `;
@@ -36,9 +36,10 @@ const ProfilePage = () => {
   const userLogoutRequest = async () => {
     try {
       const res = await axios.post('/member/logout', {});
-      dispatch(userActions.logout());
     } catch (err) {
       console.error(err);
+    } finally {
+      dispatch(userActions.logout());
     }
   };
 
@@ -92,9 +93,20 @@ const ProfilePage = () => {
           <ProfileInfo name={user.nickName} email={user.email} />
         </div>
         <div className='buttonWrapper'>
-          <Button onClick={onClickProfileEdit} text='프로필 수정하기' />
-          <Button onClick={onClickLogout} text='로그아웃' theme='dark' />
-          <Button onClick={onClickUserLeave} text='탈퇴하기' theme='dark' />
+          <Button
+            onClick={onClickProfileEdit}
+            buttonColor='var(--primary)'
+            textColor='var(--black)'
+            border='none'
+            text='프로필 수정하기'
+          />
+          <Button onClick={onClickLogout} text='로그아웃' />
+          <Button
+            onClick={onClickUserLeave}
+            border='none'
+            textColor='var(--gray-2)'
+            text='탈퇴하기'
+          />
         </div>
         <ConfirmBox
           show={showConfirm}
@@ -109,9 +121,8 @@ const ProfilePage = () => {
             display: flex;
             justify-content: center;
           }
-          .profileInfo{
+          .profileInfo {
             margin-top: 30px;
-
           }
           .buttonWrapper {
             margin-top: 59px;
