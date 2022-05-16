@@ -14,12 +14,17 @@ const Button: React.FC<Props> = ({
   text,
   buttonColor,
   textColor = '#000',
+  children,
 }) => {
-  const backgroundColor = buttonColor ? buttonColor : theme === 'light' ? 'var(--primary)' : 'var(--black)';
+  const backgroundColor = buttonColor
+    ? buttonColor
+    : theme === 'light'
+    ? 'var(--primary)'
+    : 'var(--black)';
   return (
     <div className='wrapper'>
-      <button className='button' onClick={onClick}>
-        {text}
+      <button className='button' onClick={() => onClick()}>
+        {children ? children : text}
       </button>
       <style jsx>
         {`

@@ -1,7 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import axios from 'axios';
-import Link from 'next/link';
 import Router from 'next/router';
 import css from 'styled-jsx/css';
 
@@ -32,7 +31,7 @@ const ProfilePage = () => {
   const { pushToast } = useToastMessage();
   const dispatch = useDispatch();
   const [showConfirm, setConfirm] = useState(false);
-  const { user, token } = useUserState();
+  const { user } = useUserState();
 
   const userLogoutRequest = async () => {
     try {
@@ -86,17 +85,17 @@ const ProfilePage = () => {
   };
 
   return (
-    <Layout>
+    <Layout title='프로필' headerTitle='프로필'>
       <div className='profileWrapper'>
         <ProfileAvatar avatarSrc={user.avatar} />
-        <ProfileInfo name={user.nickName} email={user.email} />
+        <div className='profileInfo'>
+          <ProfileInfo name={user.nickName} email={user.email} />
+        </div>
         <div className='buttonWrapper'>
-          <Button onClick={onClickProfileEdit} text='프로필 편집' />
+          <Button onClick={onClickProfileEdit} text='프로필 수정하기' />
           <Button onClick={onClickLogout} text='로그아웃' theme='dark' />
           <Button onClick={onClickUserLeave} text='탈퇴하기' theme='dark' />
         </div>
-        <Link href={'/profile/edit'}>프로필 수정</Link>
-        <Link href={{ pathname: '/profile/edit', query: { editType: 'signup' } }}>프로필 생성</Link>
         <ConfirmBox
           show={showConfirm}
           callback={confirmUserLeave}
@@ -110,7 +109,12 @@ const ProfilePage = () => {
             display: flex;
             justify-content: center;
           }
+          .profileInfo{
+            margin-top: 30px;
+
+          }
           .buttonWrapper {
+            margin-top: 59px;
             width: 100%;
           }
         `}
