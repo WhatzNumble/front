@@ -1,7 +1,6 @@
 import { CSSTransition } from "react-transition-group";
 import ReactDOM from 'react-dom';
 import Modal from "components/Modal";
-import { useState, useEffect } from "react";
 import useWindow from "hooks/useWindow";
 
 
