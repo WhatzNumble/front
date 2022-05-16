@@ -1,26 +1,23 @@
 interface Props {
+  children?: React.ReactNode;
   onClick: () => void;
   buttonColor?: string;
-  theme?: 'light' | 'dark';
-  text: string;
+  backgroundColor?: string;
+  border?: string;
+  text?: string;
   textColor?: string;
   width?: string;
 }
 
 const Button: React.FC<Props> = ({
   onClick,
-  theme = 'light',
   width = '100%',
-  text,
-  buttonColor,
-  textColor = '#000',
+  text = 'Button',
+  buttonColor = 'var(--black)',
+  border = '1px solid #8F8F8F;',
+  textColor = 'var(--white)',
   children,
 }) => {
-  const backgroundColor = buttonColor
-    ? buttonColor
-    : theme === 'light'
-    ? 'var(--primary)'
-    : 'var(--black)';
   return (
     <div className='wrapper'>
       <button className='button' onClick={() => onClick()}>
@@ -30,18 +27,20 @@ const Button: React.FC<Props> = ({
         {`
           .wrapper {
             width: ${width};
-            margin: 4px 0;
+            max-width: 750px;
+            margin: 0 auto;
+            margin-bottom: 8px;
           }
           .button {
             height: 48px;
             width: 100%;
-            background: ${backgroundColor};
+            background: ${buttonColor};
+            border: ${border};
             border-radius: 30px;
-            color: ${theme === 'dark' ? '#fff' : textColor};
+            color: ${textColor};
             font-weight: 500;
             font-size: 16px;
             line-height: 140%;
-            ${theme === 'dark' && 'border: 1px solid #8F8F8F;'}
           }
         `}
       </style>
