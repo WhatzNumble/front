@@ -32,7 +32,7 @@ const Home: NextPage<Props> = ({ videos, likeList }) => {
 
   return (
     <Layout tabBarTransparent>
-      <ShortFormPlayer preLoadedVideos={videos || mockVideos} query='/home' />
+      <ShortFormPlayer preLoadedVideos={videos || []} query='/home' />
     </Layout>
   );
 };
@@ -44,7 +44,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     axios.defaults.headers.common[config.authHeaderKey] = accessTokenByCookie;
   }
   try {
-    const res = await axios.get('/home');
+    const res = await axios.get(`${config.apiBaseURL}/home`);
     return {
       props: {
         videos: res.data.videos,
@@ -52,6 +52,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   } catch (err) {
+    console.error(err)
     return {
       props: {
         videos: null,
