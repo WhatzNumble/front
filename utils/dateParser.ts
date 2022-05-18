@@ -27,9 +27,12 @@ const dateToLabelString = (value: Date | string, todayValue?: Date): string => {
 
 const dateToDateFormatString= (input: Date | string, delimiter: string = '.') => {
   const timeValue = new Date(input);
+  console.log('dateInput:', input);
+  console.log('timeValue:', timeValue);
   const year = timeValue.getFullYear();
   const month = timeValue.getMonth() + 1;
   const day = timeValue.getDate();
+
   return [year, month, day].join(delimiter);
 };
 
