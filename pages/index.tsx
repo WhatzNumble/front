@@ -1,4 +1,3 @@
-import Layout from 'components/Layout';
 import axios from 'axios';
 import cookies from 'next-cookies';
 import type { NextPage } from 'next';
@@ -7,9 +6,11 @@ import { GetServerSideProps } from 'next';
 import { useEffect } from 'react';
 
 import config from 'utils/config';
+import Layout from 'components/Layout';
 import ShortFormPlayer from 'components/ShortFormPlayer';
-import mockVideos from 'components/ShortFormPlayer/mockVideos';
 import { Video } from 'libs/types';
+import { useDispatch } from 'react-redux';
+import { userActions } from 'store/user';
 
 interface Props {
   videos: Video[];
@@ -17,12 +18,19 @@ interface Props {
 }
 
 const Home: NextPage<Props> = ({ videos, likeList }) => {
+  const dispatch = useDispatch();
   const detectFirstView = () => {
     const localStorageKey = 'onBoarded-Whatz';
     const isOnboared = localStorage.getItem(localStorageKey);
     localStorage.setItem(localStorageKey, 'true');
     return !!isOnboared;
   };
+
+  useEffect(() => {
+    if (likeList) {
+      dispatch(userActions.updateLikeList({ likeList: likeList }));
+    }
+  }, [dispatch, likeList]);
 
   useEffect(() => {
     if (!detectFirstView()) {
@@ -52,7 +60,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   } catch (err) {
-    console.error(err)
+    console.error(err);
     return {
       props: {
         videos: null,
