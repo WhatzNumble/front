@@ -10,9 +10,8 @@ interface Props extends IPlayer {
 }
 
 const extractIdFromURL = (url: string) => {
-  var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-  var match = url.match(regExp);
-  return match && match[7].length == 11 ? match[7] : false;
+  const regex = /(youtu.*be.*)\/(watch\?v=|embed\/|v|shorts|)(.*?((?=[&#?])|$))/gm;
+  return regex.exec(url);
 };
 
 const EmbedPlayer: React.FC<Props> = ({ video, blockTouch, isEditable, isPlaying, inViewPort }) => {
