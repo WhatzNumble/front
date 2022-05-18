@@ -10,7 +10,13 @@ const Avatar: React.FC<Props> = ({ link, avatarImage }) => {
   return (
     <Link href={`/user/${link}`}>
       <a className='container' href={link}>
-        <Image className='profileImage' width='44px' height='44px' src={avatarImage} alt={link} />
+        <Image
+          className='profileImage'
+          width='44px'
+          height='44px'
+          src={avatarImage || '/mock/profile.png'}
+          alt={link}
+        />
         <style jsx>
           {`
             .profileImage {
