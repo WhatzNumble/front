@@ -93,8 +93,8 @@ const mockVideos: Video[] = [
     videoCreationDate: '2022-05-06T12:07:35.052847',
     videoViews: 20,
     videoThumbnail: '/mock/profile.png',
-    directDir: '/bipbop-advanced/bipbop_16x9_variant.m3u8',
-    embedLink: null,
+    directDir: null,
+    embedLink: 'https://youtube.com/shorts/E4BR0sAM3-8?feature=share',
   },
   {
     videoId: 7,
