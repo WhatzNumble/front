@@ -25,16 +25,14 @@ const ProfileInfo: React.FC<Props> = ({ name, isEdit = false, email, onNickNameC
       <style jsx>
         {`
           .profileInfo {
-            margin-top: 8px;
-            color: #fff;
+            color: var(--white);
             display: flex;
             flex-direction: column;
             align-items: center;
-
             p {
-              color: #8f8f8f;
+              color: var(--gray-2);
+              margin: 0;
             }
-
             .nickName {
               background-color: transparent;
               width: 315px;

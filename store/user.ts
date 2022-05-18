@@ -61,7 +61,6 @@ const userSlice = createSlice({
       };
     },
     logout: () => {
-      console.log('logout');
       deleteCookie('access-token', '/');
       Router.push('/');
       axios.defaults.headers.common[config.authHeaderKey] = '';

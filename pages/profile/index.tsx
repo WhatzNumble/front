@@ -1,7 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import axios from 'axios';
-import Link from 'next/link';
 import Router from 'next/router';
 import css from 'styled-jsx/css';
 
@@ -11,10 +10,10 @@ import Layout from 'components/Layout';
 import { userActions } from 'store/user';
 import useUserState from 'hooks/useUserState';
 
-import Button from './Button';
+import Button from 'components/Button';
+import ConfirmBox from 'components/ConfirmBox';
 import ProfileAvatar from './ProfileAvatar';
 import ProfileInfo from './ProfileInfo';
-import ConfirmBox from 'components/ConfirmBox';
 
 export const profileWrapper = css`
   .profileWrapper {
@@ -22,24 +21,25 @@ export const profileWrapper = css`
     flex-direction: column;
     align-items: center;
     align-content: center;
-    margin-top: 30%;
+    margin: auto 0px;
     padding: 0px 32px;
   }
 `;
 
 const ProfilePage = () => {
-  // useUserTypeRedirect('/', 'guest');
+  useUserTypeRedirect('/', 'guest');
   const { pushToast } = useToastMessage();
   const dispatch = useDispatch();
   const [showConfirm, setConfirm] = useState(false);
-  const { user, token } = useUserState();
+  const { user } = useUserState();
 
   const userLogoutRequest = async () => {
     try {
       const res = await axios.post('/member/logout', {});
-      dispatch(userActions.logout());
     } catch (err) {
       console.error(err);
+    } finally {
+      dispatch(userActions.logout());
     }
   };
 
@@ -80,24 +80,34 @@ const ProfilePage = () => {
     //user 탈퇴 request
     if (confirm) {
       userDeleteRequest();
-      console.log('userLeave');
     } else {
       closeConfirm();
     }
   };
 
   return (
-    <Layout>
+    <Layout title='프로필' headerTitle='프로필'>
       <div className='profileWrapper'>
         <ProfileAvatar avatarSrc={user.avatar} />
-        <ProfileInfo name={user.nickName} email={user.email} />
-        <div className='buttonWrapper'>
-          <Button onClick={onClickProfileEdit} text='프로필 편집' />
-          <Button onClick={onClickLogout} text='로그아웃' theme='dark' />
-          <Button onClick={onClickUserLeave} text='탈퇴하기' theme='dark' />
+        <div className='profileInfo'>
+          <ProfileInfo name={user.nickName} email={user.email} />
         </div>
-        <Link href={'/profile/edit'}>프로필 수정</Link>
-        <Link href={{ pathname: '/profile/edit', query: { editType: 'signup' } }}>프로필 생성</Link>
+        <div className='buttonWrapper'>
+          <Button
+            onClick={onClickProfileEdit}
+            buttonColor='var(--primary)'
+            textColor='var(--black)'
+            border='none'
+            text='프로필 수정하기'
+          />
+          <Button onClick={onClickLogout} text='로그아웃' />
+          <Button
+            onClick={onClickUserLeave}
+            border='none'
+            textColor='var(--gray-2)'
+            text='탈퇴하기'
+          />
+        </div>
         <ConfirmBox
           show={showConfirm}
           callback={confirmUserLeave}
@@ -111,7 +121,11 @@ const ProfilePage = () => {
             display: flex;
             justify-content: center;
           }
+          .profileInfo {
+            margin-top: 30px;
+          }
           .buttonWrapper {
+            margin-top: 59px;
             width: 100%;
           }
         `}

@@ -12,7 +12,6 @@ interface Props {
 const EditPopup: React.FC<Props> = ({ videoId, isEmbed }) => {
   const { pushToast } = useToastMessage();
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
-  console.log(isEmbed);
   const onClickEdit = () => {
     Router.push({
       pathname: `/my-video/upload/${isEmbed ? 'embed' : 'self'}/`,
@@ -36,7 +35,6 @@ const EditPopup: React.FC<Props> = ({ videoId, isEmbed }) => {
           },
         })
         .then((res) => {
-          console.log(res.status);
           pushToast('영상을 삭제했습니다.');
           Router.push('/my-video');
         })
@@ -50,7 +48,7 @@ const EditPopup: React.FC<Props> = ({ videoId, isEmbed }) => {
   };
   return (
     <div className='editPopup'>
-      <h2 className='header'>영상 수정 팝업</h2>
+      <div className='header'>영상 수정 팝업</div>
       <div onClick={onClickEdit}>영상 수정하기</div>
       <div onClick={onClickDelete}>영상 삭제하기</div>
       <ConfirmBox

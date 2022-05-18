@@ -14,7 +14,7 @@ const ProfileAvatar: React.FC<Props> = ({ avatarSrc, isEdit = false, onProfileCh
         {isEdit && onProfileChange ? (
           <>
             <div className='avatar'>
-              <Image src={avatarSrc || '/icon/logo/logo.svg'} width={180} height={180} alt='user-avatar' />
+              <Image src={avatarSrc || '/icon/logo/logo.svg'} width={120} height={120} alt='user-avatar' />
               <label className='editButton' htmlFor='profileAvatar'>
                 <Image src='/icon/common/btn_edit.svg' layout='fill' alt='edit-button' />
               </label>
@@ -44,8 +44,8 @@ const ProfileAvatar: React.FC<Props> = ({ avatarSrc, isEdit = false, onProfileCh
           }
           .avatar {
             border-radius: 50%;
-            width: 180px;
-            height: 180px;
+            width: 120px;
+            height: 120px;
             overflow: hidden;
           }
           .editButton {

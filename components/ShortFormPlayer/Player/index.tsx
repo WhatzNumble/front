@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import dynamic from 'next/dynamic';
 
 import { editableVideo } from 'libs/types';
@@ -18,12 +17,11 @@ interface Props extends IPlayer {
 }
 
 const Player: React.FC<Props> = ({ playerID, video, isEditable, inViewPort, isPlaying }) => {
-  const ref = useRef<HTMLDivElement | null>(null);
   const { embedLink } = video;
 
   return (
     <>
-      <div className='Video' id={playerID} style={{ opacity: inViewPort ? 1 : 0.7 }} ref={ref}>
+      <div className='Video' id={playerID} style={{ opacity: inViewPort ? 1 : 0.7 }}>
         {embedLink ? (
           <EmbedPlayer
             video={video}
