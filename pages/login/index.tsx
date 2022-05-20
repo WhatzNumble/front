@@ -3,6 +3,7 @@ import Image from 'next/image';
 
 import Layout from 'components/Layout';
 import LoginButton from './LoginButton';
+import Button from 'components/Button';
 import useUserTypeRedirect from 'hooks/useUserTypeRedirect';
 import config from 'utils/config';
 
@@ -39,7 +40,8 @@ const LoginPage: NextPage = () => {
       </div>
       <style jsx>{`
         .loginPage {
-          margin: auto;
+          margin: auto 20px;
+          width: calc(100% - 40px);
           .logoWrapper {
             display: flex;
             flex-direction: column;

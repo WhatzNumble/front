@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Button from 'components/Button';
 
 interface ISocialLoginButton {
   text: string;
@@ -10,37 +11,40 @@ interface ISocialLoginButton {
 
 const LoginButton: React.FC<ISocialLoginButton> = ({
   logoSrc = '/icon/logo/whatz.svg',
-  backgroundColor = 'var(--primary)',
+  backgroundColor,
   text,
   hrefLink,
 }) => {
+  const onClickLoginButton = () => {
+    location.href = hrefLink;
+  };
+  console.log(backgroundColor)
   return (
-    <a href={hrefLink}>
-      <button className='loginButton'>
-        <label>
+    <>
+      <Button onClick={onClickLoginButton} textColor='var(--black)'  buttonColor={backgroundColor}>
+        <label className='loginButton'>
           <Image src={logoSrc} width={19} height={19} alt='login logo' />
           <p>{text}</p>
         </label>
-      </button>
+      </Button>
       <style jsx>
         {`
           .loginButton {
-            width: 311px;
+            width: 100%;
             height: 48px;
-            background: ${backgroundColor};
-            border-radius: 28px;
-            color: var(--black);
-            label {
-              display: flex;
-              justify-content: center;
-              p{
-                margin-left: 10px;
-              }
+          }
+          label {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            p {
+              margin-left: 4px;
+              font-size: 16px;
             }
           }
         `}
       </style>
-    </a>
+    </>
   );
 };
 
