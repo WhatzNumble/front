@@ -65,9 +65,9 @@ const DefaultPlayer: React.FC<IPlayer> = ({
           height='100%'
           loop
           //deploy
-          // src={config.videoSrcBaseURL + directDir}
+          src={config.videoSrcBaseURL + directDir}
           //dev
-          src={'https://d2zihajmogu5jn.cloudfront.net' + directDir}
+          // src={'https://d2zihajmogu5jn.cloudfront.net' + directDir}
           onLoadedData={onVideoLoadEnd}
           onClick={onClickVideo}
         />

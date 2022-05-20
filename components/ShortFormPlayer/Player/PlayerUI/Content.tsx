@@ -10,14 +10,14 @@ const Content: React.FC<Props> = ({ content }) => {
     setShowContent((prev) => !prev);
   };
   return (
-    <div className='contentWrapper' >
+    <div className='content'>
       {showContent ? (
-        <div className='showContent' onClick={toggleContent}>
+        <div className='spread' onClick={toggleContent}>
           {content}
         </div>
       ) : (
         <>
-          <div className='content'>{content}</div>
+          <div className='folded'>{content}</div>
           <button className='contentMore' onClick={toggleContent}>
             더보기
           </button>
@@ -25,20 +25,21 @@ const Content: React.FC<Props> = ({ content }) => {
       )}
       <style jsx>
         {`
-          .contentWrapper {
+          .content{
             width: 100%;
             display: flex;
             font-weight: 500;
             font-size: 14px;
             line-height: 140%;
             letter-spacing: -0.002em;
-            .showContent {
+            .spread{
+              display: flex;
+              align-items: flex-end;
               width: 100%;
-              height: auto;
               overflow: scroll;
               height: 260px;
             }
-            .content {
+            .folded{
               width: calc(100% - 40px);
               overflow: hidden;
               white-space: nowrap;
