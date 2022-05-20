@@ -90,7 +90,7 @@ const ShortFormPlayer: React.FC<Props> = ({
 
   return (
     <>
-      <div className='VideoListWrapper' ref={videoListRef} onClick={onClickPlayer}>
+      <div className='VideoListWrapper' ref={videoListRef} >
         {videos.map((video, index) => {
           return (
             <Player
@@ -99,6 +99,7 @@ const ShortFormPlayer: React.FC<Props> = ({
               inViewPort={index === inViewIndex}
               isPlaying={index === playVideo}
               isEditable={isEditable}
+              onClickVideo={onClickPlayer}
               video={video}
             />
           );

@@ -13,6 +13,7 @@ export type LoginUser = {
 
 export interface UserState {
   user: LoginUser;
+  likeList: string[];
   isLoggedIn: boolean;
   token: string;
 }
@@ -28,6 +29,7 @@ const initLoginUser: LoginUser = {
 const initialState: UserState = {
   isLoggedIn: false,
   user: initLoginUser,
+  likeList: [],
   token: '',
 };
 
@@ -39,6 +41,12 @@ const userSlice = createSlice({
       return {
         ...state,
         token: action.payload.token,
+      };
+    },
+    updateLikeList: (state, action: PayloadAction<{ likeList: string[] }>) => {
+      return {
+        ...state,
+        likeList: [...action.payload.likeList],
       };
     },
     login: (

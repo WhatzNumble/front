@@ -6,7 +6,13 @@ import PlayerUI from '../PlayerUI';
 import ReactHlsPlayer from 'react-hls-player';
 import PlayStatusIcon from '../PlayStatusIcon';
 
-const DefaultPlayer: React.FC<IPlayer> = ({ isPlaying, inViewPort, video, isEditable }) => {
+const DefaultPlayer: React.FC<IPlayer> = ({
+  isPlaying,
+  inViewPort,
+  video,
+  isEditable,
+  onClickVideo,
+}) => {
   const { directDir } = video;
   const [loading, setIsLoading] = useState(true);
   const [playing, setPlaying] = useState(false);
@@ -14,14 +20,12 @@ const DefaultPlayer: React.FC<IPlayer> = ({ isPlaying, inViewPort, video, isEdit
   const playerRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    if (directDir) {
-      if (inViewPort) {
-        handleVideo(isPlaying ? 'play' : 'pause');
-      } else {
-        handleVideo('stop');
-      }
+    if (inViewPort && !loading) {
+      handleVideo(isPlaying ? 'play' : 'pause');
+    } else {
+      handleVideo('stop');
     }
-  }, [directDir, isPlaying, inViewPort]);
+  }, [loading, isPlaying, inViewPort]);
 
   const handleVideo = (input: string) => {
     switch (input) {
@@ -46,9 +50,9 @@ const DefaultPlayer: React.FC<IPlayer> = ({ isPlaying, inViewPort, video, isEdit
     setIsLoading(false);
   };
 
-  const onClickVideo = () => {
-    handleVideo(playing ? 'pause' : 'play');
-  };
+  // const onClickVideo = () => {
+  //   handleVideo(playing ? 'pause' : 'play');
+  // };
 
   return (
     <>
@@ -60,8 +64,10 @@ const DefaultPlayer: React.FC<IPlayer> = ({ isPlaying, inViewPort, video, isEdit
           width='100%'
           height='100%'
           loop
+          //deploy
           src={config.videoSrcBaseURL + directDir}
-          // src={'https://d2zihajmogu5jn.cloudfront.net'+ directDir}
+          //dev
+          // src={'https://d2zihajmogu5jn.cloudfront.net' + directDir}
           onLoadedData={onVideoLoadEnd}
           onClick={onClickVideo}
         />

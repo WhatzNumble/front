@@ -37,22 +37,20 @@ const PlayerUI: React.FC<Props> = ({ video, isEditable, progress }) => {
     setIsLike((prev) => !prev);
   };
 
-  const onClickMore = () => {};
-
   return (
     <>
+      <div className='editWrapper'>
+        {isEditable && (
+          <button onClick={() => toggleVideoEditPop()}>
+            <Image src={'/icon/player/more_button.svg'} width={32} height={32} alt='bookmark' />
+          </button>
+        )}
+      </div>
       <div className='PlayerUI'>
         <div className='row top'>
           <div className='contentWrapper'>
             <Content content={videoContent} />
           </div>
-          {isEditable && (
-            <div className='button'>
-              <button onClick={() => toggleVideoEditPop()}>
-                <Image src={'/icon/player/more_button.svg'} width={32} height={32} alt='bookmark' />
-              </button>
-            </div>
-          )}
         </div>
         <div className='row'>
           <Avatar link='test' avatarImage={profile || '/mock/profile.png'} />
@@ -68,8 +66,8 @@ const PlayerUI: React.FC<Props> = ({ video, isEditable, progress }) => {
             <button onClick={() => handleLike()}>
               <Image
                 src={isLike ? '/icon/player/bookmarked.svg' : '/icon/player/bookmark.svg'}
-                width={32}
-                height={32}
+                width={24}
+                height={24}
                 alt='bookmark'
               />
               <div className='count' style={isLike ? { opacity: 1 } : { opacity: 0.5 }}>
@@ -97,6 +95,20 @@ const PlayerUI: React.FC<Props> = ({ video, isEditable, progress }) => {
             background: linear-gradient(0deg, rgba(0, 0, 0, 0.61) 0%, rgba(0, 0, 0, 0.01) 100%);
             color: var(--white);
           }
+          .editWrapper {
+            z-index: 10;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            button {
+              width: 44px;
+              height: 44px;
+              border-radius: 50%;
+              background: rgba(0, 0, 0, 0.4);
+              padding: auto;
+            }
+          }
+
           .row {
             margin-bottom: 20px;
             display: flex;
@@ -105,7 +117,6 @@ const PlayerUI: React.FC<Props> = ({ video, isEditable, progress }) => {
           }
           .top {
             align-items: flex-end;
-
           }
 
           .infoWrapper {
@@ -120,13 +131,14 @@ const PlayerUI: React.FC<Props> = ({ video, isEditable, progress }) => {
                 font-size: 16px;
               }
               .viewDate {
+                margin-top: 2px;
                 opacity: 0.7;
               }
             }
           }
 
           .contentWrapper {
-            flex:1;
+            flex: 1;
             width: 80%;
             font-weight: 500;
             font-size: 14px;
