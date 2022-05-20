@@ -45,7 +45,6 @@ const EmbedPlayer: React.FC<Props> = ({ video, blockTouch, isEditable, isPlaying
   }, []);
 
   useEffect(() => {
-    console.log(inViewPort);
     if (inViewPort) {
       sendCommand(isPlaying ? 'playVideo' : 'pauseVideo');
     } else {

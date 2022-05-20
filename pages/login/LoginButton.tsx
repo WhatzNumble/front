@@ -18,7 +18,6 @@ const LoginButton: React.FC<ISocialLoginButton> = ({
   const onClickLoginButton = () => {
     location.href = hrefLink;
   };
-  console.log(backgroundColor)
   return (
     <>
       <Button onClick={onClickLoginButton} textColor='var(--black)'  buttonColor={backgroundColor}>
