@@ -23,14 +23,19 @@ function TabBar({ height = 56, transparent = false }: Props) {
   const router = useRouter();
   const dispatch = useDispatch();
   const { isLoggedIn } = useSelector((state: AppState) => state.user);
-  const LINK_INFOS = [
-    { path: '/', name: '홈', icon: '/icon/common/home' },
-    { path: '/my-video', name: '마이 비디오', icon: '/icon/common/myvideo' },
-    { path: '/like', name: '관심 영상', icon: '/icon/common/bookmark' },
-    isLoggedIn
-      ? { path: '/profile', name: '프로필', icon: '/icon/common/profile' }
-      : { path: '/login', name: '로그인', icon: '/icon/common/profile' },
-  ];
+  const LINK_INFOS = isLoggedIn
+    ? [
+        { path: '/', name: '홈', icon: '/icon/common/home' },
+        { path: '/my-video', name: '마이 비디오', icon: '/icon/common/myvideo' },
+        { path: '/like', name: '관심 영상', icon: '/icon/common/bookmark' },
+        { path: '/profile', name: '프로필', icon: '/icon/common/profile' },
+      ]
+    : [
+        { path: '/', name: '홈', icon: '/icon/common/home' },
+        { path: '/login', name: '마이 비디오', icon: '/icon/common/myvideo' },
+        { path: '/login', name: '관심 영상', icon: '/icon/common/bookmark' },
+        { path: '/login', name: '로그인', icon: '/icon/common/profile' },
+      ];
 
   const getSuffix = (path: string) => {
     const { pathname } = router;
