@@ -10,13 +10,14 @@ const DefaultPlayer = dynamic(() => import('./DefaultPlayer'), {
 export interface IPlayer extends editableVideo {
   inViewPort: boolean;
   isPlaying: boolean;
+  onClickVideo: () => void;
 }
 
 interface Props extends IPlayer {
   playerID: string;
 }
 
-const Player: React.FC<Props> = ({ playerID, video, isEditable, inViewPort, isPlaying }) => {
+const Player: React.FC<Props> = ({ playerID, video, isEditable, inViewPort, isPlaying, onClickVideo }) => {
   const { embedLink } = video;
 
   return (
@@ -28,6 +29,7 @@ const Player: React.FC<Props> = ({ playerID, video, isEditable, inViewPort, isPl
             inViewPort={inViewPort}
             isEditable={isEditable}
             isPlaying={isPlaying}
+            onClickVideo={onClickVideo}
             blockTouch
           />
         ) : (
@@ -35,6 +37,7 @@ const Player: React.FC<Props> = ({ playerID, video, isEditable, inViewPort, isPl
             video={video}
             inViewPort={inViewPort}
             isEditable={isEditable}
+            onClickVideo={onClickVideo}
             isPlaying={isPlaying}
           />
         )}

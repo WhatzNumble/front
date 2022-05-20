@@ -11,6 +11,7 @@ import ShortFormPlayer from 'components/ShortFormPlayer';
 import { Video } from 'libs/types';
 import { useDispatch } from 'react-redux';
 import { userActions } from 'store/user';
+import mockVideos from 'components/ShortFormPlayer/mockVideos';
 
 interface Props {
   videos: Video[];
@@ -40,7 +41,8 @@ const Home: NextPage<Props> = ({ videos, likeList }) => {
 
   return (
     <Layout tabBarTransparent>
-      <ShortFormPlayer preLoadedVideos={videos || []} query='/home' />
+      {/* <ShortFormPlayer preLoadedVideos={videos || []} query='/home' /> */}
+      <ShortFormPlayer preLoadedVideos={mockVideos} query='/home' isEditable />
     </Layout>
   );
 };
@@ -60,7 +62,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   } catch (err) {
-    console.error(err);
     return {
       props: {
         videos: null,

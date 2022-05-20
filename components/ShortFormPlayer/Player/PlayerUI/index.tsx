@@ -37,8 +37,6 @@ const PlayerUI: React.FC<Props> = ({ video, isEditable, progress }) => {
     setIsLike((prev) => !prev);
   };
 
-  const onClickMore = () => {};
-
   return (
     <>
       <div className='PlayerUI'>
@@ -105,7 +103,6 @@ const PlayerUI: React.FC<Props> = ({ video, isEditable, progress }) => {
           }
           .top {
             align-items: flex-end;
-
           }
 
           .infoWrapper {

@@ -14,7 +14,7 @@ const extractIdFromURL = (url: string) => {
   return regex.exec(url);
 };
 
-const EmbedPlayer: React.FC<Props> = ({ video, blockTouch, isEditable, isPlaying, inViewPort }) => {
+const EmbedPlayer: React.FC<Props> = ({ video, blockTouch, isEditable, isPlaying, inViewPort, onClickVideo }) => {
   const { videoTitle, embedLink } = video;
   const iframeVideoRef = useRef<HTMLIFrameElement | null>(null);
   const embedSrc = `https://www.youtube.com/embed/?playlist=${extractIdFromURL(
@@ -56,6 +56,7 @@ const EmbedPlayer: React.FC<Props> = ({ video, blockTouch, isEditable, isPlaying
   return (
     <>
       <iframe
+        onClick={onClickVideo}
         ref={iframeVideoRef}
         width='100%'
         height='100%'
