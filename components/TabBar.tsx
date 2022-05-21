@@ -84,8 +84,8 @@ function TabBar({ height = 56, transparent = false }: Props) {
   return (
     <nav className='TabBar'>
       <ul className='nav-box'>
-        {LINK_INFOS.map((info) => (
-          <li key={info.path}>
+        {LINK_INFOS.map((info, index) => (
+          <li key={index}>
             <Link href={info.path}>
               <a>
                 <Image
