@@ -14,7 +14,7 @@ const LoginPage: NextPage = () => {
   const redirectURI = `${config.hostURL}${redirectPath}`;
   const backendRequest = isProd
     ? `/oauth2/authorization/kakao?redirect_uri=${redirectURI}`
-    : `${config.apiBaseURL}/oauth2/authorization/kakao?redirect_uri=${redirectURI}`;
+    : `http://localhost:8080/oauth2/authorization/kakao?redirect_uri=${redirectURI}`;
   useUserTypeRedirect('/', 'user');
 
   return (
