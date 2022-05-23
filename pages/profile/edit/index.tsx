@@ -64,16 +64,16 @@ const ProfileEditPage: NextPage = () => {
   const updateProfileRequest = async () => {
     try {
       const body = new FormData(formRef.current!);
-      console.log(body.get('nickName'));
-      console.log(body.get('profileAvatar'));
+      // console.log(body.get('nickName'));
+      // console.log(body.get('profileAvatar'));
 
       const res = axios.post('/member/update', {
         body,
       });
-      console.log(res);
+      // console.log(res);
       successUpdateProfile();
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       failUpdateProfile();
     }
   };
