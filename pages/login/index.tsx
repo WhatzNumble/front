@@ -3,7 +3,6 @@ import Image from 'next/image';
 
 import Layout from 'components/Layout';
 import LoginButton from './LoginButton';
-import Button from 'components/Button';
 import useUserTypeRedirect from 'hooks/useUserTypeRedirect';
 import config from 'utils/config';
 

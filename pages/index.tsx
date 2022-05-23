@@ -42,7 +42,6 @@ const Home: NextPage<Props> = ({ videos, likeList }) => {
   return (
     <Layout tabBarTransparent>
       <ShortFormPlayer preLoadedVideos={videos || []} query='/home' />
-      {/* <ShortFormPlayer preLoadedVideos={mockVideos} query='/home' isEditable /> */}
     </Layout>
   );
 };
